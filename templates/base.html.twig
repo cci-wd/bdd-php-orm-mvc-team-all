@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="description" content="{{ meta_desc }}">
+        <title>{{ meta_title }}</title>
+
+        {% include "/ressources/meta.html.twig" %}
+
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body class="nav-on-header smart-nav">
+        <nav class="navbar">
+            {% include "/ressources/navbar.html.twig" %}
+        </nav>
+
         {% block body %}{% endblock %}
+
+        <footer class="site-footer">
+            {% include "/ressources/footer.html.twig" %}
+        </footer>
+
+        <a id="scroll-up" href="#"><i class="ti-angle-up"></i></a>
+        
+        {% include "/ressources/js.html.twig" %}
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>
