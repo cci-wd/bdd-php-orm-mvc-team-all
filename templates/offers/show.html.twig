@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offers{% endblock %}
+
+{% block body %}
+    <h1>Offers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdOffers</th>
+                <td>{{ offer.idOffers }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ offer.title }}</td>
+            </tr>
+            <tr>
+                <th>MinDescription</th>
+                <td>{{ offer.minDescription }}</td>
+            </tr>
+            <tr>
+                <th>Site</th>
+                <td>{{ offer.site }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ offer.location }}</td>
+            </tr>
+            <tr>
+                <th>HoursWeek</th>
+                <td>{{ offer.hoursWeek }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ offer.description }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ offer.statut ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('offers_index') }}">back to list</a>
+
+    <a href="{{ path('offers_edit', {'idOffers': offer.idOffers}) }}">edit</a>
+
+    {{ include('offers/_delete_form.html.twig') }}
+{% endblock %}
