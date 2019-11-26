@@ -136,5 +136,202 @@ class Businesses
      */
     private $idUsers;
 
+    public function getIdBusinesses(): ?int
+    {
+        return $this->idBusinesses;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSlogan(): ?string
+    {
+        return $this->slogan;
+    }
+
+    public function setSlogan(?string $slogan): self
+    {
+        $this->slogan = $slogan;
+
+        return $this;
+    }
+
+    public function getMinDescription(): ?string
+    {
+        return $this->minDescription;
+    }
+
+    public function setMinDescription(?string $minDescription): self
+    {
+        $this->minDescription = $minDescription;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getNbEmployees(): ?int
+    {
+        return $this->nbEmployees;
+    }
+
+    public function setNbEmployees(?int $nbEmployees): self
+    {
+        $this->nbEmployees = $nbEmployees;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function getDateFoundation(): ?\DateTimeInterface
+    {
+        return $this->dateFoundation;
+    }
+
+    public function setDateFoundation(?\DateTimeInterface $dateFoundation): self
+    {
+        $this->dateFoundation = $dateFoundation;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?int
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(int $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getFacebook(): ?string
+    {
+        return $this->facebook;
+    }
+
+    public function setFacebook(?string $facebook): self
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+
+    public function getTwitter(): ?string
+    {
+        return $this->twitter;
+    }
+
+    public function setTwitter(?string $twitter): self
+    {
+        $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    public function getLinkedin(): ?string
+    {
+        return $this->linkedin;
+    }
+
+    public function setLinkedin(?string $linkedin): self
+    {
+        $this->linkedin = $linkedin;
+
+        return $this;
+    }
+
+    public function getYoutube(): ?string
+    {
+        return $this->youtube;
+    }
+
+    public function setYoutube(?string $youtube): self
+    {
+        $this->youtube = $youtube;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIdUsers(): ?Users
+    {
+        return $this->idUsers;
+    }
+
+    public function setIdUsers(?Users $idUsers): self
+    {
+        $this->idUsers = $idUsers;
+
+        return $this;
+    }
+
 
 }

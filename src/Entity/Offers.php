@@ -90,5 +90,118 @@ class Offers
      */
     private $idSections;
 
+    public function getIdOffers(): ?int
+    {
+        return $this->idOffers;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getMinDescription(): ?string
+    {
+        return $this->minDescription;
+    }
+
+    public function setMinDescription(?string $minDescription): self
+    {
+        $this->minDescription = $minDescription;
+
+        return $this;
+    }
+
+    public function getSite(): ?string
+    {
+        return $this->site;
+    }
+
+    public function setSite(?string $site): self
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getHoursWeek(): ?int
+    {
+        return $this->hoursWeek;
+    }
+
+    public function setHoursWeek(?int $hoursWeek): self
+    {
+        $this->hoursWeek = $hoursWeek;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getStatut(): ?bool
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(bool $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getIdBusinesses(): ?Businesses
+    {
+        return $this->idBusinesses;
+    }
+
+    public function setIdBusinesses(?Businesses $idBusinesses): self
+    {
+        $this->idBusinesses = $idBusinesses;
+
+        return $this;
+    }
+
+    public function getIdSections(): ?Sections
+    {
+        return $this->idSections;
+    }
+
+    public function setIdSections(?Sections $idSections): self
+    {
+        $this->idSections = $idSections;
+
+        return $this;
+    }
+
 
 }

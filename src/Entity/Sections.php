@@ -28,5 +28,22 @@ class Sections
      */
     private $name;
 
+    public function getIdSections(): ?int
+    {
+        return $this->idSections;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
 
 }

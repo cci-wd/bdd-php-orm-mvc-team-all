@@ -73,5 +73,94 @@ class Experiences
      */
     private $idStudents;
 
+    public function getIdExperiences(): ?int
+    {
+        return $this->idExperiences;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getPost(): ?string
+    {
+        return $this->post;
+    }
+
+    public function setPost(string $post): self
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    public function getDateFrom(): ?\DateTimeInterface
+    {
+        return $this->dateFrom;
+    }
+
+    public function setDateFrom(\DateTimeInterface $dateFrom): self
+    {
+        $this->dateFrom = $dateFrom;
+
+        return $this;
+    }
+
+    public function getDateTo(): ?\DateTimeInterface
+    {
+        return $this->dateTo;
+    }
+
+    public function setDateTo(\DateTimeInterface $dateTo): self
+    {
+        $this->dateTo = $dateTo;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIdStudents(): ?Students
+    {
+        return $this->idStudents;
+    }
+
+    public function setIdStudents(?Students $idStudents): self
+    {
+        $this->idStudents = $idStudents;
+
+        return $this;
+    }
+
 
 }

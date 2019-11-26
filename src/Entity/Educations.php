@@ -80,5 +80,106 @@ class Educations
      */
     private $idStudents;
 
+    public function getIdEducations(): ?int
+    {
+        return $this->idEducations;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getDegree(): ?string
+    {
+        return $this->degree;
+    }
+
+    public function setDegree(string $degree): self
+    {
+        $this->degree = $degree;
+
+        return $this;
+    }
+
+    public function getSpeciality(): ?string
+    {
+        return $this->speciality;
+    }
+
+    public function setSpeciality(string $speciality): self
+    {
+        $this->speciality = $speciality;
+
+        return $this;
+    }
+
+    public function getSchoolName(): ?string
+    {
+        return $this->schoolName;
+    }
+
+    public function setSchoolName(string $schoolName): self
+    {
+        $this->schoolName = $schoolName;
+
+        return $this;
+    }
+
+    public function getDateFrom(): ?\DateTimeInterface
+    {
+        return $this->dateFrom;
+    }
+
+    public function setDateFrom(\DateTimeInterface $dateFrom): self
+    {
+        $this->dateFrom = $dateFrom;
+
+        return $this;
+    }
+
+    public function getDateTo(): ?\DateTimeInterface
+    {
+        return $this->dateTo;
+    }
+
+    public function setDateTo(\DateTimeInterface $dateTo): self
+    {
+        $this->dateTo = $dateTo;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIdStudents(): ?Students
+    {
+        return $this->idStudents;
+    }
+
+    public function setIdStudents(?Students $idStudents): self
+    {
+        $this->idStudents = $idStudents;
+
+        return $this;
+    }
+
 
 }

@@ -45,5 +45,46 @@ class Skills
      */
     private $idStudents;
 
+    public function getIdSkills(): ?int
+    {
+        return $this->idSkills;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPercentage(): ?int
+    {
+        return $this->percentage;
+    }
+
+    public function setPercentage(int $percentage): self
+    {
+        $this->percentage = $percentage;
+
+        return $this;
+    }
+
+    public function getIdStudents(): ?Students
+    {
+        return $this->idStudents;
+    }
+
+    public function setIdStudents(?Students $idStudents): self
+    {
+        $this->idStudents = $idStudents;
+
+        return $this;
+    }
+
 
 }
