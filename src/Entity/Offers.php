@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Offers
  *
- * @ORM\Table(name="offers", indexes={@ORM\Index(name="fk_Offers_Businesses1_idx", columns={"id_businesses"}), @ORM\Index(name="fk_Offers_Sections1_idx", columns={"id_sections"})})
+ * @ORM\Table(name="offers", indexes={@ORM\Index(name="fk_Offers_Businesses1_idx", columns={"businesses_id"}), @ORM\Index(name="fk_Offers_Sections1_idx", columns={"sections_id"})})
  * @ORM\Entity
  */
 class Offers
@@ -15,11 +15,11 @@ class Offers
     /**
      * @var int
      *
-     * @ORM\Column(name="id_offers", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idOffers;
+    private $id;
 
     /**
      * @var string
@@ -71,28 +71,35 @@ class Offers
     private $statut;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="publish_date", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $publishDate = 'CURRENT_TIMESTAMP';
+
+    /**
      * @var \Businesses
      *
      * @ORM\ManyToOne(targetEntity="Businesses")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_businesses", referencedColumnName="id_businesses")
+     *   @ORM\JoinColumn(name="businesses_id", referencedColumnName="id")
      * })
      */
-    private $idBusinesses;
+    private $businesses;
 
     /**
      * @var \Sections
      *
      * @ORM\ManyToOne(targetEntity="Sections")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_sections", referencedColumnName="id_sections")
+     *   @ORM\JoinColumn(name="sections_id", referencedColumnName="id")
      * })
      */
-    private $idSections;
+    private $sections;
 
-    public function getIdOffers(): ?int
+    public function getId(): ?int
     {
-        return $this->idOffers;
+        return $this->id;
     }
 
     public function getTitle(): ?string
@@ -179,26 +186,38 @@ class Offers
         return $this;
     }
 
-    public function getIdBusinesses(): ?Businesses
+    public function getPublishDate(): ?\DateTimeInterface
     {
-        return $this->idBusinesses;
+        return $this->publishDate;
     }
 
-    public function setIdBusinesses(?Businesses $idBusinesses): self
+    public function setPublishDate(\DateTimeInterface $publishDate): self
     {
-        $this->idBusinesses = $idBusinesses;
+        $this->publishDate = $publishDate;
 
         return $this;
     }
 
-    public function getIdSections(): ?Sections
+    public function getBusinesses(): ?Businesses
     {
-        return $this->idSections;
+        return $this->businesses;
     }
 
-    public function setIdSections(?Sections $idSections): self
+    public function setBusinesses(?Businesses $businesses): self
     {
-        $this->idSections = $idSections;
+        $this->businesses = $businesses;
+
+        return $this;
+    }
+
+    public function getSections(): ?Sections
+    {
+        return $this->sections;
+    }
+
+    public function setSections(?Sections $sections): self
+    {
+        $this->sections = $sections;
 
         return $this;
     }

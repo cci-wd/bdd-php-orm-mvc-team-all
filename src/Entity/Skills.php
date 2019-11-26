@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Skills
  *
- * @ORM\Table(name="skills", indexes={@ORM\Index(name="fk_Skills_Students1_idx", columns={"id_students"})})
+ * @ORM\Table(name="skills", indexes={@ORM\Index(name="fk_Skills_Students1_idx", columns={"students_id"})})
  * @ORM\Entity
  */
 class Skills
@@ -15,18 +15,18 @@ class Skills
     /**
      * @var int
      *
-     * @ORM\Column(name="id_skills", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idSkills;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $name;
+    private $title;
 
     /**
      * @var int
@@ -40,24 +40,24 @@ class Skills
      *
      * @ORM\ManyToOne(targetEntity="Students")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_students", referencedColumnName="id_students")
+     *   @ORM\JoinColumn(name="students_id", referencedColumnName="id")
      * })
      */
-    private $idStudents;
+    private $students;
 
-    public function getIdSkills(): ?int
+    public function getId(): ?int
     {
-        return $this->idSkills;
+        return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
@@ -74,14 +74,14 @@ class Skills
         return $this;
     }
 
-    public function getIdStudents(): ?Students
+    public function getStudents(): ?Students
     {
-        return $this->idStudents;
+        return $this->students;
     }
 
-    public function setIdStudents(?Students $idStudents): self
+    public function setStudents(?Students $students): self
     {
-        $this->idStudents = $idStudents;
+        $this->students = $students;
 
         return $this;
     }

@@ -15,11 +15,11 @@ class Sections
     /**
      * @var int
      *
-     * @ORM\Column(name="id_sections", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idSections;
+    private $id;
 
     /**
      * @var string
@@ -28,9 +28,9 @@ class Sections
      */
     private $name;
 
-    public function getIdSections(): ?int
+    public function getId(): ?int
     {
-        return $this->idSections;
+        return $this->id;
     }
 
     public function getName(): ?string
