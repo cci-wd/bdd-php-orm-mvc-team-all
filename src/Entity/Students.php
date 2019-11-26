@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Students
  *
- * @ORM\Table(name="students", indexes={@ORM\Index(name="fk_Students_Sections1_idx", columns={"id_sections"}), @ORM\Index(name="fk_Students_Users1_idx", columns={"id_users"})})
+ * @ORM\Table(name="students", indexes={@ORM\Index(name="fk_Students_Sections1_idx", columns={"sections_id"}), @ORM\Index(name="fk_Students_Users1_idx", columns={"users_id"})})
  * @ORM\Entity
  */
 class Students
@@ -15,11 +15,11 @@ class Students
     /**
      * @var int
      *
-     * @ORM\Column(name="id_students", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idStudents;
+    private $id;
 
     /**
      * @var string|null
@@ -31,14 +31,21 @@ class Students
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="first_name", type="string", length=45, nullable=false)
      */
-    private $name;
+    private $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string", length=45, nullable=false)
+     */
+    private $lastName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="min_description", type="string", length=255, nullable=true)
+     * @ORM\Column(name="min_description", type="string", length=100, nullable=true)
      */
     private $minDescription;
 
@@ -52,7 +59,7 @@ class Students
     /**
      * @var string|null
      *
-     * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     * @ORM\Column(name="website", type="string", length=100, nullable=true)
      */
     private $website;
 
@@ -87,13 +94,6 @@ class Students
     /**
      * @var string|null
      *
-     * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
-     */
-    private $facebook;
-
-    /**
-     * @var string|null
-     *
      * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
      */
     private $twitter;
@@ -106,28 +106,35 @@ class Students
     private $github;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="linkedin", type="string", length=255, nullable=true)
+     */
+    private $linkedin;
+
+    /**
      * @var \Sections
      *
      * @ORM\ManyToOne(targetEntity="Sections")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_sections", referencedColumnName="id_sections")
+     *   @ORM\JoinColumn(name="sections_id", referencedColumnName="id")
      * })
      */
-    private $idSections;
+    private $sections;
 
     /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_users", referencedColumnName="id_users")
+     *   @ORM\JoinColumn(name="users_id", referencedColumnName="id")
      * })
      */
-    private $idUsers;
+    private $users;
 
-    public function getIdStudents(): ?int
+    public function getId(): ?int
     {
-        return $this->idStudents;
+        return $this->id;
     }
 
     public function getImage(): ?string
@@ -142,14 +149,26 @@ class Students
         return $this;
     }
 
-    public function getName(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->name;
+        return $this->firstName;
     }
 
-    public function setName(string $name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->name = $name;
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -238,18 +257,6 @@ class Students
         return $this;
     }
 
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook(?string $facebook): self
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
     public function getTwitter(): ?string
     {
         return $this->twitter;
@@ -274,26 +281,38 @@ class Students
         return $this;
     }
 
-    public function getIdSections(): ?Sections
+    public function getLinkedin(): ?string
     {
-        return $this->idSections;
+        return $this->linkedin;
     }
 
-    public function setIdSections(?Sections $idSections): self
+    public function setLinkedin(?string $linkedin): self
     {
-        $this->idSections = $idSections;
+        $this->linkedin = $linkedin;
 
         return $this;
     }
 
-    public function getIdUsers(): ?Users
+    public function getSections(): ?Sections
     {
-        return $this->idUsers;
+        return $this->sections;
     }
 
-    public function setIdUsers(?Users $idUsers): self
+    public function setSections(?Sections $sections): self
     {
-        $this->idUsers = $idUsers;
+        $this->sections = $sections;
+
+        return $this;
+    }
+
+    public function getUsers(): ?Users
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?Users $users): self
+    {
+        $this->users = $users;
 
         return $this;
     }
