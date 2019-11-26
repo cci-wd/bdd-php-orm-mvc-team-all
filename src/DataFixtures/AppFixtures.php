@@ -10,7 +10,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 10; $i++) {
+          for ($i = 0; $i < 10; $i++) {
             $students = new Students();
             $students->setName('John Doe');
             $students->setAge(mt_rand(18, 40));
@@ -19,6 +19,8 @@ class AppFixtures extends Fixture
             $students->setEmail('test@test.test');
             $manager->persist($students);
         }
+        // $product = new Product();
+        // $manager->persist($product);
 
         $manager->flush();
     }
