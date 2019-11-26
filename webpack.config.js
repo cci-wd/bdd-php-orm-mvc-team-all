@@ -1,7 +1,6 @@
 var Encore = require('@symfony/webpack-encore');
 // this loads jquery, but does *not* set a global $ or jQuery variable
-const $ = require('jquery');
-
+// const $ = require('jquery');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -26,7 +25,7 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    .addEntry('app', './assets/js/app.js')
+    .addEntry('main', './assets/js/main.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -65,7 +64,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    .autoProvidejQuery()
+    // .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
