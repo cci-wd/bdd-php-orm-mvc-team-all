@@ -30,7 +30,7 @@
         <tbody>
         {% for business in businesses %}
             <tr>
-                <td>{{ business.idBusinesses }}</td>
+                <td>{{ business.id }}</td>
                 <td>{{ business.name }}</td>
                 <td>{{ business.slogan }}</td>
                 <td>{{ business.minDescription }}</td>
@@ -47,8 +47,8 @@
                 <td>{{ business.youtube }}</td>
                 <td>{{ business.description }}</td>
                 <td>
-                    <a href="{{ path('businesses_show', {'idBusinesses': business.idBusinesses}) }}">show</a>
-                    <a href="{{ path('businesses_edit', {'idBusinesses': business.idBusinesses}) }}">edit</a>
+                    <a href="{{ path('businesses_show', {'id': business.id}) }}">show</a>
+                    <a href="{{ path('businesses_edit', {'id': business.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
