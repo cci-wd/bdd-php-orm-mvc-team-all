@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Students index{% endblock %}
+
+{% block body %}
+    <h1>Students index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdStudents</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>MinDescription</th>
+                <th>Location</th>
+                <th>Website</th>
+                <th>Age</th>
+                <th>PhoneNumber</th>
+                <th>Email</th>
+                <th>CoverImage</th>
+                <th>Facebook</th>
+                <th>Twitter</th>
+                <th>Github</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for student in students %}
+            <tr>
+                <td>{{ student.idStudents }}</td>
+                <td>{{ student.image }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.minDescription }}</td>
+                <td>{{ student.location }}</td>
+                <td>{{ student.website }}</td>
+                <td>{{ student.age }}</td>
+                <td>{{ student.phoneNumber }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.coverImage }}</td>
+                <td>{{ student.facebook }}</td>
+                <td>{{ student.twitter }}</td>
+                <td>{{ student.github }}</td>
+                <td>
+                    <a href="{{ path('students_show', {'idStudents': student.idStudents}) }}">show</a>
+                    <a href="{{ path('students_edit', {'idStudents': student.idStudents}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('students_new') }}">Create new</a>
+{% endblock %}
