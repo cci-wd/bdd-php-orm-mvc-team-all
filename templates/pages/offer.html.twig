@@ -1,0 +1,91 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<header class="page-header">
+		<div class="container page-name">
+			<h1 class="text-center">Ajouter votre annonce</h1>
+			<p class="lead text-center">Create a new vacancy for your company and put it online.</p>
+		</div>
+
+		<div class="container">
+
+			<div class="row">
+				<div class="form-group col-xs-12">
+					<input type="text" class="form-control input-lg" placeholder="Titre de l'annonce">
+				</div>
+
+				<div class="form-group col-xs-12">
+					<textarea class="form-control" rows="3" placeholder="Description..."></textarea>
+				</div>
+
+				<div class="form-group col-xs-12 col-sm-6 col-md-6">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">
+							<i class="fa fa-map-marker"></i>
+						</span>
+						<input type="text" class="form-control" placeholder="Adresse">
+					</div>
+				</div>
+
+				<div class="form-group col-xs-12 col-sm-6 col-md-6">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">
+							<i class="fa fa-clock-o"></i>
+						</span>
+						<input type="text" class="form-control" placeholder="Working hours, e.g. 40">
+						<span class="input-group-addon">hours / week</span>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="button-group">
+				<div class="action-buttons">
+					<div class="upload-button">
+						<button class="btn btn-block btn-primary">Choisir une image</button>
+						<input id="cover_img_file" type="file">
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</header>
+	<main>
+
+
+		<!-- Job detail -->
+		<section>
+			<div class="container">
+
+				<header class="section-header">
+					<span>Description</span>
+					<h2>Détail de l'annonce</h2>
+					<p>Write about your company, job description, skills required, benefits, etc.</p>
+				</header>
+
+				<textarea class="summernote-editor"></textarea>
+
+			</div>
+		</section>
+		<!-- END Job detail -->
+
+
+		<!-- Submit -->
+		<section class="bg-alt">
+			<div class="container">
+				<header class="section-header">
+					<span>Avez-vous terminé?</span>
+					<h2>Postez votre annonce</h2>
+					<p>Please review your information once more and press the below button to put your job online.</p>
+				</header>
+
+				<p class="text-center">
+					<button class="btn btn-success btn-xl btn-round">Soumettre</button>
+				</p>
+
+			</div>
+		</section>
+		<!-- END Submit -->
+
+	</main>
+{% endblock %}
