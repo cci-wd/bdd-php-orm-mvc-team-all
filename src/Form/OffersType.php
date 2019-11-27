@@ -3,14 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Offers;
+use App\Entity\Sections;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use App\Entity\Sections;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class OffersType extends AbstractType
 {
@@ -18,24 +19,23 @@ class OffersType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'attr' => [ 'class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Titre de l'annonce"]
+                'attr' => [ 'class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Titre de l'annonce", 'autocomplete' => 'off']
             ])
             ->add('minDescription', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...']
             ])
             ->add('site', TextType::class, [
-                'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "URL site Web"]
+                'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "URL site Web", 'autocomplete' => 'off']
             ])
             ->add('location', TextType::class, [
                 'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "Adresse"]
             ])
-            ->add('hoursWeek', TextType::class, [
-                'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "Volume horaire"]
+            ->add('hoursWeek', IntegerType::class, [
+                'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "Volume horaire", 'autocomplete' => 'off']
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'summernote-editor', 'rows' => '3', 'placeholder' => "Description"]
             ])
-            ->add('businesses')
             ->add('sections', EntityType::class, [
                 'class' => Sections::class,
                 'choice_label' => 'name',
@@ -43,9 +43,7 @@ class OffersType extends AbstractType
                 'attr' => [
                     'class' => 'form-control selectpicker'
                 ]
-            ])
-            ->add('status')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
