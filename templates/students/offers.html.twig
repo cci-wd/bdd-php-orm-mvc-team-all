@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offers index
+{% endblock %}
+
+{% block body %}
+	<!-- Page header -->
+	<header class="page-header bg-img" style="background-image: url(assets/img/bg-banner1.jpg);">
+		<div class="container page-name">
+			<h1 class="text-center">CCI-LINK</h1>
+			<p class="lead text-center">Votre site de rencontres professionnelles au CFA</p>
+		</div>
+
+		<div class="container">
+			<form action="#">
+
+				<div class="row">
+					<div class="form-group col-xs-12 col-sm-4">
+						<input type="text" class="form-control" placeholder="Mot-clé: nom du métier, compétences, ou entreprise">
+					</div>
+
+					<div class="form-group col-xs-12 col-sm-4">
+						<input type="text" class="form-control" placeholder="Adresse: quartier,">
+					</div>
+
+					<div class="form-group col-xs-12 col-sm-4">
+						<select class="form-control selectpicker" multiple>
+							<option selected>Toutes les sections</option>
+							{% for section in sections %}
+								<option>{{ section.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+
+				</div>
+
+				<div class="button-group">
+					<div class="action-buttons">
+						<button class="btn btn-primary">Apply filter</button>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+
+	</header>
+	<!-- END Page header -->
+
+
+	<!-- Main container -->
+	<main>
+		<section class="no-padding-top bg-alt">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-xs-12">
+						<br>
+						<h5>We found
+							<strong>{{ offers|length }}</strong>
+							matches, you're watching
+							<i>{{ offers|length }}</i>
+							to
+							<i>{{ offers|length }}</i>
+						</h5>
+					</div>
+					{% if is_granted('ROLE_APPRENANT') %}
+						<!-- Job item -->
+						{% for offer in offers %}
+							<div class="col-xs-12">
+								<a class="item-block" href="{{ path('students_offer', {'id': offer.id}) }}">
+									<header>
+										<img src="assets/img/logo-google.jpg" alt="">
+										<div class="hgroup">
+											<h4>{{ offer.title }}</h4>
+											<h5>{{ offer.businesses.name }}
+												<span class="label label-success">Full-time</span>
+											</h5>
+										</div>
+										<time datetime="2016-03-10 20:00">34 min ago</time>
+									</header>
+
+									<div class="item-body">
+										<p>
+											{{ offer.minDescription }}
+										</p>
+									</div>
+
+									<footer>
+										<ul class="details cols-3">
+											<li>
+												<i class="fa fa-map-marker"></i>
+												<span>{{ offer.location }}</span>
+											</li>
+
+											<li>
+												<i class="fa fa-certificate"></i>
+												<span>{{ offer.sections.name }}</span>
+											</li>
+
+											<li>
+												<i class="fa fa-clock-o"></i>
+												<span>{{ offer.hoursWeek }}
+													h / semaine</span>
+											</li>
+										</ul>
+									</footer>
+								</a>
+							</div>
+						{% endfor %}
+						<!-- END Job item -->
+					{% else %}
+						<h3>Veuillez vous connectez pour accéder aux offres
+							<a href="{{ path("app_login") }}">ici</a>.</h3>
+					{% endif %}
+
+				</div>
+
+
+				<!-- Page navigation -->
+				<nav class="text-center">
+					<ul class="pagination">
+						<li>
+							<a href="#" aria-label="Previous">
+								<i class="ti-angle-left"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">1</a>
+						</li>
+						<li class="active">
+							<a href="#">2</a>
+						</li>
+						<li>
+							<a href="#">3</a>
+						</li>
+						<li>
+							<a href="#">4</a>
+						</li>
+						<li>
+							<a href="#" aria-label="Next">
+								<i class="ti-angle-right"></i>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<!-- END Page navigation -->
+
+			</div>
+		</section>
+	</main>
+	<!-- END Main container -->
+{% endblock %}

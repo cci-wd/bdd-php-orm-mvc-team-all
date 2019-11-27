@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Offers;
 use App\Entity\Students;
 use App\Form\StudentsType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/students")
@@ -48,6 +49,40 @@ class StudentsController extends AbstractController
         return $this->render('students/new.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/offers", name="students_offers", methods={"GET"})
+     */
+    public function offers(Request $request): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+        $offers = $this->getDoctrine()
+            ->getRepository(Offers::class)
+            ->findAll();
+        return $this->render('students/offers.html.twig', [
+            //'student' => $student,
+            'offers'=> $offers,
+            'meta_title' => "Liste des offres"
+        ]);
+    }
+
+    /**
+     * @Route("/offer/{id}", name="students_offer", methods={"GET"})
+     */
+    public function offer(Request $request, $id): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+        $offer = $this->getDoctrine()
+            ->getRepository(Offers::class)
+            ->findOneBy(['id'=>$id]);
+        return $this->render('students/offer.html.twig', [
+            //'student' => $student,
+            'offer'=>$offer,
+            'meta_title' => "Offre détaillée"
         ]);
     }
 
@@ -114,4 +149,5 @@ class StudentsController extends AbstractController
         $mpdf->WriteHTML('<h1>Lettre de motivation !</h1>');
         $mpdf->Output();
     }
+
 }

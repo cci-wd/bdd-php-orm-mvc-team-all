@@ -61,7 +61,9 @@ class OffersController extends AbstractController
     public function show(Offers $offer): Response
     {
         return $this->render('offers/show.html.twig', [
-            'offer' => $offer,
+            'offer' => $offer,            
+            'meta_title' => 'Modifier une annonce',
+            'meta_desc' => "Modification d'annonce"
         ]);
     }
 
@@ -100,4 +102,17 @@ class OffersController extends AbstractController
 
         return $this->redirectToRoute('offers_index');
     }
+
+    /**
+     * @Route("/offres", name="offers_index")
+     */
+    public function indexOffers(Offers $offers): Response
+    {
+        return $this->render('offers/offers.html.twig', [
+            'offers' => $offers,            
+            'meta_title' => 'Voir l\'offre',
+        ]);
+    }
+
+    
 }
