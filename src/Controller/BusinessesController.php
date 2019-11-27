@@ -50,6 +50,8 @@ class BusinessesController extends AbstractController
         return $this->render('businesses/new.html.twig', [
             'business' => $business,
             'form' => $form->createView(),
+            'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
+            'meta_desc' => 'Description des metas'
         ]);
     }
 

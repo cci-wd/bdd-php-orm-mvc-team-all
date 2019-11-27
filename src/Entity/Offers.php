@@ -73,9 +73,9 @@ class Offers
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publish_date", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="publish_date", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $publishDate = 'CURRENT_TIMESTAMP';
+    private $publishDate;
 
     /**
      * @var \Businesses

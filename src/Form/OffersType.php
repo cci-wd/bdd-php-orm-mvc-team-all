@@ -34,8 +34,8 @@ class OffersType extends AbstractType
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'summernote-editor', 'placeholder' => "Description"]
             ])
-            ->add('idBusinesses')
-            ->add('idSections', EntityType::class, [
+            ->add('businesses')
+            ->add('sections', EntityType::class, [
                 'class' => Sections::class,
                 'choice_label' => 'name',
                 'attr' => [

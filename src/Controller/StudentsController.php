@@ -52,7 +52,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/{idStudents}", name="students_show", methods={"GET"})
+     * @Route("/{id}", name="students_show", methods={"GET"})
      */
     public function show(Students $student): Response
     {
@@ -62,7 +62,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/{idStudents}/edit", name="students_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="students_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Students $student): Response
     {
@@ -82,11 +82,11 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/{idStudents}", name="students_delete", methods={"DELETE"})
+     * @Route("/{id}", name="students_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Students $student): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$student->getIdStudents(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$student->getid(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($student);
             $entityManager->flush();
@@ -96,7 +96,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/{idStudents}/cv", name="students_cv", methods={"POST"})
+     * @Route("/{id}/cv", name="students_cv", methods={"POST"})
      */
     public function generateCv()
     {
@@ -106,7 +106,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/{idStudents}/lm", name="students_lm", methods={"POST"})
+     * @Route("/{id}/lm", name="students_lm", methods={"POST"})
      */
     public function generateLm()
     {

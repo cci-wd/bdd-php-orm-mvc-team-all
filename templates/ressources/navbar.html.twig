@@ -13,9 +13,15 @@
         <!-- END Logo -->
 
         <!-- User account -->
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="pull-right user-login">
-          <a class="btn btn-sm btn-primary" href="user-login.html">Login</a> or <a href="user-register.html">register</a>
+          <a class="btn btn-sm btn-primary" href="{{ path("app_logout") }}">se déconnecter</a>
         </div>
+        {% else %}
+        <div class="pull-right user-login">
+          <a class="btn btn-sm btn-primary" href="{{ path("app_login") }}">Se connecter</a>
+        </div>
+        {% endif %}
         <!-- END User account -->
 
         <!-- Navigation menu -->
