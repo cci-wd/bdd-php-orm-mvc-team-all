@@ -50,11 +50,13 @@ class BusinessesController extends AbstractController
         return $this->render('businesses/new.html.twig', [
             'business' => $business,
             'form' => $form->createView(),
+            'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
+            'meta_desc' => 'Description des metas'
         ]);
     }
 
     /**
-     * @Route("/{idBusinesses}", name="businesses_show", methods={"GET"})
+     * @Route("/{id}", name="businesses_show", methods={"GET"})
      */
     public function show(Businesses $business): Response
     {
@@ -64,7 +66,7 @@ class BusinessesController extends AbstractController
     }
 
     /**
-     * @Route("/{idBusinesses}/edit", name="businesses_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="businesses_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Businesses $business): Response
     {
@@ -86,11 +88,11 @@ class BusinessesController extends AbstractController
     }
 
     /**
-     * @Route("/{idBusinesses}", name="businesses_delete", methods={"DELETE"})
+     * @Route("/{id}", name="businesses_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Businesses $business): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$business->getIdBusinesses(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$business->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($business);
             $entityManager->flush();
