@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Sections;
 use App\Entity\Students;
 use App\Form\StudentsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,16 +24,20 @@ class StudentsController extends AbstractController
             ->getRepository(Students::class)
             ->findAll();
 
+        $sections = $this->getDoctrine()
+            ->getRepository(Sections::class)
+            ->findAll();
+
         return $this->render('students/index.html.twig', [
             'students' => $students,
+            'sections' => $sections,
         ]);
     }
 
     /**
      * @Route("/new", name="students_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
-    {
+    function new (Request $request): Response {
         $student = new Students();
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
@@ -86,7 +91,7 @@ class StudentsController extends AbstractController
      */
     public function delete(Request $request, Students $student): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$student->getid(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $student->getid(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($student);
             $entityManager->flush();

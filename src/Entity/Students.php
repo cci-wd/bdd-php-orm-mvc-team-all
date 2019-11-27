@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Students
@@ -131,6 +132,16 @@ class Students
      * })
      */
     private $users;
+
+    // /**
+    //  * @ORM\OneToMany(targetEntity="Educations", mappedBy="students")
+    //  */
+    //public $educations;
+
+    // public function __construct()
+    // {
+    //     $this->educations = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -317,5 +328,11 @@ class Students
         return $this;
     }
 
-
+    // /**
+    //  * @return Collection|Educations[]
+    //  */
+    // public function getEducationss(): Collection
+    // {
+    //     return $this->educationss;
+    // }
 }
