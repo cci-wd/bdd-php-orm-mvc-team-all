@@ -6,13 +6,12 @@ use App\Entity\Offers;
 use App\Entity\Students;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 10; $i++) {
+          for ($i = 0; $i < 10; $i++) {
             $students = new Students();
             $students->setFirstName('John');
             $students->setLastName('Doe');
@@ -22,6 +21,8 @@ class AppFixtures extends Fixture
             $students->setEmail('test@test.test');
             $manager->persist($students);
         }
+        // $product = new Product();
+        // $manager->persist($product);
 
         for ($i = 0; $i < 10; $i++) {
             $offers = new Offers();

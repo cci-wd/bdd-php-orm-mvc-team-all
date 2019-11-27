@@ -26,8 +26,6 @@ class BusinessesType extends AbstractType
             ->add('twitter')
             ->add('linkedin')
             ->add('youtube')
-            ->add('description')
-            ->add('idUsers')
         ;
     }
 

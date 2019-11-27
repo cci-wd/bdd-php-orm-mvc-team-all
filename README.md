@@ -28,6 +28,13 @@ Afin de mettre en place une page sur le symfony, suivez les consignes suivantes:
 ```
 >Le extends permet de lier votre page à la base, permettant ainsi la déclaration des metas / js
 
+**Ouvrir le block body et le fermer**
+```
+{% block body %}
+    Votre contenu
+{% endblock %}
+```
+
 **Ensuite, récupérer la page du templage dont vous avez besoin et repérer les balises :**
 ```
 header et main:

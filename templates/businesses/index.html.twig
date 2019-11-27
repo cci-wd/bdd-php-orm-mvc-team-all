@@ -23,8 +23,6 @@
                 <th>Twitter</th>
                 <th>Linkedin</th>
                 <th>Youtube</th>
-                <th>Description</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -45,7 +43,6 @@
                 <td>{{ business.twitter }}</td>
                 <td>{{ business.linkedin }}</td>
                 <td>{{ business.youtube }}</td>
-                <td>{{ business.description }}</td>
                 <td>
                     <a href="{{ path('businesses_show', {'id': business.id}) }}">show</a>
                     <a href="{{ path('businesses_edit', {'id': business.id}) }}">edit</a>
