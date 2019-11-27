@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Sections;
 
 class OffersType extends AbstractType
@@ -32,16 +33,18 @@ class OffersType extends AbstractType
                 'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "Volume horaire"]
             ])
             ->add('description', TextareaType::class, [
-                'attr' => ['class' => 'summernote-editor', 'placeholder' => "Description"]
+                'attr' => ['class' => 'summernote-editor', 'rows' => '3', 'placeholder' => "Description"]
             ])
             ->add('idBusinesses')
             ->add('idSections', EntityType::class, [
                 'class' => Sections::class,
                 'choice_label' => 'name',
+                'placeholder' => 'Section',
                 'attr' => [
                     'class' => 'form-control selectpicker'
                 ]
             ])
+            ->add('status')
         ;
     }
 
