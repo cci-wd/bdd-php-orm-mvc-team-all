@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"}), @ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})})
  * @ORM\Entity
  */
 class Users
@@ -15,11 +15,11 @@ class Users
     /**
      * @var int
      *
-     * @ORM\Column(name="id_users", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idUsers;
+    private $id;
 
     /**
      * @var string
@@ -27,6 +27,13 @@ class Users
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=45, nullable=false)
+     */
+    private $username;
 
     /**
      * @var string
@@ -45,13 +52,20 @@ class Users
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @ORM\Column(name="password", type="string", length=60, nullable=false)
      */
     private $password;
 
-    public function getIdUsers(): ?int
+    /**
+     * @var json|null
+     *
+     * @ORM\Column(name="roles", type="json", nullable=true)
+     */
+    private $roles;
+
+    public function getId(): ?int
     {
-        return $this->idUsers;
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -62,6 +76,18 @@ class Users
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
@@ -98,6 +124,18 @@ class Users
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(?array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }

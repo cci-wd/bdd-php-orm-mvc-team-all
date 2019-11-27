@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Experiences
  *
- * @ORM\Table(name="experiences", indexes={@ORM\Index(name="fk_Work_experiences_Students1_idx", columns={"id_students"})})
+ * @ORM\Table(name="experiences", indexes={@ORM\Index(name="fk_Work_experiences_Students1_idx", columns={"students_id"})})
  * @ORM\Entity
  */
 class Experiences
@@ -15,11 +15,11 @@ class Experiences
     /**
      * @var int
      *
-     * @ORM\Column(name="id_experiences", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idExperiences;
+    private $id;
 
     /**
      * @var string|null
@@ -68,14 +68,14 @@ class Experiences
      *
      * @ORM\ManyToOne(targetEntity="Students")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_students", referencedColumnName="id_students")
+     *   @ORM\JoinColumn(name="students_id", referencedColumnName="id")
      * })
      */
-    private $idStudents;
+    private $students;
 
-    public function getIdExperiences(): ?int
+    public function getId(): ?int
     {
-        return $this->idExperiences;
+        return $this->id;
     }
 
     public function getImage(): ?string
@@ -150,14 +150,14 @@ class Experiences
         return $this;
     }
 
-    public function getIdStudents(): ?Students
+    public function getStudents(): ?Students
     {
-        return $this->idStudents;
+        return $this->students;
     }
 
-    public function setIdStudents(?Students $idStudents): self
+    public function setStudents(?Students $students): self
     {
-        $this->idStudents = $idStudents;
+        $this->students = $students;
 
         return $this;
     }

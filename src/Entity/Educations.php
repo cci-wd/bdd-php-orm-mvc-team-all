@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Educations
  *
- * @ORM\Table(name="educations", indexes={@ORM\Index(name="fk_Educations_Students1_idx", columns={"id_students"})})
+ * @ORM\Table(name="educations", indexes={@ORM\Index(name="fk_Educations_Students1_idx", columns={"students_id"})})
  * @ORM\Entity
  */
 class Educations
@@ -15,11 +15,11 @@ class Educations
     /**
      * @var int
      *
-     * @ORM\Column(name="id_educations", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idEducations;
+    private $id;
 
     /**
      * @var string|null
@@ -64,25 +64,18 @@ class Educations
     private $dateTo;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=400, nullable=false)
-     */
-    private $description;
-
-    /**
      * @var \Students
      *
      * @ORM\ManyToOne(targetEntity="Students")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_students", referencedColumnName="id_students")
+     *   @ORM\JoinColumn(name="students_id", referencedColumnName="id")
      * })
      */
-    private $idStudents;
+    private $students;
 
-    public function getIdEducations(): ?int
+    public function getId(): ?int
     {
-        return $this->idEducations;
+        return $this->id;
     }
 
     public function getImage(): ?string
@@ -157,26 +150,14 @@ class Educations
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getStudents(): ?Students
     {
-        return $this->description;
+        return $this->students;
     }
 
-    public function setDescription(string $description): self
+    public function setStudents(?Students $students): self
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getIdStudents(): ?Students
-    {
-        return $this->idStudents;
-    }
-
-    public function setIdStudents(?Students $idStudents): self
-    {
-        $this->idStudents = $idStudents;
+        $this->students = $students;
 
         return $this;
     }

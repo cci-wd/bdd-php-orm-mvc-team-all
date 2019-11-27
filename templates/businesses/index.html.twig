@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Businesses index{% endblock %}
+
+{% block body %}
+    <h1>Businesses index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdBusinesses</th>
+                <th>Name</th>
+                <th>Slogan</th>
+                <th>MinDescription</th>
+                <th>Image</th>
+                <th>Location</th>
+                <th>NbEmployees</th>
+                <th>Website</th>
+                <th>DateFoundation</th>
+                <th>PhoneNumber</th>
+                <th>Email</th>
+                <th>Facebook</th>
+                <th>Twitter</th>
+                <th>Linkedin</th>
+                <th>Youtube</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for business in businesses %}
+            <tr>
+                <td>{{ business.id }}</td>
+                <td>{{ business.name }}</td>
+                <td>{{ business.slogan }}</td>
+                <td>{{ business.minDescription }}</td>
+                <td>{{ business.image }}</td>
+                <td>{{ business.location }}</td>
+                <td>{{ business.nbEmployees }}</td>
+                <td>{{ business.website }}</td>
+                <td>{{ business.dateFoundation ? business.dateFoundation|date('Y-m-d') : '' }}</td>
+                <td>{{ business.phoneNumber }}</td>
+                <td>{{ business.email }}</td>
+                <td>{{ business.facebook }}</td>
+                <td>{{ business.twitter }}</td>
+                <td>{{ business.linkedin }}</td>
+                <td>{{ business.youtube }}</td>
+                <td>
+                    <a href="{{ path('businesses_show', {'id': business.id}) }}">show</a>
+                    <a href="{{ path('businesses_edit', {'id': business.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="17">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('businesses_new') }}">Create new</a>
+{% endblock %}

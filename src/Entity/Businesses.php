@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Businesses
  *
- * @ORM\Table(name="businesses", indexes={@ORM\Index(name="fk_Businesses_Users1_idx", columns={"id_users"})})
+ * @ORM\Table(name="businesses", indexes={@ORM\Index(name="fk_Businesses_Users1_idx", columns={"users_id"})})
  * @ORM\Entity
  */
 class Businesses
@@ -15,16 +15,16 @@ class Businesses
     /**
      * @var int
      *
-     * @ORM\Column(name="id_businesses", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idBusinesses;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
 
@@ -38,7 +38,7 @@ class Businesses
     /**
      * @var string|null
      *
-     * @ORM\Column(name="min_description", type="string", length=255, nullable=true)
+     * @ORM\Column(name="min_description", type="string", length=100, nullable=true)
      */
     private $minDescription;
 
@@ -120,25 +120,18 @@ class Businesses
     private $youtube;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=400, nullable=false)
-     */
-    private $description;
-
-    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_users", referencedColumnName="id_users")
+     *   @ORM\JoinColumn(name="users_id", referencedColumnName="id")
      * })
      */
-    private $idUsers;
+    private $users;
 
-    public function getIdBusinesses(): ?int
+    public function getId(): ?int
     {
-        return $this->idBusinesses;
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -309,26 +302,14 @@ class Businesses
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getUsers(): ?Users
     {
-        return $this->description;
+        return $this->users;
     }
 
-    public function setDescription(string $description): self
+    public function setUsers(?Users $users): self
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getIdUsers(): ?Users
-    {
-        return $this->idUsers;
-    }
-
-    public function setIdUsers(?Users $idUsers): self
-    {
-        $this->idUsers = $idUsers;
+        $this->users = $users;
 
         return $this;
     }
