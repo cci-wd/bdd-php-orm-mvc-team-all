@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -35,8 +35,16 @@ class BusinessesType extends AbstractType
             ->add('location', TextType::class, [
                 'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "Localisation" ]
             ])
-            ->add('nbEmployees', IntegerType::class, [
-                'attr' => [ 'class' => 'form-control input-lg', 'type' => 'number', 'placeholder' => 'Nombre d\'employés' ],
+            ->add('nbEmployees', ChoiceType::class, [
+                'attr' => [
+                    'class' => 'form-control selectpicker'
+                ],
+
+                'choices' => [
+                    '0 - 9' => '0 - 9',
+                    '10 - 99' => '10 - 99',
+                    '100 - 999' => '100 - 999',
+                ], 
             ])
             ->add('website', UrlType::class, [
                 'attr' => [ 'class' => 'form-control input-lg', 'type' => 'url', 'placeholder' => "Site Web" ],
