@@ -13,7 +13,8 @@ class StudentsType extends AbstractType
     {
         $builder
             ->add('image')
-            ->add('name')
+            ->add('firstName')
+            ->add('lastName')
             ->add('minDescription')
             ->add('location')
             ->add('website')
@@ -21,11 +22,10 @@ class StudentsType extends AbstractType
             ->add('phoneNumber')
             ->add('email')
             ->add('coverImage')
-            ->add('facebook')
             ->add('twitter')
             ->add('github')
-            ->add('idSections')
-            ->add('idUsers')
+            ->add('sections')
+            ->add('users')
         ;
     }
 

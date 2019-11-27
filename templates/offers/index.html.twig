@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>IdOffers</th>
+                <th>id</th>
                 <th>Title</th>
                 <th>MinDescription</th>
                 <th>Site</th>
@@ -22,7 +22,7 @@
         <tbody>
         {% for offer in offers %}
             <tr>
-                <td>{{ offer.idOffers }}</td>
+                <td>{{ offer.id }}</td>
                 <td>{{ offer.title }}</td>
                 <td>{{ offer.minDescription }}</td>
                 <td>{{ offer.site }}</td>
@@ -31,8 +31,8 @@
                 <td>{{ offer.description }}</td>
                 <td>{{ offer.statut ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('offers_show', {'idOffers': offer.idOffers}) }}">show</a>
-                    <a href="{{ path('offers_edit', {'idOffers': offer.idOffers}) }}">edit</a>
+                    <a href="{{ path('offers_show', {'id': offer.id}) }}">show</a>
+                    <a href="{{ path('offers_edit', {'id': offer.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

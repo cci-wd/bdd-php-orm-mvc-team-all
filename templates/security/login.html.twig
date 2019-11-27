@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Styles -->
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Oswald:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="assets/img/favicon.ico">
+  </head>
+
+  <body class="login-page">
+
+
+    <main>
+
+      <div class="login-block">
+        <img src="https://www.cfa.cci.nc/themes/custom/cci/src/img/logo-cci-color-header.png" alt="">
+        <h1>Se connecter à votre compte</h1>
+
+        <form method="post">
+        {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="ti-user"></i></span>
+              <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Nom d'utilisateur" required autofocus>
+            </div>
+          </div>
+          
+          <hr class="hr-xs">
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="ti-unlock"></i></span>
+              <input type="password" class="form-control" placeholder="Mot de passe" name="password" id="inputPassword" required>
+            </div>
+          </div>
+
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        {# <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Se souvenir de moi
+            </label>
+        </div> #}
+
+          <button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+
+          <div class="login-footer">
+            <h6>Si vous n'arrivez pas à vous connectez, veuillez contacter le CFA</h6>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="login-links">
+        <a class="pull-left" href="user-forget-pass.html">Mot de passe oublié?</a>
+      </div>
+
+    </main>
+
+
+    <!-- Scripts -->
+    {{ encore_entry_script_tags('main') }}
+
+  </body>
+</html>
