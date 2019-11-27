@@ -12,7 +12,8 @@ class AppFixtures extends Fixture
     {
         for ($i = 0; $i < 10; $i++) {
             $students = new Students();
-            $students->setName('John Doe');
+            $students->setFirstName('John');
+            $students->setLastName('Doe');
             $students->setAge(mt_rand(18, 40));
             $students->setLocation('c koi sa');
             $students->setPhoneNumber('123456');
