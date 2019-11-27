@@ -2,9 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Offers;
+use App\Entity\Students;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Students;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class AppFixtures extends Fixture
 {
@@ -12,7 +14,8 @@ class AppFixtures extends Fixture
     {
         for ($i = 0; $i < 10; $i++) {
             $students = new Students();
-            $students->setName('John Doe');
+            $students->setFirstName('John');
+            $students->setLastName('Doe');
             $students->setAge(mt_rand(18, 40));
             $students->setLocation('c koi sa');
             $students->setPhoneNumber('123456');
@@ -20,6 +23,18 @@ class AppFixtures extends Fixture
             $manager->persist($students);
         }
 
+        for ($i = 0; $i < 10; $i++) {
+            $offers = new Offers();
+            $offers->setTitle('John Doe');
+            $offers->setLocation('Nouméa');
+            $offers->setDescription(mt_rand(18, 40));
+            $offers->setStatut(1);
+            // $offers->setPublishDate(DateTime::createFromFormat("Y-m-d H:i:s", "2019-11-27 11:37:00"));
+            // insert datas
+            $manager->persist($offers);
+        }
+
+        // empty objects inserted in Databasde
         $manager->flush();
     }
 }

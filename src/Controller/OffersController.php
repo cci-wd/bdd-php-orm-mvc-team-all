@@ -56,7 +56,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{idOffers}", name="offers_show", methods={"GET"})
+     * @Route("/{id}", name="offers_show", methods={"GET"})
      */
     public function show(Offers $offer): Response
     {
@@ -66,7 +66,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{idOffers}/edit", name="offers_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Offers $offer): Response
     {
@@ -82,15 +82,17 @@ class OffersController extends AbstractController
         return $this->render('offers/edit.html.twig', [
             'offer' => $offer,
             'form' => $form->createView(),
+            'meta_title' => 'Modifier une annonce',
+            'meta_desc' => "Modification d'annonce"
         ]);
     }
 
     /**
-     * @Route("/{idOffers}", name="offers_delete", methods={"DELETE"})
+     * @Route("/{id}", name="offers_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Offers $offer): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$offer->getIdOffers(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$offer->getid(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($offer);
             $entityManager->flush();
