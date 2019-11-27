@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Offers{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/summernote/summernote.css') }}">
+{% endblock %}
+
+{% block title %}New Offers
+{% endblock %}
 
 {% block body %}
 
-    {{ include('offers/_form.html.twig') }}
+	{{ include('offers/_form.html.twig') }}
 
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('assets/vendors/summernote/summernote.js') }}"></script>
 {% endblock %}

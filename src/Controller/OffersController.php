@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @Route("/offers")
@@ -36,8 +37,13 @@ class OffersController extends AbstractController
     public function new(Request $request): Response
     {
         $offer = new Offers();
+        $offer->setStatut(0);
+        $offer->setPublishDate(new \DateTime());
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
+
+        /* $validator = Validation::createValidator();
+        $errors = $validator->validate($offer); */
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -51,8 +57,10 @@ class OffersController extends AbstractController
             'offer' => $offer,
             'form' => $form->createView(),
             'meta_desc' => 'Créer une annonce',
-            'meta_title' => "Création d'annonce"
+            'meta_title' => "Création d'annonce",
+            /* 'errors' => $errors */
         ]);
+
     }
 
     /**
