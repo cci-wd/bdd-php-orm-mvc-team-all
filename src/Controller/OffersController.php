@@ -25,8 +25,8 @@ class OffersController extends AbstractController
 
         return $this->render('offers/index.html.twig', [
             'offers' => $offers,
-            'meta_desc' => 'Créer une annonce',
-            'meta_title' => "Création d'annonce"
+            'meta_desc' => "Liste des offres d'emplois",
+            'meta_title' => "Offres d'emplois"
         ]);
     }
 
@@ -62,6 +62,8 @@ class OffersController extends AbstractController
     {
         return $this->render('offers/show.html.twig', [
             'offer' => $offer,
+            'meta_title' => "Voir l'annonce",
+            'meta_desc' => "Voir une annonce"
         ]);
     }
 

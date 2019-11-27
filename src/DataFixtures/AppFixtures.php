@@ -26,11 +26,10 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 10; $i++) {
             $offers = new Offers();
-            $offers->setTitle('John Doe');
+            $offers->setTitle("Offre d'emploi");
             $offers->setLocation('Nouméa');
             $offers->setDescription(mt_rand(18, 40));
             $offers->setStatut(1);
-            // $offers->setPublishDate(DateTime::createFromFormat("Y-m-d H:i:s", "2019-11-27 11:37:00"));
             // insert datas
             $manager->persist($offers);
         }
