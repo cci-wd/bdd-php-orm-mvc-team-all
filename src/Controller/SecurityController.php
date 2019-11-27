@@ -25,13 +25,15 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
-             'error' => $error,
-             'meta_title' => 'Se connecter'
+            'error' => $error,
+            'meta_title' => 'Connexion - CCI-LINK',
+            'meta_desc' => 'connexion'
+             
              ]);
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/deconnexion", name="app_logout")
      */
     public function logout()
     {
