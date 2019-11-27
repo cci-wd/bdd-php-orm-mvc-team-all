@@ -47,14 +47,19 @@ class OffersController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
+        $userId = $user->getId();
+        
+        $businesses = $this->getDoctrine()
+            ->getRepository(Businesses::class)
+            ->findBy(['users' => $userId]);
+
         $offer = new Offers();
         $offer->setStatut(0);
+        $offer->setBusinesses($businesses[0]);
         $offer->setPublishDate(new \DateTime());
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
-
-        /* $validator = Validation::createValidator();
-        $errors = $validator->validate($offer); */
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
