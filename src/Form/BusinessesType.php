@@ -29,9 +29,7 @@ class BusinessesType extends AbstractType
             ->add('minDescription', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...'],
             ])
-            ->add('image', FileType::class, [
-                'attr' => [ 'class' => 'dropify', 'type' => 'file' ],
-            ])
+            ->add('image', FileType::class, array('data_class' => null, 'required' => false))
             ->add('location', TextType::class, [
                 'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "Localisation" ]
             ])

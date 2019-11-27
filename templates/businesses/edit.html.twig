@@ -21,8 +21,8 @@
 <!-- Page header -->
 <header class="page-header">
     <div class="container page-name">
-        <h1 class="text-center">Ajouter votre entreprise</h1>
-        <p class="lead text-center">Créez un profil pour votre entreprise et mettez-le en ligne.</p>
+        <h1 class="text-center">Modifier votre profil entreprise</h1>
+        <p class="lead text-center">Mettre à jour le profil de votre entreprise et mettez-le en ligne.</p>
     </div>
 
     <div class="container">
@@ -33,7 +33,7 @@
 
                     <div class="col-xs-12 col-sm-4 col-lg-2">
                         <div class="form-group">
-                            {{ form_widget(form.image) }}
+                            {{ form_widget(form.image, {'attr': {'class': 'dropify'}}) }}
                             {# <input type="file" class="dropify" data-default-file="assets/img/logo-default.png"> #}
                             <span class="help-block">A square logo</span>
                         </div>
@@ -177,7 +177,7 @@
                 <p>Veuillez revoir vos informations une fois de plus et appuyer sur le bouton ci-dessous pour mettre votre entreprise en ligne.</p>
             </header>
             
-            <p class="text-center">{{ form_widget(form.submit, { 'label': 'Valider votre inscription' }) }}</p>
+            <p class="text-center">{{ form_widget(form.submit, { 'label': 'Valider vos modifications' }) }}</p>
 
         </div>
     </section>
