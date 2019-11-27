@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
             $students->setSections($sections);
             // OFFERS
             $offers = new Offers();
-            $offers->setTitle('John Doe');
+            $offers->setTitle("Offre d'emploi");
             $offers->setLocation('Nouméa');
             $offers->setDescription(mt_rand(18, 40));
             $offers->setStatut(1);

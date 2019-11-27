@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Offers;
 use App\Form\OffersType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Businesses;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Validation;
 
 /**
@@ -20,14 +21,24 @@ class OffersController extends AbstractController
      */
     public function index(): Response
     {
+        $user = $this->getUser();
+        $userId = $user->getId();
+
+        $businesses = $this->getDoctrine()
+            ->getRepository(Businesses::class)
+            ->findBy(['users' => $userId]);
+
+        $businessesId = $businesses[0]->getId();
+
         $offers = $this->getDoctrine()
             ->getRepository(Offers::class)
-            ->findAll();
+            ->findBy(['businesses' => $businessesId]);            
 
         return $this->render('offers/index.html.twig', [
             'offers' => $offers,
-            'meta_desc' => 'Créer une annonce',
-            'meta_title' => "Création d'annonce"
+            'user' => $user,
+            'meta_desc' => "Liste des offres d'emplois",
+            'meta_title' => "Offres d'emplois"
         ]);
     }
 
@@ -36,14 +47,19 @@ class OffersController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
+        $userId = $user->getId();
+        
+        $businesses = $this->getDoctrine()
+            ->getRepository(Businesses::class)
+            ->findBy(['users' => $userId]);
+
         $offer = new Offers();
         $offer->setStatut(0);
+        $offer->setBusinesses($businesses[0]);
         $offer->setPublishDate(new \DateTime());
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
-
-        /* $validator = Validation::createValidator();
-        $errors = $validator->validate($offer); */
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -72,6 +88,8 @@ class OffersController extends AbstractController
     {
         return $this->render('offers/show.html.twig', [
             'offer' => $offer,
+            'meta_title' => "Voir l'annonce",
+            'meta_desc' => "Voir une annonce"
         ]);
     }
 
