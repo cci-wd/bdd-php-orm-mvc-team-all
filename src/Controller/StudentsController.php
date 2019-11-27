@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Offers;
 use App\Entity\Students;
+use App\Entity\Businesses;
 use App\Form\StudentsType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/students")
@@ -52,12 +54,56 @@ class StudentsController extends AbstractController
     }
 
     /**
+     * @Route("/businesses", name="students_businesses", methods={"GET"})
+     */
+    public function businesses(Request $request): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+
+        $businesses = $this->getDoctrine()
+            ->getRepository(Businesses::class)
+            ->findAll();
+
+        return $this->render('students/businesses.html.twig', [
+            //'student' => $student,
+            'businesses'=>$businesses,
+            'meta_title'=>'Liste des entreprises'
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="students_show", methods={"GET"})
      */
     public function show(Students $student): Response
     {
         return $this->render('students/show.html.twig', [
             'student' => $student,
+        ]);
+    }
+
+    /**
+     * @Route("/business/{id}", name="students_business", methods={"GET"})
+     */
+    public function business(Request $request, $id): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+
+        $business = $this->getDoctrine()
+            ->getRepository(Businesses::class)
+            ->findOneBy(['id'=>$id]);
+
+        $openPosts = $this->getDoctrine()
+        ->getRepository(Offers::class)
+        ->findBy(array('businesses' => $id));
+
+
+        return $this->render('students/business.html.twig', [
+            //'student' => $student,
+            'business' => $business,
+            'posts' => $openPosts,
+            'meta_title'=>'Une entreprise'
         ]);
     }
 
