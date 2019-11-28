@@ -74,7 +74,6 @@ class AppFixtures extends Fixture
             $manager->persist($offers);
             $manager->persist($students);
         }   
-
         // empty objects inserted in Databasde
         $manager->flush();
     }

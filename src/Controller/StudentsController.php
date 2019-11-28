@@ -28,7 +28,10 @@ class StudentsController extends AbstractController
 
         return $this->render('students/index.html.twig', [
             'students' => $students,
-            'meta_title' => 'meta title'
+
+            'meta_title' => "Profil",
+            'meta_desc' => "Profil apprenant",
+
         ]);
     }
 
@@ -191,6 +194,8 @@ class StudentsController extends AbstractController
         return $this->render('students/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
+            'meta_title' => "Profil",
+            'meta_desc' => "Profil apprenant",
         ]);
     }
 
