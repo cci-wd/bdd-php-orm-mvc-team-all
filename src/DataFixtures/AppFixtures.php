@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\City;
 use App\Entity\Users;
 use App\Entity\Offers;
 use App\Entity\Sections;
@@ -16,6 +17,15 @@ class AppFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
+
+        // TOWNS
+        $towns = ['Bélep','Boulouparis','Bourail','Canala','Dumbéa','Farino','Hienghène','Houailou','Ile des Pins','Kaala-Gomen','Koné','Koumac','La Foa','Lifou','Maré','Moindou','Mont-Dore','Nouméa','Ouégoa','Ouvéa','Paita','Poindimié','Ponerihouen','Pouébo','Pouembout','Poum','Poya','Sarraméa','Thio','Touho','Voh','Yaté'];
+        
+        foreach($towns as $town) {
+            $city = new City();
+            $city->setName($town);
+            $manager->persist($city);
+        }
 
         for ($i = 0; $i < 10; $i++) {
 
