@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Offers
@@ -25,6 +26,13 @@ class Offers
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "Le titre doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "Le titre ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     private $title;
 
@@ -32,6 +40,13 @@ class Offers
      * @var string|null
      *
      * @ORM\Column(name="min_description", type="string", length=255, nullable=true)
+     * 
+     * @Assert\Length(
+     *      min = 50,
+     *      max = 255,
+     *      minMessage = "La description doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     private $minDescription;
 
@@ -39,6 +54,11 @@ class Offers
      * @var string|null
      *
      * @ORM\Column(name="site", type="string", length=255, nullable=true)
+     * 
+     * @Assert\Url(
+     *      message = "L'url n'est pas valide",
+     * )
+     *
      */
     private $site;
 
@@ -46,6 +66,14 @@ class Offers
      * @var string
      *
      * @ORM\Column(name="location", type="string", length=255, nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "L'adresse doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "L'adresse ne doit pas dépasser {{ limit }} caractères"
+     * )
+     * 
      */
     private $location;
 
@@ -53,6 +81,7 @@ class Offers
      * @var int|null
      *
      * @ORM\Column(name="hours_week", type="integer", nullable=true)
+     * 
      */
     private $hoursWeek;
 
@@ -60,6 +89,14 @@ class Offers
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=400, nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 50,
+     *      max = 400,
+     *      minMessage = "La description doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
+     * )
+     * 
      */
     private $description;
 
