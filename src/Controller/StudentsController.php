@@ -27,6 +27,7 @@ class StudentsController extends AbstractController
 
         return $this->render('students/index.html.twig', [
             'students' => $students,
+            'meta_title' => 'meta title'
         ]);
     }
 
