@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Offers;
+use App\Entity\Sections;
 use App\Entity\Students;
 use App\Form\StudentsType;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,9 +63,40 @@ class StudentsController extends AbstractController
         $offers = $this->getDoctrine()
             ->getRepository(Offers::class)
             ->findAll();
+
+        $sections = $this->getDoctrine()
+            ->getRepository(Sections::class)
+            ->findAll();
+        
+        $keyword = $request->query->get("keyword");
+        $location = $request->query->get("location");
+        $section = $request->query->get("section");
+
+        if($keyword != "") {
+            $entityManager = $this->getDoctrine()->getManager();
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->select('o')
+                ->from(Offers::class, 'o')
+                ->where('o.title LIKE :keyword')
+                ->orWhere('o.description LIKE :keyword')
+
+                ->setParameter('keyword', '%'.$keyword.'%');
+              
+            $query = $queryBuilder->getQuery();
+            $offers = $query->getResult();
+        } else {
+            $offers = $this->getDoctrine()
+                ->getRepository(Offers::class)
+                ->findAll();
+        }
+
         return $this->render('students/offers.html.twig', [
             //'student' => $student,
             'offers'=> $offers,
+            'sections'=> $sections,
+            'keyword'=> $keyword,
+            'location'=> $location,
+            'section'=> $section,
             'meta_title' => "Liste des offres"
         ]);
     }
@@ -79,6 +111,7 @@ class StudentsController extends AbstractController
         $offer = $this->getDoctrine()
             ->getRepository(Offers::class)
             ->findOneBy(['id'=>$id]);
+
         return $this->render('students/offer.html.twig', [
             //'student' => $student,
             'offer'=>$offer,

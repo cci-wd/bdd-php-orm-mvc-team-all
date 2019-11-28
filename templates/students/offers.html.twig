@@ -16,15 +16,49 @@
 
 				<div class="row">
 					<div class="form-group col-xs-12 col-sm-4">
-						<input type="text" class="form-control" placeholder="Mot-clé: nom du métier, compétences, ou entreprise">
+						<input type="text" name="keyword" class="form-control" placeholder="Mot-clé: nom du métier, compétences, ou entreprise">
 					</div>
 
 					<div class="form-group col-xs-12 col-sm-4">
-						<input type="text" class="form-control" placeholder="Adresse: quartier,">
+						<select name="location" class="form-control selectpicker" multiple>
+							<option selected>Toutes les communes</option>
+							<option>Bélep</option>
+							<option>Boulouparis</option>
+							<option>Bourail</option>
+							<option>Canala</option>
+							<option>Dumbéa</option>
+							<option>Farino</option>
+							<option>Hienghène</option>
+							<option>Houailou</option>
+							<option>Ile des Pins</option>
+							<option>Kaala-Gomen</option>
+							<option>Koné</option>
+							<option>Koumac</option>
+							<option>La Foa</option>
+							<option>Lifou</option>
+							<option>Maré</option>
+							<option>Moindou</option>
+							<option>Mont-Dore</option>
+							<option>Nouméa</option>
+							<option>Ouégoa</option>
+							<option>Ouvéa</option>
+							<option>Paita</option>
+							<option>Poindimié</option>
+							<option>Ponerihouen</option>
+							<option>Pouébo</option>
+							<option>Pouembout</option>
+							<option>Poum</option>
+							<option>Poya</option>
+							<option>Sarraméa</option>
+							<option>Thio</option>
+							<option>Touho</option>
+							<option>Voh</option>
+							<option>Yaté</option>
+						</select>
 					</div>
 
 					<div class="form-group col-xs-12 col-sm-4">
-						<select class="form-control selectpicker" multiple>
+						<select name="section" class="form-control selectpicker" multiple>
 							<option selected>Toutes les sections</option>
 							{% for section in sections %}
 								<option>{{ section.name }}</option>
@@ -36,7 +70,7 @@
 
 				<div class="button-group">
 					<div class="action-buttons">
-						<button class="btn btn-primary">Apply filter</button>
+						<button class="btn btn-primary">Filtrer</button>
 					</div>
 				</div>
 
