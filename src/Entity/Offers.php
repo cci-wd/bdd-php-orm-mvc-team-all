@@ -68,7 +68,7 @@ class Offers
      * @ORM\Column(name="location", type="string", length=255, nullable=false)
      * 
      * @Assert\Length(
-     *      min = 50,
+     *      min = 5,
      *      max = 255,
      *      minMessage = "L'adresse doit contenir {{ limit }} caractères au minimum",
      *      maxMessage = "L'adresse ne doit pas dépasser {{ limit }} caractères"
@@ -92,7 +92,7 @@ class Offers
      * 
      * @Assert\Length(
      *      min = 50,
-     *      max = 255,
+     *      max = 400,
      *      minMessage = "La description doit contenir {{ limit }} caractères au minimum",
      *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
      * )

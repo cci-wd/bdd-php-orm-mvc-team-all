@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Offers;
 use App\Entity\Sections;
+use App\Entity\Businesses;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,9 +41,7 @@ class OffersType extends AbstractType
                 'class' => Sections::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Section',
-                'attr' => [
-                    'class' => 'form-control selectpicker'
-                ]
+                'attr' => ['class' => 'form-control selectpicker']
             ]);
     }
 
