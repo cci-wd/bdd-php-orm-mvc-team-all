@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Students
@@ -34,6 +34,13 @@ class Students
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=45, nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "Le prénom ne peut pas contenir une seule lettre",
+     *      maxMessage = "Le prénom ne peut pas excéder {{ limit }} lettres"
+     * )
      */
     private $firstName;
 
@@ -41,6 +48,13 @@ class Students
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=45, nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "Le nom de famille ne peut pas contenir une seule lettre",
+     *      maxMessage = "Le nom de famille ne peut pas excéder {{ limit }} lettres"
+     * )
      */
     private $lastName;
 
@@ -69,6 +83,12 @@ class Students
      * @var int
      *
      * @ORM\Column(name="age", type="integer", nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 2,
+     *      exactMessage = "L'âge doit contenir {{ limit }} chiffres",
+     * )
      */
     private $age;
 
@@ -76,13 +96,22 @@ class Students
      * @var int
      *
      * @ORM\Column(name="phone_number", type="integer", nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 6,
+     *      exactMessage = "Le numéro de téléphone doit contenir {{ limit }} caractères",
+     * )
      */
     private $phoneNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' n'est pas valide."
+     * )
      */
     private $email;
 
