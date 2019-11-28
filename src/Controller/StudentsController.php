@@ -218,7 +218,7 @@ class StudentsController extends AbstractController
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() /*&& $form->isValid()*/) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $image */
             $image = $form['image']->getData();
             if ($image) {
