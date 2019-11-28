@@ -65,13 +65,13 @@ class Educations
 
     /**
      * @var \Students
-     *
-     * @ORM\ManyToOne(targetEntity="Students")
+     * 
+     * @ORM\ManyToOne(targetEntity="App\Entity\Students", inversedBy="educations")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="students_id", referencedColumnName="id")
      * })
      */
-    private $students;
+    private $student;
 
     public function getId(): ?int
     {
@@ -158,6 +158,30 @@ class Educations
     public function setStudents(?Students $students): self
     {
         $this->students = $students;
+
+        return $this;
+    }
+
+    public function getStudent(): ?Students
+    {
+        return $this->student;
+    }
+
+    public function setStudent(?Students $student): self
+    {
+        $this->student = $student;
+
+        return $this;
+    }
+
+    public function getTest(): ?Students
+    {
+        return $this->test;
+    }
+
+    public function setTest(?Students $test): self
+    {
+        $this->test = $test;
 
         return $this;
     }
