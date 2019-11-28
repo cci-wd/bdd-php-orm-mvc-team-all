@@ -203,25 +203,54 @@
 
 									</div>
 
-									<footer>
-										<ul class="details cols-3">
-											<li>
-												<i class="fa fa-certificate"></i>
-												<span>
-													{% if student.sections %}
-														{{student.sections.name}}
-													{% else %}
-														Problème dans la BDD
-													{% endif %}
-												</span>
-											</li>
+								<footer>
+									<ul class="details cols-3">
+										<li>
+											<i class="fa fa-certificate"></i>
+											<span>
+												{% if student.sections %}
+													{{student.sections.name}}
+												{% else %}
+													Problème dans la BDD
+												{% endif %}
+											</span>
+										</li>
 
-											<li>
-												<i class="fa fa-map-marker"></i>
-												<span>{{student.location}}</span>
-											</li>
-										</ul>
-									</footer>
+										<li>
+											<i class="fa fa-map-marker"></i>
+											<span>{{student.location}}</span>
+										</li>
+									</ul>
+								</footer>
+							</a>
+						</div>
+					{% endfor %}
+					<!-- END Resume detail -->
+
+					<!-- Page navigation -->
+					<nav class="text-center">
+						<ul class="pagination">
+							<li>
+								<a href="#" aria-label="Previous">
+									<i class="ti-angle-left"></i>
+								</a>
+							</li>
+							<li>
+								<a href="#">1</a>
+							</li>
+							<li class="active">
+								<a href="#">2</a>
+							</li>
+							<li>
+								<a href="#">3</a>
+							</li>
+							<li>
+								<a href="#">4</a>
+							</li>
+							<li>
+								<a href="#" aria-label="Next">
+									<i class="ti-angle-right"></i>
+
 								</a>
 							</div>
 						{% endfor %}

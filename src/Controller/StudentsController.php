@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Offers;
 use App\Entity\Sections;
 use App\Entity\Students;
+use App\Entity\Businesses;
 use App\Form\StudentsType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/students")
@@ -57,12 +59,121 @@ class StudentsController extends AbstractController
     }
 
     /**
+     * @Route("/businesses", name="students_businesses", methods={"GET"})
+     */
+    public function businesses(Request $request): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+
+        $businesses = $this->getDoctrine()
+            ->getRepository(Businesses::class)
+            ->findAll();
+
+        return $this->render('students/businesses.html.twig', [
+            //'student' => $student,
+            'businesses'=>$businesses,
+            'meta_title'=>'Liste des entreprises'
+           ]);
+    }
+
+    /**
+     * @Route("/offers", name="students_offers", methods={"GET"})
+     */
+    public function offers(Request $request): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+        $offers = $this->getDoctrine()
+            ->getRepository(Offers::class)
+            ->findAll();
+
+        $sections = $this->getDoctrine()
+            ->getRepository(Sections::class)
+            ->findAll();
+        
+        $keyword = $request->query->get("keyword");
+        $location = $request->query->get("location");
+        $section = $request->query->get("section");
+
+        if($keyword != "") {
+            $entityManager = $this->getDoctrine()->getManager();
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->select('o')
+                ->from(Offers::class, 'o')
+                ->where('o.title LIKE :keyword')
+                ->orWhere('o.description LIKE :keyword')
+
+                ->setParameter('keyword', '%'.$keyword.'%');
+              
+            $query = $queryBuilder->getQuery();
+            $offers = $query->getResult();
+        } else {
+            $offers = $this->getDoctrine()
+                ->getRepository(Offers::class)
+                ->findAll();
+        }
+
+        return $this->render('students/offers.html.twig', [
+            //'student' => $student,
+            'offers'=> $offers,
+            'sections'=> $sections,
+            'keyword'=> $keyword,
+            'location'=> $location,
+            'section'=> $section,
+            'meta_title' => "Liste des offres"
+        ]);
+    }
+
+    /**
+     * @Route("/offer/{id}", name="students_offer", methods={"GET"})
+     */
+    public function offer(Request $request, $id): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+        $offer = $this->getDoctrine()
+            ->getRepository(Offers::class)
+            ->findOneBy(['id'=>$id]);
+
+        return $this->render('students/offer.html.twig', [
+            //'student' => $student,
+            'offer'=>$offer,
+            'meta_title' => "Offre détaillée",
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="students_show", methods={"GET"})
      */
     public function show(Students $student): Response
     {
         return $this->render('students/show.html.twig', [
             'student' => $student,
+        ]);
+    }
+
+    /**
+     * @Route("/business/{id}", name="students_business", methods={"GET"})
+     */
+    public function business(Request $request, $id): Response
+    {
+        //$user = $this->getUser();
+        //$student = $user->student;
+
+        $business = $this->getDoctrine()
+            ->getRepository(Businesses::class)
+            ->findOneBy(['id'=>$id]);
+
+        $openPosts = $this->getDoctrine()
+        ->getRepository(Offers::class)
+        ->findBy(array('businesses' => $id));
+
+        return $this->render('students/business.html.twig', [
+            //'student' => $student,
+            'business' => $business,
+            'posts' => $openPosts,
+            'meta_title'=>'Une entreprise'
         ]);
     }
 
@@ -83,6 +194,8 @@ class StudentsController extends AbstractController
         return $this->render('students/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
+            'meta_title' => "Profil",
+            'meta_desc' => "Profil apprenant",
         ]);
     }
 
