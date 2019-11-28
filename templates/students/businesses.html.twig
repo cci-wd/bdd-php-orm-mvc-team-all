@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Businesses index{% endblock %}
+
+{% block body %}
+    <h1>Businesses index</h1>
+
+        <!-- Page header -->
+    <header class="page-header bg-img" style="background-image: url(assets/img/bg-banner1.jpg);">
+      <div class="container page-name">
+        <h1 class="text-center">Parcourir les entreprises</h1>
+        <p class="lead text-center">Utilisez le champ de recherche suivant pour trouver les entreprises qui vous conviennent le mieux</p>
+      </div>
+
+      <div class="container">
+        <form action="#">
+
+          <div class="row">
+            <div class="form-group col-xs-12 col-sm-4">
+              <input type="text" class="form-control" placeholder="Mot clé">
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-4">
+              <input type="text" class="form-control" placeholder="Adresse">
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-4">
+              <select class="form-control selectpicker" multiple>
+                <option selected>Toutes les catégories</option>
+                <option>Informatique</option>
+                <option>BTP</option>
+                <option>Coiffure</option>
+                <option>Artisanat</option>
+                <option>Finance</option>
+                <option>Commerce</option>
+                <option>Marketing</option>
+                <option>Social</option>
+                <option>Logistique</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="button-group">
+            <div class="action-buttons">
+              <button class="btn btn-primary">Appliquer le filtre</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+      <section class="no-padding-top bg-alt">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-xs-12">
+              <br>
+            </div>
+
+            <!-- Company detail -->
+        {% for business in businesses %}
+            <div class="col-xs-12">
+              <a class="item-block" href="{{ path('students_business', {'id': business.id}) }}">
+                <header>
+                  <img src="{{ business.image }}" alt="">
+                  <div class="hgroup">
+                    <h4><td>{{ business.name }}</td></h4>
+                    <h5><td>{{ business.slogan }}</td></h5>
+                  </div>
+                </header>
+
+                <div class="item-body">
+                  <p>{{ business.minDescription }}</p>
+                </div>
+              </a>
+            </div>
+        {% endfor %}
+            <!-- END Company detail -->
+
+            <!-- Page navigation -->
+            <nav class="text-center">
+              <ul class="pagination">
+                <li>
+                  <a href="#" aria-label="Previous">
+                    <i class="ti-angle-left"></i>
+                  </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li class="active"><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li>
+                  <a href="#" aria-label="Next">
+                    <i class="ti-angle-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- END Page navigation -->
+
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- END Main container -->
+{% endblock %}
