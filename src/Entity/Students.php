@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -133,15 +134,15 @@ class Students
      */
     private $users;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity="Educations", mappedBy="students")
-    //  */
-    //public $educations;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Educations", mappedBy="student", fetch="EAGER")
+     */
+    private $educations;
 
-    // public function __construct()
-    // {
-    //     $this->educations = new ArrayCollection();
-    // }
+    public function __construct()
+    {
+        $this->educations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -324,6 +325,37 @@ class Students
     public function setUsers(?Users $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Educations[]
+     */
+    public function getEducations(): Collection
+    {
+        return $this->educations;
+    }
+
+    public function addEducation(Educations $education): self
+    {
+        if (!$this->educations->contains($education)) {
+            $this->educations[] = $education;
+            $education->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEducation(Educations $education): self
+    {
+        if ($this->educations->contains($education)) {
+            $this->educations->removeElement($education);
+            // set the owning side to null (unless already changed)
+            if ($education->getStudent() === $this) {
+                $education->setStudent(null);
+            }
+        }
 
         return $this;
     }

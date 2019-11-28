@@ -62,6 +62,11 @@ class Users implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Students", cascade={"persist", "remove"}, mappedBy="users")
+     */
+    private $students;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -167,5 +172,17 @@ class Users implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getStudents(): ?Students
+    {
+        return $this->students;
+    }
+
+    public function setStudents(?Students $students): self
+    {
+        $this->students = $students;
+
+        return $this;
     }
 }
