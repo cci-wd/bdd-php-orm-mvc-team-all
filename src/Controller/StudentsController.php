@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Offers;
-use App\Entity\Sections;
-use App\Entity\Businesses;
-use App\Form\StudentsType;
 use App\Entity\Skills;
+use App\Entity\Sections;
 use App\Entity\Students;
+use App\Entity\Businesses;
 use App\Entity\Educations;
-use App\Entity\Experiences;
+use App\Form\StudentsType;
 
+use App\Entity\Experiences;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\FileUploader;
 
 /**
  * @Route("/students")
@@ -43,12 +45,19 @@ class StudentsController extends AbstractController
     /**
      * @Route("/new", name="students_new", methods={"GET","POST"})
      */
-    function new (Request $request): Response {
+    function new (Request $request, FileUploader $fileUploader): Response {
         $student = new Students();
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $product->setImage($imageName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($student);
             $entityManager->flush();
@@ -67,18 +76,36 @@ class StudentsController extends AbstractController
      */
     public function businesses(Request $request): Response
     {
-        //$user = $this->getUser();
-        //$student = $user->student;
-
-        $businesses = $this->getDoctrine()
-            ->getRepository(Businesses::class)
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
             ->findAll();
 
+        $keyword = $request->query->get("keyword");
+        $location = $request->query->get("location");
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('b')
+            ->from(Businesses::class, 'b')
+            ->where('b.name LIKE :keyword')
+            ->setParameter('keyword', '%'.$keyword.'%');
+
+        if($location != "Toutes les communes") {
+            $queryBuilder->andWhere('b.location = :location')
+                ->setParameter('location', $location);
+        }
+
+        $query = $queryBuilder->getQuery();
+        $businesses = $query->getResult();
+
         return $this->render('students/businesses.html.twig', [
-            //'student' => $student,
             'businesses'=>$businesses,
+            'keyword'=>$keyword,
+            'location'=>$location,
+            'cities'=>$cities,
             'meta_title'=>'Liste des entreprises'
-           ]);
+        ]);
     }
 
     /**
@@ -184,12 +211,19 @@ class StudentsController extends AbstractController
     /**
      * @Route("/{id}/edit", name="students_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Students $student): Response
+    public function edit(Request $request, Students $student, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() /*&& $form->isValid()*/) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $student->setImage($imageName);
+            }
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('students_index');

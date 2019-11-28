@@ -34,7 +34,7 @@ class BusinessesType extends AbstractType
                 'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "Localisation" ]
             ])
             ->add('nbEmployees', IntegerType::class, [
-                'attr' => [ 'class' => 'form-control input-lg', 'type' => 'number', 'placeholder' => 'Nombre d\'employés' ],
+                'attr' => [ 'class' => 'form-control input-lg', 'type' => 'number', 'min' => '1' , 'placeholder' => 'Nombre d\'employés' ],
             ])
             ->add('website', UrlType::class, [
                 'attr' => [ 'class' => 'form-control input-lg', 'type' => 'url', 'placeholder' => "Site Web" ],
