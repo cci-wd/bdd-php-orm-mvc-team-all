@@ -47,6 +47,7 @@ class Offers
      *      minMessage = "La description doit contenir {{ limit }} caractères au minimum",
      *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
      * )
+     * 
      */
     private $minDescription;
 
@@ -56,7 +57,7 @@ class Offers
      * @ORM\Column(name="site", type="string", length=255, nullable=true)
      * 
      * @Assert\Url(
-     *      message = "L'url n'est pas valide",
+     *      message = "L'url {{ value }} n'est pas valide",
      * )
      *
      */
@@ -68,7 +69,7 @@ class Offers
      * @ORM\Column(name="location", type="string", length=255, nullable=false)
      * 
      * @Assert\Length(
-     *      min = 5,
+     *      min = 3,
      *      max = 255,
      *      minMessage = "L'adresse doit contenir {{ limit }} caractères au minimum",
      *      maxMessage = "L'adresse ne doit pas dépasser {{ limit }} caractères"
@@ -81,7 +82,7 @@ class Offers
      * @var int|null
      *
      * @ORM\Column(name="hours_week", type="integer", nullable=true)
-     * 
+     *
      */
     private $hoursWeek;
 
@@ -104,6 +105,9 @@ class Offers
      * @var bool
      *
      * @ORM\Column(name="statut", type="boolean", nullable=false)
+     * @Assert\Positive(
+     *
+     * )
      */
     private $statut;
 
