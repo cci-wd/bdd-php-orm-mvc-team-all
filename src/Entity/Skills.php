@@ -26,12 +26,7 @@ class Skills
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-<<<<<<< Updated upstream
     private $title;
-=======
-    
-    private $name;
->>>>>>> Stashed changes
 
     /**
      * @var int
