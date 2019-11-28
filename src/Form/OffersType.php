@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,7 +27,7 @@ class OffersType extends AbstractType
             ->add('minDescription', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...']
             ])
-            ->add('site', TextType::class, [
+            ->add('site', UrlType::class, [
                 'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => "URL site Web", 'autocomplete' => 'off']
             ])
             ->add('location', TextType::class, [
