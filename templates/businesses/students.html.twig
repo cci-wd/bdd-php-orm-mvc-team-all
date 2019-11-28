@@ -8,7 +8,7 @@
 	<header class="page-header bg-img" style="background-image: url(assets/img/bg-banner1.jpg);">
 		<div class="container page-name">
 			{% if app.user %}
-				<h1 class="text-center">Liste des alternants :</h1>
+				<h1 class="text-center">Liste des alternants</h1>
 				<p class="lead text-center">Filtrer la recherche :</p>
 			{% else %}
 				<h1 class="lead text-center">Veuillez vous connecter pour accéder à cette liste.</h1>
@@ -20,11 +20,11 @@
 
 					<div class="row">
 						<div class="form-group col-xs-12 col-sm-4">
-							<input type="text" class="form-control" placeholder="Keyword: name, skills, or tags">
+							<input type="text" class="form-control" placeholder="Mots clés: nom, diplôme, ...">
 						</div>
 
 						<div class="form-group col-xs-12 col-sm-4">
-							<input type="text" class="form-control" placeholder="Location: city, state or zip">
+							<input type="text" class="form-control" placeholder="Commune : Nouméa, Koumac, ...">
 						</div>
 
 						<div class="form-group col-xs-12 col-sm-4">
@@ -38,7 +38,7 @@
 
 
 						<div class="form-group col-xs-12 col-sm-4">
-							<h6>Hourly rate</h6>
+							<h6>Tu veux vraiment mettre salaire dans un pays français ?</h6>
 							<div class="checkall-group">
 								<div class="checkbox">
 									<input type="checkbox" id="rate1" name="rate" checked>
@@ -47,28 +47,28 @@
 
 								<div class="checkbox">
 									<input type="checkbox" id="rate2" name="rate">
-									<label for="rate2">$0 - $50
+									<label for="rate2">$000 - $5000
 										<small>(364)</small>
 									</label>
 								</div>
 
 								<div class="checkbox">
 									<input type="checkbox" id="rate3" name="rate">
-									<label for="rate3">$50 - $100
+									<label for="rate3">$5000 - $10000
 										<small>(684)</small>
 									</label>
 								</div>
 
 								<div class="checkbox">
 									<input type="checkbox" id="rate4" name="rate">
-									<label for="rate4">$100 - $200
+									<label for="rate4">$10000 - $20000
 										<small>(195)</small>
 									</label>
 								</div>
 
 								<div class="checkbox">
 									<input type="checkbox" id="rate5" name="rate">
-									<label for="rate5">$200+
+									<label for="rate5">$20000+
 										<small>(39)</small>
 									</label>
 								</div>
@@ -77,7 +77,7 @@
 
 
 						<div class="form-group col-xs-12 col-sm-4">
-							<h6>Academic degree</h6>
+							<h6>Academic degree (c'est un champ libre donc tu peux pas faire de checkbox si ?)</h6>
 							<div class="checkall-group">
 								<div class="checkbox">
 									<input type="checkbox" id="degree1" name="degree" checked>
@@ -119,7 +119,7 @@
 							<h6>Trier par</h6>
 							<div class="radio">
 								<input type="radio" name="sortby" id="sortby1" value="option1" checked>
-								<label for="sortby1">Relevance</label>
+								<label for="sortby1">Pertinence</label>
 							</div>
 
 							<div class="radio">
@@ -178,7 +178,7 @@
 						<!-- Resume detail -->
 						{% for student in students %}
 							<div class="col-xs-12">
-								<a class="item-block" href="{{student.id}}">
+								<a class="item-block" href="/businesses/student/{{student.id}}">
 									<header>
 										<img class="resume-avatar" src="assets/img/avatar.jpg" alt="">
 										<div class="hgroup">
@@ -195,62 +195,33 @@
 										<p>{{student.mindescription}}</p>
 
 										<div class="tag-list">
-											<span>HTML5</span>
-											<span>CSS3</span>
-											<span>Bootstrap</span>
-											<span>Wordpress</span>
+											<span>Tu</span>
+											<span>veux mettre</span>
+											<span>quoi dans</span>
+											<span>les tags ??</span>
 										</div>
 
 									</div>
 
-								<footer>
-									<ul class="details cols-3">
-										<li>
-											<i class="fa fa-certificate"></i>
-											<span>
-												{% if student.sections %}
-													{{student.sections.name}}
-												{% else %}
-													Problème dans la BDD
-												{% endif %}
-											</span>
-										</li>
+									<footer>
+										<ul class="details cols-3">
+											<li>
+												<i class="fa fa-certificate"></i>
+												<span>
+													{% if student.sections %}
+														{{student.sections.name}}
+													{% else %}
+														Problème dans la BDD (pas censé être null)
+													{% endif %}
+												</span>
+											</li>
 
-										<li>
-											<i class="fa fa-map-marker"></i>
-											<span>{{student.location}}</span>
-										</li>
-									</ul>
-								</footer>
-							</a>
-						</div>
-					{% endfor %}
-					<!-- END Resume detail -->
-
-					<!-- Page navigation -->
-					<nav class="text-center">
-						<ul class="pagination">
-							<li>
-								<a href="#" aria-label="Previous">
-									<i class="ti-angle-left"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">1</a>
-							</li>
-							<li class="active">
-								<a href="#">2</a>
-							</li>
-							<li>
-								<a href="#">3</a>
-							</li>
-							<li>
-								<a href="#">4</a>
-							</li>
-							<li>
-								<a href="#" aria-label="Next">
-									<i class="ti-angle-right"></i>
-
+											<li>
+												<i class="fa fa-map-marker"></i>
+												<span>{{student.location}}</span>
+											</li>
+										</ul>
+									</footer>
 								</a>
 							</div>
 						{% endfor %}
