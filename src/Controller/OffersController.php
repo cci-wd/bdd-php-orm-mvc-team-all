@@ -112,8 +112,6 @@ class OffersController extends AbstractController
         return $this->render('offers/edit.html.twig', [
             'offer' => $offer,
             'form' => $form->createView(),
-            'meta_title' => 'Modifier une annonce',
-            'meta_desc' => "Modification d'annonce",
             'form_title' => "Modifier votre annonce",
             'form_desc' => "En quelques clics seulement!"
         ]);
@@ -132,4 +130,17 @@ class OffersController extends AbstractController
 
         return $this->redirectToRoute('offers_index');
     }
+
+    /**
+     * @Route("/offres", name="offers_index")
+     */
+    public function indexOffers(Offers $offers): Response
+    {
+        return $this->render('offers/offers.html.twig', [
+            'offers' => $offers,            
+            'meta_title' => 'Voir l\'offre',
+        ]);
+    }
+
+    
 }

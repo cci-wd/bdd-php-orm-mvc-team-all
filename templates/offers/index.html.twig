@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Offers index{% endblock %}
+{% block title %}Offers index
+{% endblock %}
 
 {% block body %}
 	<header class="page-header bg-img size-lg" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
@@ -21,52 +22,52 @@
                     	<a href="{{ path('offers_new') }}" class="btn btn-primary btn-sm">Ajouter une offre d'emplois</a>
 					</div>
 					<!-- Job detail -->
-                    {% for offer in offers %}
-                        <div class="col-xs-12">
-                            <div class="item-block">
-                                <header>
-                                    {% if offer.businesses %}
-                                        <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}"><img src="{{ asset('assets/img/logo-google.jpg') }}" alt=""></a>
-                                    {% else %}
-                                        <img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
-                                    {% endif %}
-                                    <div class="hgroup">
-                                        <h4>
-                                            <a href="{{ path('offers_show', {'id': offer.id}) }}">{{ offer.title }}</a>
-                                        </h4>
-                                        <h5>
-                                        {% if offer.businesses %}
-                                            <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}">{{ offer.businesses.name }}</a>
-                                        {% else %}
-                                            attente BDD
-                                        {% endif %}
-                                        </h5>
-                                    </div>
-                                    <div class="header-meta">
-                                        <span class="location">{{ offer.location }}</span>
-                                        {% if offer.publishDate %}
-                                            <time>Publié le {{ offer.publishDate|date("d/m/Y") }}</time>
-                                        {% else %}
-                                            attente BDD
-                                        {% endif %}
-                                    </div>
-                                </header>
+          {% for offer in offers %}
+              <div class="col-xs-12">
+                  <div class="item-block">
+                      <header>
+                          {% if offer.businesses %}
+                              <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}"><img src="{{ asset('assets/img/logo-google.jpg') }}" alt=""></a>
+                          {% else %}
+                              <img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
+                          {% endif %}
+                          <div class="hgroup">
+                              <h4>
+                                  <a href="{{ path('offers_show', {'id': offer.id}) }}">{{ offer.title }}</a>
+                              </h4>
+                              <h5>
+                              {% if offer.businesses %}
+                                  <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}">{{ offer.businesses.name }}</a>
+                              {% else %}
+                                  attente BDD
+                              {% endif %}
+                              </h5>
+                          </div>
+                          <div class="header-meta">
+                              <span class="location">{{ offer.location }}</span>
+                              {% if offer.publishDate %}
+                                  <time>Publié le {{ offer.publishDate|date("d/m/Y") }}</time>
+                              {% else %}
+                                  attente BDD
+                              {% endif %}
+                          </div>
+                      </header>
 
-                                <footer>
-                                    <p class="status">
-                                        <strong>Status:</strong>
-                                        {{ offer.statut ? 'En cours' : 'En attente de validation' }}</p>
+                      <footer>
+                          <p class="status">
+                              <strong>Status:</strong>
+                              {{ offer.statut ? 'En cours' : 'En attente de validation' }}</p>
 
-                                    <div class="action-btn">
-                                        <a class="btn btn-xs btn-gray" href="{{ path('offers_edit', {'id': offer.id}) }}">Modifier</a>
-                                        <div class="offer-del">{{ include('offers/_delete_form.html.twig') }}</div>
-                                    </div>
-                                </footer>
-                            </div>
-                        </div>
-                    {% else %}
-                        Il n'y a aucune offre d'emploi disponible.
-                    {% endfor %}
+                          <div class="action-btn">
+                              <a class="btn btn-xs btn-gray" href="{{ path('offers_edit', {'id': offer.id}) }}">Modifier</a>
+                              <div class="offer-del">{{ include('offers/_delete_form.html.twig') }}</div>
+                          </div>
+                      </footer>
+                  </div>
+              </div>
+          {% else %}
+              Il n'y a aucune offre d'emploi disponible.
+          {% endfor %}
 				</div>
 			</div>
 		</section>
