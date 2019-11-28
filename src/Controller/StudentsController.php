@@ -73,10 +73,31 @@ class StudentsController extends AbstractController
         $businesses = $this->getDoctrine()
             ->getRepository(Businesses::class)
             ->findAll();
+        
+        $keyword = $request->query->get("keyword");
+
+        if($keyword != "") {
+            $entityManager = $this->getDoctrine()->getManager();
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->select('b')
+                ->from(Businesses::class, 'b')
+                ->where('b.name LIKE :keyword')
+                ->orWhere('b.minDescription LIKE :keyword')
+
+                ->setParameter('keyword', '%'.$keyword.'%');
+              
+            $query = $queryBuilder->getQuery();
+            $businesses = $query->getResult();
+        } else {
+            $businesses = $this->getDoctrine()
+                ->getRepository(Businesses::class)
+                ->findAll();
+        }
 
         return $this->render('students/businesses.html.twig', [
             //'student' => $student,
             'businesses'=>$businesses,
+            'keyword'=>$keyword,
             'meta_title'=>'Liste des entreprises'
            ]);
     }
