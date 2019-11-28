@@ -141,8 +141,6 @@ class Users implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_APPRENANT
-        $roles[] = 'ROLE_APPRENANT';
 
         return array_unique($roles);
     }
