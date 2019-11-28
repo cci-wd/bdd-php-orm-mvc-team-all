@@ -4,13 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Offers;
 use App\Entity\Sections;
-use App\Entity\Students;
 use App\Entity\Businesses;
 use App\Form\StudentsType;
+use App\Entity\Skills;
+use App\Entity\Students;
+use App\Entity\Educations;
+use App\Entity\Experiences;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\FileUploader;
 
 /**
  * @Route("/students")
@@ -39,12 +44,19 @@ class StudentsController extends AbstractController
     /**
      * @Route("/new", name="students_new", methods={"GET","POST"})
      */
-    function new (Request $request): Response {
+    function new (Request $request, FileUploader $fileUploader): Response {
         $student = new Students();
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $product->setImage($imageName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($student);
             $entityManager->flush();
@@ -69,10 +81,31 @@ class StudentsController extends AbstractController
         $businesses = $this->getDoctrine()
             ->getRepository(Businesses::class)
             ->findAll();
+        
+        $keyword = $request->query->get("keyword");
+
+        if($keyword != "") {
+            $entityManager = $this->getDoctrine()->getManager();
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->select('b')
+                ->from(Businesses::class, 'b')
+                ->where('b.name LIKE :keyword')
+                ->orWhere('b.minDescription LIKE :keyword')
+
+                ->setParameter('keyword', '%'.$keyword.'%');
+              
+            $query = $queryBuilder->getQuery();
+            $businesses = $query->getResult();
+        } else {
+            $businesses = $this->getDoctrine()
+                ->getRepository(Businesses::class)
+                ->findAll();
+        }
 
         return $this->render('students/businesses.html.twig', [
             //'student' => $student,
             'businesses'=>$businesses,
+            'keyword'=>$keyword,
             'meta_title'=>'Liste des entreprises'
            ]);
     }
@@ -180,12 +213,19 @@ class StudentsController extends AbstractController
     /**
      * @Route("/{id}/edit", name="students_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Students $student): Response
+    public function edit(Request $request, Students $student, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() /*&& $form->isValid()*/) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $student->setImage($imageName);
+            }
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('students_index');
@@ -214,13 +254,92 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/cv", name="students_cv", methods={"POST"})
+     * @Route("/{id}/cv", name="students_cv", methods={"GET"})
      */
-    public function generateCv()
+    public function generateCv(Students $student)
     {
+
+        $educations = $this->getDoctrine()
+            ->getRepository(Educations::class)
+            ->findBy(['students' => $student->getId()]);
+
+        $experiences = $this->getDoctrine()
+            ->getRepository(Experiences::class)
+            ->findBy(['students' => $student->getId()]);
+
+        $skills = $this->getDoctrine()
+            ->getRepository(Skills::class)
+            ->findBy(['students' => $student->getId()]);
+
+        $tabEduc = '';
+        foreach ( $educations as $education){
+            $tabEduc = $tabEduc.'<li>'.$education->getDateFrom()->format('Y').'-'.$education->getDateTo()->format('Y').' '.$education->getDegree().' '.$education->getSpeciality().' '.$education->getSchoolName().'</li>';
+        }
+
+        $tabExp = '';
+        foreach ( $experiences as $experience){
+            $tabExp = $tabExp.'<li>'.$experience->getDateFrom()->format('Y').'-'.$experience->getDateTo()->format('Y').' '.$experience->getPost().' '.$experience->getTitle().'</li>';
+        }
+
+        $tabSkill = '';
+        foreach ( $skills as $skill){
+            $tabSkill = $tabSkill.'<li>'.$skill->getPercentage().'% '.$skill->getTitle().'</li>';
+        }
+
         $mpdf = new \Mpdf\Mpdf();
-        $mpdf->WriteHTML('<h1>CV !</h1>');
-        $mpdf->Output();
+
+        $mpdf->WriteHTML('
+        <table width="100%" style="border-style: solid; border-width: 2px;">
+            <tr>
+                <td width="33%">
+                    <h1>'.$student->getFirstName().' '.$student->getLastName().'</h1>
+                    <p>adresse: '.$student->getLocation().'<p>
+                    <p>tel: '.$student->getPhoneNumber().'</p>
+                    <p>email: '.$student->getEmail().'</p>
+                </td>
+                <td width="33%" align="center"></td>
+                <td width="33%">
+                    <div style="background-color: #cccccc; width: 150px; height: 200px;"></div>
+                </td>
+            </tr>
+        </table>
+        <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
+            <h3>Etudes</h3>
+        </div>
+        <div style="">
+            <ul>
+                '.$tabEduc.'
+            </ul>
+        </div>
+        <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
+            <h3>Expériences</h3>
+        </div>
+        <div style="">
+            <ul>
+                '.$tabExp.'
+            </ul>
+        </div>
+        <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
+            <h3>Compétences</h3>
+        </div>
+        <div style="">
+            <ul>
+                '.$tabSkill.'
+            </ul>
+        </div>
+        '
+    );
+
+    $mpdf->SetHTMLFooter('
+    <table width="100%">
+        <tr>
+            <td width="33%">{DATE j-m-Y}</td>
+            <td width="33%" align="center">{PAGENO}/{nbpg}</td>
+            <td width="33%" style="text-align: right;">Mon CV</td>
+        </tr>
+    </table>');
+    $mpdf->Output();
+
     }
 
     /**
