@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\FileUploader;
 
 /**
  * @Route("/students")
@@ -39,12 +40,19 @@ class StudentsController extends AbstractController
     /**
      * @Route("/new", name="students_new", methods={"GET","POST"})
      */
-    function new (Request $request): Response {
+    function new (Request $request, FileUploader $fileUploader): Response {
         $student = new Students();
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $product->setImage($imageName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($student);
             $entityManager->flush();
@@ -180,12 +188,19 @@ class StudentsController extends AbstractController
     /**
      * @Route("/{id}/edit", name="students_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Students $student): Response
+    public function edit(Request $request, Students $student, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() /*&& $form->isValid()*/) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $student->setImage($imageName);
+            }
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('students_index');
