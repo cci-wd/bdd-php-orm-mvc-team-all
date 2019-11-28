@@ -16,13 +16,19 @@
         <form action="#">
 
           <div class="row">
-            <div class="form-group col-xs-12 col-sm-6">
+            <div class="form-group col-xs-12 col-sm-8">
               <input type="text" name="keyword" class="form-control" placeholder="Mot clé">
             </div>
 
-            <div class="form-group col-xs-12 col-sm-6">
-              <input type="text" name="location" class="form-control" placeholder="Adresse">
+            <div class="form-group col-xs-12 col-sm-4">
+              <select name="location" class="form-control selectpicker">
+               <option selected>Toutes les communes</option>
+                {% for city in cities %}
+                  <option>{{ city.name }}</option>
+                {% endfor %}
+              </select>
             </div>
+
           </div>
 
           <div class="button-group">
