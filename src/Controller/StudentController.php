@@ -257,28 +257,36 @@ class StudentController extends AbstractController
      */
     public function generateCv(Students $student)
     {
+
         $educations = $this->getDoctrine()
             ->getRepository(Educations::class)
             ->findBy(['students' => $student->getId()]);
+
         $experiences = $this->getDoctrine()
             ->getRepository(Experiences::class)
             ->findBy(['students' => $student->getId()]);
+
         $skills = $this->getDoctrine()
             ->getRepository(Skills::class)
             ->findBy(['students' => $student->getId()]);
+
         $tabEduc = '';
         foreach ( $educations as $education){
             $tabEduc = $tabEduc.'<li>'.$education->getDateFrom()->format('Y').'-'.$education->getDateTo()->format('Y').' '.$education->getDegree().' '.$education->getSpeciality().' '.$education->getSchoolName().'</li>';
         }
+
         $tabExp = '';
         foreach ( $experiences as $experience){
             $tabExp = $tabExp.'<li>'.$experience->getDateFrom()->format('Y').'-'.$experience->getDateTo()->format('Y').' '.$experience->getPost().' '.$experience->getTitle().'</li>';
         }
+
         $tabSkill = '';
         foreach ( $skills as $skill){
             $tabSkill = $tabSkill.'<li>'.$skill->getPercentage().'% '.$skill->getTitle().'</li>';
         }
+
         $mpdf = new \Mpdf\Mpdf();
+
         $mpdf->WriteHTML('
         <table width="100%" style="border-style: solid; border-width: 2px;">
             <tr>
@@ -320,6 +328,7 @@ class StudentController extends AbstractController
         </div>
         '
     );
+
     $mpdf->SetHTMLFooter('
     <table width="100%">
         <tr>
@@ -329,6 +338,7 @@ class StudentController extends AbstractController
         </tr>
     </table>');
     $mpdf->Output();
+
     }
 
     /**
