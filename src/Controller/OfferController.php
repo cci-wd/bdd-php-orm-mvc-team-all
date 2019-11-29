@@ -2,19 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Businesses;
 use App\Entity\Offers;
 use App\Form\OffersType;
-use App\Entity\Businesses;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Validator\Validation;
 
 /**
  * @Route("/offres")
  */
-class OffersController extends AbstractController
+class OfferController extends AbstractController
 {
     /**
      * @Route("/", name="offers_index", methods={"GET"})
@@ -32,24 +31,24 @@ class OffersController extends AbstractController
 
         $offers = $this->getDoctrine()
             ->getRepository(Offers::class)
-            ->findBy(['businesses' => $businessesId]);            
+            ->findBy(['businesses' => $businessesId]);
 
         return $this->render('offers/index.html.twig', [
             'offers' => $offers,
             'user' => $user,
             'meta_desc' => "Liste des offres d'emplois",
-            'meta_title' => "Offres d'emplois"
+            'meta_title' => "Offres d'emplois",
         ]);
     }
 
     /**
      * @Route("/creer", name="offers_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $user = $this->getUser();
         $userId = $user->getId();
-        
+
         $businesses = $this->getDoctrine()
             ->getRepository(Businesses::class)
             ->findBy(['users' => $userId]);
@@ -75,10 +74,9 @@ class OffersController extends AbstractController
             'meta_desc' => 'Créer une annonce',
             'meta_title' => "Création d'annonce",
             'form_title' => "Ajouter une annonce",
-            'form_desc' => ""
+            'form_desc' => "",
             /* 'errors' => $errors */
         ]);
-
     }
 
     /**
@@ -89,7 +87,7 @@ class OffersController extends AbstractController
         return $this->render('offers/show.html.twig', [
             'offer' => $offer,
             'meta_title' => "Voir l'annonce",
-            'meta_desc' => "Voir une annonce"
+            'meta_desc' => "Voir une annonce",
         ]);
     }
 
@@ -124,12 +122,12 @@ class OffersController extends AbstractController
      */
     public function delete(Request $request, Offers $offer): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$offer->getid(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $offer->getid(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($offer);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('offers_index');
-    }    
+    }
 }

@@ -2,26 +2,25 @@
 
 namespace App\Controller;
 
-use App\Entity\City;
-use App\Entity\Offers;
-use App\Entity\Skills;
-use App\Entity\Sections;
-use App\Entity\Students;
 use App\Entity\Businesses;
+use App\Entity\City;
 use App\Entity\Educations;
-use App\Form\StudentsType;
-
 use App\Entity\Experiences;
+use App\Entity\Offers;
+use App\Entity\Sections;
+use App\Entity\Skills;
+use App\Entity\Students;
+use App\Form\StudentsType;
+use App\Service\FileUploader;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Service\FileUploader;
 
 /**
- * @Route("/apprenant")
+ * @Route("/apprenants")
  */
-class StudentsController extends AbstractController
+class StudentController extends AbstractController
 {
     /**
      * @Route("/", name="students_index", methods={"GET"})
@@ -45,7 +44,8 @@ class StudentsController extends AbstractController
     /**
      * @Route("/creer", name="students_new", methods={"GET","POST"})
      */
-    function new (Request $request, FileUploader $fileUploader): Response {
+    public function create(Request $request, FileUploader $fileUploader): Response
+    {
         $student = new Students();
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
@@ -89,9 +89,9 @@ class StudentsController extends AbstractController
             ->select('b')
             ->from(Businesses::class, 'b')
             ->where('b.name LIKE :keyword')
-            ->setParameter('keyword', '%'.$keyword.'%');
+            ->setParameter('keyword', '%' . $keyword . '%');
 
-        if($location != "Toutes les communes") {
+        if ($location != "Toutes les communes") {
             $queryBuilder->andWhere('b.location = :location')
                 ->setParameter('location', $location);
         }
@@ -100,11 +100,11 @@ class StudentsController extends AbstractController
         $businesses = $query->getResult();
 
         return $this->render('students/businesses.html.twig', [
-            'businesses'=>$businesses,
-            'keyword'=>$keyword,
-            'location'=>$location,
-            'cities'=>$cities,
-            'meta_title'=>'Liste des entreprises'
+            'businesses' => $businesses,
+            'keyword' => $keyword,
+            'location' => $location,
+            'cities' => $cities,
+            'meta_title' => 'Liste des entreprises',
         ]);
     }
 
@@ -116,48 +116,44 @@ class StudentsController extends AbstractController
         $sections = $this->getDoctrine()
             ->getRepository(Sections::class)
             ->findAll();
-
         $cities = $this->getDoctrine()
             ->getRepository(City::class)
             ->findAll();
-        
+
         $keyword = $request->query->get("keyword");
         $location = $request->query->get("location");
         $section = $request->query->get("section");
-
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder
             ->select('o')
             ->from(Offers::class, 'o')
             ->where('o.title LIKE :keyword')
-            ->setParameter('keyword', '%'.$keyword.'%');
-
-        if($location != "Toutes les communes") {
+            ->setParameter('keyword', '%' . $keyword . '%');
+        if ($location != "Toutes les communes") {
             $queryBuilder->andWhere('o.location = :location')
                 ->setParameter('location', $location);
         }
-
-        if($section != "Toutes les sections") {
+        if ($section != "Toutes les sections") {
             $queryBuilder
                 ->leftJoin('o.sections', 'sections')
                 ->andWhere('sections.name = :section')
                 ->setParameter('section', $section);
         }
-    
+
         $query = $queryBuilder->getQuery();
         $offers = $query->getResult();
-        
+
         return $this->render('students/offers.html.twig', [
-            'offers'=> $offers,
-            'parameters'=>[
-                'keyword'=> $keyword,
-                'location'=>$location,
-                'section'=> $section,
+            'offers' => $offers,
+            'parameters' => [
+                'keyword' => $keyword,
+                'location' => $location,
+                'section' => $section,
             ],
-            'cities'=> $cities,
-            'sections'=> $sections,
-            'meta_title' => "Liste des offres"
+            'cities' => $cities,
+            'sections' => $sections,
+            'meta_title' => "Liste des offres",
         ]);
     }
 
@@ -170,11 +166,11 @@ class StudentsController extends AbstractController
         //$student = $user->student;
         $offer = $this->getDoctrine()
             ->getRepository(Offers::class)
-            ->findOneBy(['id'=>$id]);
+            ->findOneBy(['id' => $id]);
 
         return $this->render('students/offer.html.twig', [
             //'student' => $student,
-            'offer'=>$offer,
+            'offer' => $offer,
             'meta_title' => "Offre détaillée",
         ]);
     }
@@ -199,17 +195,17 @@ class StudentsController extends AbstractController
 
         $business = $this->getDoctrine()
             ->getRepository(Businesses::class)
-            ->findOneBy(['id'=>$id]);
+            ->findOneBy(['id' => $id]);
 
         $openPosts = $this->getDoctrine()
-        ->getRepository(Offers::class)
-        ->findBy(array('businesses' => $id));
+            ->getRepository(Offers::class)
+            ->findBy(array('businesses' => $id));
 
         return $this->render('students/business.html.twig', [
             //'student' => $student,
             'business' => $business,
             'posts' => $openPosts,
-            'meta_title'=>'Une entreprise'
+            'meta_title' => 'Une entreprise',
         ]);
     }
 
@@ -228,7 +224,7 @@ class StudentsController extends AbstractController
                 $imageName = $fileUploader->upload($image);
                 $student->setImage($imageName);
             }
-            
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('students_index');
