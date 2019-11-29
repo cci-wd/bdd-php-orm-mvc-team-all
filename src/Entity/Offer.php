@@ -90,9 +90,7 @@ class Offer
      * @var bool
      *
      * @ORM\Column(name="statut", type="boolean", nullable=false)
-     * @Assert\Positive(
-     *
-     * )
+     *   
      */
     private $statut;
 
