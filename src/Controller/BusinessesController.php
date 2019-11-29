@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/businesses")
+ * @Route("/entreprise")
  */
 class BusinessController extends AbstractController
 {
@@ -35,7 +35,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="businesses_new", methods={"GET","POST"})
+     * @Route("/creer", name="businesses_new", methods={"GET","POST"})
      */
     public function create(Request $request): Response
     {
@@ -60,7 +60,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/students", name="businesses_students_list", methods={"GET"})
+     * @Route("/apprenants", name="businesses_students_list", methods={"GET"})
      */
     public function students(): Response
     {
@@ -81,13 +81,13 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/student/{id}", name="businnesses_student_show", methods={"GET"})
+     * @Route("/apprenant/{id}", name="businnesses_student_show", methods={"GET"})
      */
     public function student(Students $student): Response
     {
         $educations = $this->getDoctrine()
             ->getRepository(Educations::class)
-            ->findBy(array('students' => $student->getId()));
+            ->findBy(array('student' => $student->getId()));
 
         $experiences = $this->getDoctrine()
             ->getRepository(Experiences::class)
@@ -113,7 +113,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="businesses_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="businesses_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Businesses $business): Response
     {

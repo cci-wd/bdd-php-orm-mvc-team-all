@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/apprenants")
+ * @Route("/apprenant")
  */
 class StudentsController extends AbstractController
 {
@@ -72,7 +72,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/entreprise", name="students_businesses", methods={"GET"})
+     * @Route("/entreprises", name="students_businesses", methods={"GET"})
      */
     public function businesses(Request $request): Response
     {
@@ -185,7 +185,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/business/{id}", name="students_business", methods={"GET"})
+     * @Route("/entreprise/{id}", name="students_business", methods={"GET"})
      */
     public function business(Request $request, $id): Response
     {

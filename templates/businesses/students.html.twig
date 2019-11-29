@@ -178,7 +178,7 @@
 						<!-- Resume detail -->
 						{% for student in students %}
 							<div class="col-xs-12">
-								<a class="item-block" href="/businesses/student/{{student.id}}">
+								<a class="item-block" href="{{ path('businnesses_student_show', {'id': student.id}) }}">
 									<header>
 										<img class="resume-avatar" src="assets/img/avatar.jpg" alt="">
 										<div class="hgroup">
