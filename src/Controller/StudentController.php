@@ -44,7 +44,8 @@ class StudentController extends AbstractController
     /**
      * @Route("/creer", name="students_new", methods={"GET","POST"})
      */
-    function create(Request $request, FileUploader $fileUploader): Response {
+    public function create(Request $request, FileUploader $fileUploader): Response
+    {
         $student = new Student();
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
@@ -115,6 +116,7 @@ class StudentController extends AbstractController
         $sections = $this->getDoctrine()
             ->getRepository(Section::class)
             ->findAll();
+
         $cities = $this->getDoctrine()
             ->getRepository(City::class)
             ->findAll();
@@ -164,11 +166,9 @@ class StudentController extends AbstractController
      */
     public function offer(Request $request, $id): Response
     {
-        //$user = $this->getUser();
-        //$student = $user->student;
         $offer = $this->getDoctrine()
             ->getRepository(Offer::class)
-            ->findOneBy(['id'=>$id]);
+            ->findOneBy(['id' => $id]);
 
         return $this->render('students/offer.html.twig', [
             //'student' => $student,
@@ -194,7 +194,7 @@ class StudentController extends AbstractController
     {
         $business = $this->getDoctrine()
             ->getRepository(Business::class)
-            ->findOneBy(['id'=>$id]);
+            ->findOneBy(['id' => $id]);
 
         $openPosts = $this->getDoctrine()
             ->getRepository(Offer::class)
