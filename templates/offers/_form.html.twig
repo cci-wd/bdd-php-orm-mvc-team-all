@@ -25,23 +25,10 @@
 			</div>
 
 			<div class="form-group col-xs-12">
-				{{ form_widget(form.sections) }}
-				{{ form_errors(form.sections) }}
+				{{ form_widget(form.section) }}
+				{{ form_errors(form.section) }}
 			</div>
-
-			<div class="form-group col-xs-12">
-				{% if not form.minDescription.vars.valid %}
-					<div class="has-error">
-						{{ form_widget(form.minDescription) }}
-					</div>
-				{% else %}
-					{{ form_widget(form.minDescription) }}
-				{% endif %}
-
-				{{ form_errors(form.minDescription) }}
 			
-			</div>
-
 			<div class="form-group col-xs-12">
 				{% if not form.site.vars.valid %}
 					<div class="has-error">

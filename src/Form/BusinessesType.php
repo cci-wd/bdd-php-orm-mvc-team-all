@@ -26,7 +26,7 @@ class BusinessesType extends AbstractType
             ->add('slogan', TextType::class, [
                 'attr' => [ 'class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Slogan" ],
             ])
-            ->add('minDescription', TextareaType::class, [
+            ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...'],
             ])
             ->add('image', FileType::class, array('data_class' => null, 'required' => false))

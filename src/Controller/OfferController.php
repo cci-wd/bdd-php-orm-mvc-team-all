@@ -21,17 +21,10 @@ class OfferController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
-        $userId = $user->getId();
-
-        $businesses = $this->getDoctrine()
-            ->getRepository(Business::class)
-            ->findBy(['users' => $userId]);
-
-        $businessesId = $businesses[0]->getId();
 
         $offers = $this->getDoctrine()
             ->getRepository(Offer::class)
-            ->findBy(['businesses' => $businessesId]);            
+            ->findAll();            
 
         return $this->render('offers/index.html.twig', [
             'offers' => $offers,
@@ -47,15 +40,10 @@ class OfferController extends AbstractController
     public function create(Request $request): Response
     {
         $user = $this->getUser();
-        $userId = $user->getId();
-
-        $businesses = $this->getDoctrine()
-            ->getRepository(Business::class)
-            ->findBy(['users' => $userId]);
 
         $offer = new Offer();
         $offer->setStatut(0);
-        $offer->setBusiness($businesses[0]);
+        $offer->setBusiness($user->getBusiness());
         $offer->setPublishDate(new \DateTime());
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);

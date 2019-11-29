@@ -24,7 +24,7 @@ class OffersType extends AbstractType
             ->add('title', TextType::class, [
                 'attr' => [ 'class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Titre de l'annonce", 'autocomplete' => 'off']
             ])
-            ->add('minDescription', TextareaType::class, [
+            ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...']
             ])
             ->add('site', UrlType::class, [

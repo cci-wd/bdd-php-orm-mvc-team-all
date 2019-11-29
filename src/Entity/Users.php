@@ -63,9 +63,14 @@ class Users implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Student", cascade={"persist", "remove"}, mappedBy="users")
+     * @ORM\OneToOne(targetEntity="App\Entity\Student", cascade={"persist", "remove"}, mappedBy="user")
      */
     private $student;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Business", cascade={"persist", "remove"}, mappedBy="user")
+     */
+    private $business;
 
     public function getId(): ?int
     {
@@ -182,6 +187,18 @@ class Users implements UserInterface
     public function setStudent(?Student $student): self
     {
         $this->student = $student;
+
+        return $this;
+    }
+
+    public function getBusiness(): ?Business
+    {
+        return $this->business;
+    }
+
+    public function setBusiness(?Business $business): self
+    {
+        $this->business = $business;
 
         return $this;
     }

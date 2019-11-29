@@ -90,7 +90,7 @@ class BusinessController extends AbstractController
 
         $experiences = $this->getDoctrine()
             ->getRepository(Experience::class)
-            ->findBy(array('students' => $student->getId()));
+            ->findBy(array('student' => $student->getId()));
 
         return $this->render('businesses/student.html.twig', [
             'student' => $student,
