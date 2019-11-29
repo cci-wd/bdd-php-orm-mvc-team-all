@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/apprenant")
+ * @Route("/apprenants")
  */
-class StudentsController extends AbstractController
+class StudentController extends AbstractController
 {
     /**
      * @Route("/", name="students_index", methods={"GET"})
