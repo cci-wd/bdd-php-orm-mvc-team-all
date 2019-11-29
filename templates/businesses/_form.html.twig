@@ -1,143 +1,270 @@
+{% form_theme form 'form/form_errors.html.twig' %}
+
 {{ form_start(form) }}
 <!-- Page header -->
 <header class="page-header">
-    <div class="container page-name">
-        <h1 class="text-center">Modifier votre profil entreprise</h1>
-        <p class="lead text-center">Mettre à jour le profil de votre entreprise et mettez-le en ligne.</p>
-    </div>
-    <div class="container">
+  <div class="container page-name">
+    <h1 class="text-center">Modifier votre profil entreprise</h1>
+    <p class="lead text-center">Mettre à jour le profil de votre entreprise et mettez-le en ligne.</p>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
         <div class="row">
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-lg-2">
-                        <div class="form-group">
-                            {{ form_widget(form.image, {'attr': {'class': 'dropify'}}) }}
-                            {# <input type="file" class="dropify" data-default-file="assets/img/logo-default.png"> #}
-                            <span class="help-block">A square logo</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-8 col-lg-10">
-                        <div class="form-group">
-                            {{ form_widget(form.name) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_widget(form.slogan) }}
-                        </div>
+          <div class="col-xs-12 col-sm-4 col-lg-2">
+            <div class="form-group">
+              {{ form_widget(form.image, {'attr': {'class': 'dropify'}}) }}
+              {# <input type="file" class="dropify" data-default-file="assets/img/logo-default.png"> #}
+              <span class="help-block">A square logo</span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-8 col-lg-10">
+            <div class="form-group">
+              {% if not form.name.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.name) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.name) }}
+              {% endif %}
 
-                        <div class="form-group">
-                            {{ form_widget(form.description) }}
-                        </div>
-                    </div>
-                </div>
+              {{ form_errors(form.name) }}
+
             </div>
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                            {{ form_widget(form.location) }}
-                        </div>
-                    </div>
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                            {{ form_widget(form.nbEmployees) }}
-                            <span class="input-group-addon">Employés</span>
-                        </div>
-                    </div>
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon"><i class="fa fa-globe"></i></span>
-                            {{ form_widget(form.website) }}
-                        </div>
-                    </div>
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon"><i class="fa fa-birthday-cake"></i></span>
-                            {{ form_widget(form.dateFoundation) }}
-                        </div>
-                    </div>
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            {{ form_widget(form.phoneNumber) }}
-                        </div>
-                    </div>
-                    <div class="form-group col-xs-12 col-sm-6 col-md-4">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            {{ form_widget(form.email) }}
-                        </div>
-                    </div>
+            <div class="form-group">
+
+              {% if not form.slogan.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.slogan) }}
                 </div>
+              {% else %}
+                {{ form_widget(form.slogan) }}
+              {% endif %}
+
+              {{ form_errors(form.slogan) }}
             </div>
+
+            <div class="form-group">
+              {% if not form.minDescription.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.minDescription) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.minDescription) }}
+              {% endif %}
+
+              {{ form_errors(form.minDescription) }}
+            </div>
+          </div>
         </div>
-        <div class="button-group">
-            <div class="action-buttons">
-                <div class="upload-button">
-                    <button class="btn btn-block btn-primary">Choisir une image de couverture</button>
-                    <input id="cover_img_file" type="file">
+      </div>
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-map-marker"></i>
+              </span>
+              {% if not form.location.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.location) }}
                 </div>
+              {% else %}
+                {{ form_widget(form.location) }}
+              {% endif %}
+
+              {{ form_errors(form.location) }}
             </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-users"></i>
+              </span>
+              {% if not form.nbEmployees.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.nbEmployees) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.nbEmployees) }}
+              {% endif %}
+
+              {{ form_errors(form.nbEmployees) }}
+              <span class="input-group-addon">Employés</span>
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-globe"></i>
+              </span>
+              {% if not form.nbEmployees.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.website) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.website) }}
+              {% endif %}
+
+              {{ form_errors(form.website) }}
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-birthday-cake"></i>
+              </span>
+              {% if not form.dateFoundation.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.dateFoundation) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.dateFoundation) }}
+              {% endif %}
+
+              {{ form_errors(form.dateFoundation) }}
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-phone"></i>
+              </span>
+              {% if not form.phoneNumber.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.phoneNumber) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.phoneNumber) }}
+              {% endif %}
+
+              {{ form_errors(form.phoneNumber) }}
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-envelope"></i>
+              </span>
+              {% if not form.email.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.email) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.email) }}
+              {% endif %}
+
+              {{ form_errors(form.email) }}
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="button-group">
+      <div class="action-buttons">
+        <div class="upload-button">
+          <button class="btn btn-block btn-primary">Choisir une image de couverture</button>
+          <input id="cover_img_file" type="file">
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 <!-- END Page header -->
 <!-- Main container -->
 <main>
-    <!-- Social media -->
-    <section>
-        <div class="container">
-            <header class="section-header">
-                <span>Restez connectés</span>
-                <h2>Médias sociaux</h2>
-            </header>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
-                            {{ form_widget(form.facebook) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-linkedin"></i></span>
-                            {{ form_widget(form.linkedin) }}
-                        </div>
-                    </div>
+  <!-- Social media -->
+  <section>
+    <div class="container">
+      <header class="section-header">
+        <span>Restez connectés</span>
+        <h2>Médias sociaux</h2>
+      </header>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-facebook"></i>
+              </span>
+              {% if not form.facebook.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.facebook) }}
                 </div>
-                <div class="col-xs-12 col-sm-6">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
-                            {{ form_widget(form.twitter) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-youtube"></i></span>
-                            {{ form_widget(form.youtube) }}
-                        </div>
-                    </div>
-                </div>
+              {% else %}
+                {{ form_widget(form.facebook) }}
+              {% endif %}
+
+              {{ form_errors(form.facebook) }}
             </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-linkedin"></i>
+              </span>
+              {% if not form.linkedin.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.linkedin) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.linkedin) }}
+              {% endif %}
+
+              {{ form_errors(form.linkedin) }}
+            </div>
+          </div>
         </div>
-    </section>
-    <!-- Social media -->
-    <!-- Submit -->
-    <section>
-        <div class="container">
-            <header class="section-header">
-                <span>Terminer?</span>
-                <h2>Soumettre</h2>
-                <p>Veuillez revoir vos informations une fois de plus et appuyer sur le bouton ci-dessous pour mettre
-                    votre entreprise en ligne.</p>
-            </header>
-            <p class="text-center">{{ form_widget(form.submit, { 'label': 'Valider vos modifications' }) }}</p>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-twitter"></i>
+              </span>
+              {% if not form.twitter.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.twitter) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.twitter) }}
+              {% endif %}
+
+              {{ form_errors(form.twitter) }}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-youtube"></i>
+              </span>
+              {% if not form.youtube.vars.valid %}
+                <div class="has-error">
+                  {{ form_widget(form.youtube) }}
+                </div>
+              {% else %}
+                {{ form_widget(form.youtube) }}
+              {% endif %}
+
+              {{ form_errors(form.youtube) }}
+            </div>
+          </div>
         </div>
-    </section>
-    <!-- END Submit -->
+      </div>
+    </div>
+  </section>
+  <!-- Social media -->
+  <!-- Submit -->
+  <section>
+    <div class="container">
+      <header class="section-header">
+        <span>Terminer?</span>
+        <h2>Soumettre</h2>
+        <p>Veuillez revoir vos informations une fois de plus et appuyer sur le bouton ci-dessous pour mettre votre entreprise en ligne.</p>
+      </header>
+      <p class="text-center">{{ form_widget(form.submit, { 'label': 'Valider vos modifications' }) }}</p>
+    </div>
+  </section>
+  <!-- END Submit -->
 </main>
 <!-- END Main container -->
 {{ form_end(form) }}

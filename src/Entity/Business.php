@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Business
@@ -25,6 +26,14 @@ class Business
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Le nom doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "Le nom ne doit pas dépasser {{ limit }} caractères"
+     * )
+     * 
      */
     private $name;
 
@@ -32,6 +41,14 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="slogan", type="string", length=255, nullable=true)
+     * 
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 255,
+     *      minMessage = "Le slogan doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "Le slogan ne doit pas dépasser {{ limit }} caractères"
+     * )
+     * 
      */
     private $slogan;
 
@@ -39,6 +56,14 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", length=400, nullable=true)
+     * 
+     * @Assert\Length(
+     *      min = 50,
+     *      max = 255,
+     *      minMessage = "Le description doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "Le description ne doit pas dépasser {{ limit }} caractères"
+     * )
+     * 
      */
     private $description;
 
@@ -46,6 +71,7 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * 
      */
     private $image;
 
@@ -53,6 +79,12 @@ class Business
      * @var string
      *
      * @ORM\Column(name="location", type="string", length=255, nullable=false)
+     * @Assert\Length(
+     *      min = 20,
+     *      max = 255,
+     *      minMessage = "La localisation doit contenir {{ limit }} caractères au minimum",
+     *      maxMessage = "La localisation ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     private $location;
 
@@ -67,6 +99,10 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     * 
+     * @Assert\Url(
+     *      message = "L'url {{ value }} n'est pas valide",
+     * )
      */
     private $website;
 
@@ -74,6 +110,7 @@ class Business
      * @var \DateTime|null
      *
      * @ORM\Column(name="date_foundation", type="date", nullable=true)
+     * 
      */
     private $dateFoundation;
 
@@ -81,6 +118,9 @@ class Business
      * @var string
      *
      * @ORM\Column(name="phone_number", type="string", length=8, nullable=false)
+     * 
+     * @Assert\Regex("/^(\+|\+?\d{1,3})?\s*([\d]{6}|[\d]{2}\s*[\d]{2}\s*[\d]{2})$/")
+     * 
      */
     private $phoneNumber;
 
@@ -88,6 +128,10 @@ class Business
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * 
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private $email;
 
@@ -95,6 +139,9 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *      message = "L'url {{ value }} n'est pas valide",
+     * )
      */
     private $facebook;
 
@@ -102,6 +149,10 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
+     * 
+     * @Assert\Url(
+     *      message = "L'url {{ value }} n'est pas valide",
+     * )
      */
     private $twitter;
 
@@ -109,6 +160,9 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="linkedin", type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *      message = "L'url {{ value }} n'est pas valide",
+     * )
      */
     private $linkedin;
 
@@ -116,6 +170,9 @@ class Business
      * @var string|null
      *
      * @ORM\Column(name="youtube", type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *      message = "L'url {{ value }} n'est pas valide",
+     * )
      */
     private $youtube;
 
