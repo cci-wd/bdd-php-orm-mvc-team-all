@@ -257,44 +257,36 @@ class StudentController extends AbstractController
      */
     public function generateCv(Students $student)
     {
-
         $educations = $this->getDoctrine()
             ->getRepository(Educations::class)
             ->findBy(['students' => $student->getId()]);
-
         $experiences = $this->getDoctrine()
             ->getRepository(Experiences::class)
             ->findBy(['students' => $student->getId()]);
-
         $skills = $this->getDoctrine()
             ->getRepository(Skills::class)
             ->findBy(['students' => $student->getId()]);
-
         $tabEduc = '';
-        foreach ($educations as $education) {
-            $tabEduc = $tabEduc . '<li>' . $education->getDateFrom()->format('Y') . '-' . $education->getDateTo()->format('Y') . ' ' . $education->getDegree() . ' ' . $education->getSpeciality() . ' ' . $education->getSchoolName() . '</li>';
+        foreach ( $educations as $education){
+            $tabEduc = $tabEduc.'<li>'.$education->getDateFrom()->format('Y').'-'.$education->getDateTo()->format('Y').' '.$education->getDegree().' '.$education->getSpeciality().' '.$education->getSchoolName().'</li>';
         }
-
         $tabExp = '';
-        foreach ($experiences as $experience) {
-            $tabExp = $tabExp . '<li>' . $experience->getDateFrom()->format('Y') . '-' . $experience->getDateTo()->format('Y') . ' ' . $experience->getPost() . ' ' . $experience->getTitle() . '</li>';
+        foreach ( $experiences as $experience){
+            $tabExp = $tabExp.'<li>'.$experience->getDateFrom()->format('Y').'-'.$experience->getDateTo()->format('Y').' '.$experience->getPost().' '.$experience->getTitle().'</li>';
         }
-
         $tabSkill = '';
-        foreach ($skills as $skill) {
-            $tabSkill = $tabSkill . '<li>' . $skill->getPercentage() . '% ' . $skill->getTitle() . '</li>';
+        foreach ( $skills as $skill){
+            $tabSkill = $tabSkill.'<li>'.$skill->getPercentage().'% '.$skill->getTitle().'</li>';
         }
-
         $mpdf = new \Mpdf\Mpdf();
-
         $mpdf->WriteHTML('
         <table width="100%" style="border-style: solid; border-width: 2px;">
             <tr>
                 <td width="33%">
-                    <h1>' . $student->getFirstName() . ' ' . $student->getLastName() . '</h1>
-                    <p>adresse: ' . $student->getLocation() . '<p>
-                    <p>tel: ' . $student->getPhoneNumber() . '</p>
-                    <p>email: ' . $student->getEmail() . '</p>
+                    <h1>'.$student->getFirstName().' '.$student->getLastName().'</h1>
+                    <p>adresse: '.$student->getLocation().'<p>
+                    <p>tel: '.$student->getPhoneNumber().'</p>
+                    <p>email: '.$student->getEmail().'</p>
                 </td>
                 <td width="33%" align="center"></td>
                 <td width="33%">
@@ -307,7 +299,7 @@ class StudentController extends AbstractController
         </div>
         <div style="">
             <ul>
-                ' . $tabEduc . '
+                '.$tabEduc.'
             </ul>
         </div>
         <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
@@ -315,7 +307,7 @@ class StudentController extends AbstractController
         </div>
         <div style="">
             <ul>
-                ' . $tabExp . '
+                '.$tabExp.'
             </ul>
         </div>
         <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
@@ -323,13 +315,12 @@ class StudentController extends AbstractController
         </div>
         <div style="">
             <ul>
-                ' . $tabSkill . '
+                '.$tabSkill.'
             </ul>
         </div>
         '
-        );
-
-        $mpdf->SetHTMLFooter('
+    );
+    $mpdf->SetHTMLFooter('
     <table width="100%">
         <tr>
             <td width="33%">{DATE j-m-Y}</td>
@@ -337,8 +328,7 @@ class StudentController extends AbstractController
             <td width="33%" style="text-align: right;">Mon CV</td>
         </tr>
     </table>');
-        $mpdf->Output();
-
+    $mpdf->Output();
     }
 
     /**
