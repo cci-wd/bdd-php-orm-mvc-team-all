@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Businesses;
+use App\Entity\Business;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +26,7 @@ class BusinessesType extends AbstractType
             ->add('slogan', TextType::class, [
                 'attr' => [ 'class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Slogan" ],
             ])
-            ->add('minDescription', TextareaType::class, [
+            ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...'],
             ])
             ->add('image', FileType::class, array('data_class' => null, 'required' => false))
@@ -70,7 +70,7 @@ class BusinessesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Businesses::class,
+            'data_class' => Business::class,
         ]);
     }
 }

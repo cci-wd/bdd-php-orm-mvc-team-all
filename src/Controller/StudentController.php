@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Businesses;
+use App\Entity\Business;
 use App\Entity\City;
-use App\Entity\Educations;
-use App\Entity\Experiences;
-use App\Entity\Offers;
-use App\Entity\Sections;
-use App\Entity\Skills;
-use App\Entity\Students;
+use App\Entity\Education;
+use App\Entity\Experience;
+use App\Entity\Offer;
+use App\Entity\Section;
+use App\Entity\Skill;
+use App\Entity\Student;
 use App\Form\StudentsType;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,11 +28,11 @@ class StudentController extends AbstractController
     public function index(): Response
     {
         $students = $this->getDoctrine()
-            ->getRepository(Students::class)
+            ->getRepository(Student::class)
             ->findAll();
 
         $sections = $this->getDoctrine()
-            ->getRepository(Sections::class)
+            ->getRepository(Section::class)
             ->findAll();
 
         return $this->render('students/index.html.twig', [
@@ -46,7 +46,7 @@ class StudentController extends AbstractController
      */
     public function create(Request $request, FileUploader $fileUploader): Response
     {
-        $student = new Students();
+        $student = new Student();
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
 
@@ -87,7 +87,7 @@ class StudentController extends AbstractController
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder
             ->select('b')
-            ->from(Businesses::class, 'b')
+            ->from(Business::class, 'b')
             ->where('b.name LIKE :keyword')
             ->setParameter('keyword', '%' . $keyword . '%');
 
@@ -114,8 +114,9 @@ class StudentController extends AbstractController
     public function offers(Request $request): Response
     {
         $sections = $this->getDoctrine()
-            ->getRepository(Sections::class)
+            ->getRepository(Section::class)
             ->findAll();
+
         $cities = $this->getDoctrine()
             ->getRepository(City::class)
             ->findAll();
@@ -123,6 +124,7 @@ class StudentController extends AbstractController
         $keyword = $request->query->get("keyword");
         $location = $request->query->get("location");
         $section = $request->query->get("section");
+
         $entityManager = $this->getDoctrine()->getManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder
@@ -130,10 +132,12 @@ class StudentController extends AbstractController
             ->from(Offers::class, 'o')
             ->where('o.title LIKE :keyword')
             ->setParameter('keyword', '%' . $keyword . '%');
+
         if ($location != "Toutes les communes") {
             $queryBuilder->andWhere('o.location = :location')
                 ->setParameter('location', $location);
         }
+
         if ($section != "Toutes les sections") {
             $queryBuilder
                 ->leftJoin('o.sections', 'sections')
@@ -162,10 +166,8 @@ class StudentController extends AbstractController
      */
     public function offer(Request $request, $id): Response
     {
-        //$user = $this->getUser();
-        //$student = $user->student;
         $offer = $this->getDoctrine()
-            ->getRepository(Offers::class)
+            ->getRepository(Offer::class)
             ->findOneBy(['id' => $id]);
 
         return $this->render('students/offer.html.twig', [
@@ -178,7 +180,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/{id}", name="students_show", methods={"GET"})
      */
-    public function show(Students $student): Response
+    public function show(Student $student): Response
     {
         return $this->render('students/show.html.twig', [
             'student' => $student,
@@ -190,16 +192,13 @@ class StudentController extends AbstractController
      */
     public function business(Request $request, $id): Response
     {
-        //$user = $this->getUser();
-        //$student = $user->student;
-
         $business = $this->getDoctrine()
-            ->getRepository(Businesses::class)
+            ->getRepository(Business::class)
             ->findOneBy(['id' => $id]);
 
         $openPosts = $this->getDoctrine()
-            ->getRepository(Offers::class)
-            ->findBy(array('businesses' => $id));
+            ->getRepository(Offer::class)
+            ->findBy(array('business' => $id));
 
         return $this->render('students/business.html.twig', [
             //'student' => $student,
@@ -212,7 +211,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="students_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Students $student, FileUploader $fileUploader): Response
+    public function edit(Request $request, Student $student, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(StudentsType::class, $student);
         $form->handleRequest($request);
@@ -241,7 +240,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/{id}", name="students_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Students $student): Response
+    public function delete(Request $request, Student $student): Response
     {
         if ($this->isCsrfTokenValid('delete' . $student->getid(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -255,19 +254,19 @@ class StudentController extends AbstractController
     /**
      * @Route("/{id}/cv", name="students_cv", methods={"GET"})
      */
-    public function generateCv(Students $student)
+    public function generateCv(Student $student)
     {
 
         $educations = $this->getDoctrine()
-            ->getRepository(Educations::class)
+            ->getRepository(Education::class)
             ->findBy(['students' => $student->getId()]);
 
         $experiences = $this->getDoctrine()
-            ->getRepository(Experiences::class)
+            ->getRepository(Experience::class)
             ->findBy(['students' => $student->getId()]);
 
         $skills = $this->getDoctrine()
-            ->getRepository(Skills::class)
+            ->getRepository(Skill::class)
             ->findBy(['students' => $student->getId()]);
 
         $tabEduc = '';

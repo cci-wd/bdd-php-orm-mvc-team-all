@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Offers;
-use App\Entity\Sections;
-use App\Entity\Businesses;
+use App\Entity\Offer;
+use App\Entity\Section;
+use App\Entity\Business;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -24,7 +24,7 @@ class OffersType extends AbstractType
             ->add('title', TextType::class, [
                 'attr' => [ 'class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Titre de l'annonce", 'autocomplete' => 'off']
             ])
-            ->add('minDescription', TextareaType::class, [
+            ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...']
             ])
             ->add('site', UrlType::class, [
@@ -39,8 +39,8 @@ class OffersType extends AbstractType
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'summernote-editor', 'rows' => '3', 'placeholder' => "Description"]
             ])
-            ->add('sections', EntityType::class, [
-                'class' => Sections::class,
+            ->add('section', EntityType::class, [
+                'class' => Section::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisir votre section',
                 'attr' => ['class' => 'form-control selectpicker']
@@ -54,7 +54,7 @@ class OffersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Offers::class,
+            'data_class' => Offer::class,
         ]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Businesses;
-use App\Entity\Offers;
+use App\Entity\Business;
+use App\Entity\Offer;
 use App\Form\OffersType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,17 +21,10 @@ class OfferController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
-        $userId = $user->getId();
-
-        $businesses = $this->getDoctrine()
-            ->getRepository(Businesses::class)
-            ->findBy(['users' => $userId]);
-
-        $businessesId = $businesses[0]->getId();
 
         $offers = $this->getDoctrine()
-            ->getRepository(Offers::class)
-            ->findBy(['businesses' => $businessesId]);
+            ->getRepository(Offer::class)
+            ->findAll();            
 
         return $this->render('offers/index.html.twig', [
             'offers' => $offers,
@@ -47,15 +40,10 @@ class OfferController extends AbstractController
     public function create(Request $request): Response
     {
         $user = $this->getUser();
-        $userId = $user->getId();
 
-        $businesses = $this->getDoctrine()
-            ->getRepository(Businesses::class)
-            ->findBy(['users' => $userId]);
-
-        $offer = new Offers();
+        $offer = new Offer();
         $offer->setStatut(0);
-        $offer->setBusinesses($businesses[0]);
+        $offer->setBusiness($user->getBusiness());
         $offer->setPublishDate(new \DateTime());
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
@@ -82,7 +70,7 @@ class OfferController extends AbstractController
     /**
      * @Route("/{id}", name="offers_show", methods={"GET"})
      */
-    public function show(Offers $offer): Response
+    public function show( $offer): Response
     {
         return $this->render('offers/show.html.twig', [
             'offer' => $offer,
@@ -94,7 +82,7 @@ class OfferController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="offers_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Offers $offer): Response
+    public function edit(Request $request, Offer $offer): Response
     {
         $offer->setStatut(0);
         $offer->setPublishDate(new \DateTime());
@@ -120,7 +108,7 @@ class OfferController extends AbstractController
     /**
      * @Route("/{id}", name="offers_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Offers $offer): Response
+    public function delete(Request $request, Offer $offer): Response
     {
         if ($this->isCsrfTokenValid('delete' . $offer->getid(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
