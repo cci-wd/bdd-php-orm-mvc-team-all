@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Educations
+ * Education
  *
- * @ORM\Table(name="educations", indexes={@ORM\Index(name="fk_Educations_Students1_idx", columns={"students_id"})})
+ * @ORM\Table(name="educations", indexes={@ORM\Index(name="Educations_Students", columns={"student_id"})})
  * @ORM\Entity
  */
-class Educations
+class Education
 {
     /**
      * @var int
@@ -64,11 +64,11 @@ class Educations
     private $dateTo;
 
     /**
-     * @var \Students
+     * @var \Student
      * 
-     * @ORM\ManyToOne(targetEntity="App\Entity\Students", inversedBy="educations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="educations")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="students_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      * })
      */
     private $student;
@@ -150,41 +150,16 @@ class Educations
         return $this;
     }
 
-    public function getStudents(): ?Students
-    {
-        return $this->students;
-    }
-
-    public function setStudents(?Students $students): self
-    {
-        $this->students = $students;
-
-        return $this;
-    }
-
-    public function getStudent(): ?Students
+    public function getStudent(): ?Student
     {
         return $this->student;
     }
 
-    public function setStudent(?Students $student): self
+    public function setStudent(?Student $student): self
     {
         $this->student = $student;
 
         return $this;
     }
-
-    public function getTest(): ?Students
-    {
-        return $this->test;
-    }
-
-    public function setTest(?Students $test): self
-    {
-        $this->test = $test;
-
-        return $this;
-    }
-
 
 }

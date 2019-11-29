@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Students;
+use App\Entity\Student;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -85,8 +85,8 @@ class StudentsType extends AbstractType
             //     'attr' => [ 'class' => 'form-control input-lg', 'type' => 'text'],
             //     'required' => false,
             // ])
-            // ->add('sections', EntityType::class, [
-            //     'class' => Sections::class,
+            // ->add('section', EntityType::class, [
+            //     'class' => Section::class,
             //     'choice_label' => 'name',
             //     'attr' => [
             //         'class' => 'form-control selectpicker'
@@ -104,7 +104,7 @@ class StudentsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Students::class,
+            'data_class' => Student::class,
         ]);
     }
 }

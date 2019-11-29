@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Experiences
+ * Experience
  *
- * @ORM\Table(name="experiences", indexes={@ORM\Index(name="fk_Work_experiences_Students1_idx", columns={"students_id"})})
+ * @ORM\Table(name="experiences", indexes={@ORM\Index(name="Experiences_Students", columns={"student_id"})})
  * @ORM\Entity
  */
-class Experiences
+class Experience
 {
     /**
      * @var int
@@ -59,19 +59,19 @@ class Experiences
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=400, nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=false)
      */
     private $description;
 
     /**
-     * @var \Students
+     * @var \Student
      *
-     * @ORM\ManyToOne(targetEntity="Students")
+     * @ORM\ManyToOne(targetEntity="Student")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="students_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      * })
      */
-    private $students;
+    private $student;
 
     public function getId(): ?int
     {
@@ -150,14 +150,14 @@ class Experiences
         return $this;
     }
 
-    public function getStudents(): ?Students
+    public function getStudent(): ?Student
     {
         return $this->students;
     }
 
-    public function setStudents(?Students $students): self
+    public function setStudent(?Student $student): self
     {
-        $this->students = $students;
+        $this->student = $student;
 
         return $this;
     }

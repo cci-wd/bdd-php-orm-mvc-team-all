@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Offers
+ * Offer
  *
- * @ORM\Table(name="offers", indexes={@ORM\Index(name="fk_Offers_Businesses1_idx", columns={"businesses_id"}), @ORM\Index(name="fk_Offers_Sections1_idx", columns={"sections_id"})})
+ * @ORM\Table(name="offers", indexes={@ORM\Index(name="Offers_Businesses", columns={"business_id"}), @ORM\Index(name="Offers_Sections", columns={"section_id"})})
  * @ORM\Entity
  */
-class Offers
+class Offer
 {
     /**
      * @var int
@@ -35,21 +35,6 @@ class Offers
      * )
      */
     private $title;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="min_description", type="string", length=255, nullable=true)
-     * 
-     * @Assert\Length(
-     *      min = 50,
-     *      max = 255,
-     *      minMessage = "La description doit contenir {{ limit }} caractères au minimum",
-     *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
-     * )
-     * 
-     */
-    private $minDescription;
 
     /**
      * @var string|null
@@ -119,24 +104,24 @@ class Offers
     private $publishDate;
 
     /**
-     * @var \Businesses
+     * @var \Business
      *
-     * @ORM\ManyToOne(targetEntity="Businesses")
+     * @ORM\ManyToOne(targetEntity="Business")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="businesses_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      * })
      */
-    private $businesses;
+    private $business;
 
     /**
-     * @var \Sections
+     * @var \Section
      *
-     * @ORM\ManyToOne(targetEntity="Sections")
+     * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sections_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * })
      */
-    private $sections;
+    private $section;
 
     public function getId(): ?int
     {
@@ -151,18 +136,6 @@ class Offers
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getMinDescription(): ?string
-    {
-        return $this->minDescription;
-    }
-
-    public function setMinDescription(?string $minDescription): self
-    {
-        $this->minDescription = $minDescription;
 
         return $this;
     }
@@ -239,26 +212,26 @@ class Offers
         return $this;
     }
 
-    public function getBusinesses(): ?Businesses
+    public function getBusiness(): ?Business
     {
-        return $this->businesses;
+        return $this->business;
     }
 
-    public function setBusinesses(?Businesses $businesses): self
+    public function setBusiness(?Business $business): self
     {
-        $this->businesses = $businesses;
+        $this->business = $business;
 
         return $this;
     }
 
-    public function getSections(): ?Sections
+    public function getSection(): ?Section
     {
-        return $this->sections;
+        return $this->section;
     }
 
-    public function setSections(?Sections $sections): self
+    public function setSection(?Section $section): self
     {
-        $this->sections = $sections;
+        $this->section = $section;
 
         return $this;
     }

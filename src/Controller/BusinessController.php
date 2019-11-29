@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Businesses;
-use App\Entity\Educations;
-use App\Entity\Experiences;
-use App\Entity\Sections;
-use App\Entity\Students;
+use App\Entity\Section;
+use App\Entity\Student;
+use App\Entity\Business;
+use App\Entity\Education;
+use App\Entity\Experience;
 use App\Form\BusinessesType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class BusinessController extends AbstractController
     public function index(): Response
     {
         $businesses = $this->getDoctrine()
-            ->getRepository(Businesses::class)
+            ->getRepository(Business::class)
             ->findAll();
 
         return $this->render('businesses/index.html.twig', [
@@ -37,9 +37,8 @@ class BusinessController extends AbstractController
     /**
      * @Route("/creer", name="businesses_new", methods={"GET","POST"})
      */
-    public function create(Request $request): Response
-    {
-        $business = new Businesses();
+    function create(Request $request): Response {
+        $business = new Business();
         $form = $this->createForm(BusinessesType::class, $business);
         $form->handleRequest($request);
 
@@ -65,11 +64,11 @@ class BusinessController extends AbstractController
     public function students(): Response
     {
         $students = $this->getDoctrine()
-            ->getRepository(Students::class)
+            ->getRepository(Student::class)
             ->findAll();
 
         $sections = $this->getDoctrine()
-            ->getRepository(Sections::class)
+            ->getRepository(Section::class)
             ->findAll();
 
         return $this->render('businesses/students.html.twig', [
@@ -83,14 +82,14 @@ class BusinessController extends AbstractController
     /**
      * @Route("/apprenant/{id}", name="businnesses_student_show", methods={"GET"})
      */
-    public function student(Students $student): Response
+    public function student(Student $student): Response
     {
         $educations = $this->getDoctrine()
-            ->getRepository(Educations::class)
+            ->getRepository(Education::class)
             ->findBy(array('student' => $student->getId()));
 
         $experiences = $this->getDoctrine()
-            ->getRepository(Experiences::class)
+            ->getRepository(Experience::class)
             ->findBy(array('students' => $student->getId()));
 
         return $this->render('businesses/student.html.twig', [
@@ -103,7 +102,7 @@ class BusinessController extends AbstractController
     /**
      * @Route("/{id}", name="businesses_show", methods={"GET"})
      */
-    public function show(Businesses $business): Response
+    public function show(Business $business): Response
     {
         return $this->render('businesses/show.html.twig', [
             'business' => $business,
@@ -115,7 +114,7 @@ class BusinessController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="businesses_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Businesses $business): Response
+    public function edit(Request $request, Business $business): Response
     {
         $form = $this->createForm(BusinessesType::class, $business);
         $form->handleRequest($request);
@@ -137,7 +136,7 @@ class BusinessController extends AbstractController
     /**
      * @Route("/{id}", name="businesses_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Businesses $business): Response
+    public function delete(Request $request, Business $business): Response
     {
         if ($this->isCsrfTokenValid('delete' . $business->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

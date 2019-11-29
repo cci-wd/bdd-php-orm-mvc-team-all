@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Businesses
+ * Business
  *
- * @ORM\Table(name="businesses", indexes={@ORM\Index(name="fk_Businesses_Users1_idx", columns={"users_id"})})
+ * @ORM\Table(name="businesses", indexes={@ORM\Index(name="Business_User", columns={"user_id"})})
  * @ORM\Entity
  */
-class Businesses
+class Business
 {
     /**
      * @var int
@@ -38,9 +38,9 @@ class Businesses
     /**
      * @var string|null
      *
-     * @ORM\Column(name="min_description", type="string", length=100, nullable=true)
+     * @ORM\Column(name="description", type="text", length=400, nullable=true)
      */
-    private $minDescription;
+    private $description;
 
     /**
      * @var string|null
@@ -78,9 +78,9 @@ class Businesses
     private $dateFoundation;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="phone_number", type="integer", nullable=false)
+     * @ORM\Column(name="phone_number", type="string", length=8, nullable=false)
      */
     private $phoneNumber;
 
@@ -124,10 +124,10 @@ class Businesses
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="users_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
-    private $users;
+    private $user;
 
     public function getId(): ?int
     {
@@ -158,14 +158,14 @@ class Businesses
         return $this;
     }
 
-    public function getMinDescription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->minDescription;
+        return $this->description;
     }
 
-    public function setMinDescription(?string $minDescription): self
+    public function setDescription(?string $description): self
     {
-        $this->minDescription = $minDescription;
+        $this->description = $description;
 
         return $this;
     }
@@ -230,12 +230,12 @@ class Businesses
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(int $phoneNumber): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 

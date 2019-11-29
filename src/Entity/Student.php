@@ -8,12 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Students
+ * Student
  *
- * @ORM\Table(name="students", indexes={@ORM\Index(name="fk_Students_Sections1_idx", columns={"sections_id"}), @ORM\Index(name="fk_Students_Users1_idx", columns={"users_id"})})
+ * @ORM\Table(name="students", indexes={@ORM\Index(name="Students_Sections", columns={"section_id"}), @ORM\Index(name="Students_Users", columns={"user_id"})})
  * @ORM\Entity
  */
-class Students
+class Student
 {
     /**
      * @var int
@@ -94,9 +94,9 @@ class Students
     private $age;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="phone_number", type="integer", nullable=false)
+     * @ORM\Column(name="phone_number", type="string", length=8, nullable=false)
      * 
      * @Assert\Length(
      *      min = 6,
@@ -145,27 +145,27 @@ class Students
     private $linkedin;
 
     /**
-     * @var \Sections
+     * @var \Section
      *
-     * @ORM\ManyToOne(targetEntity="Sections")
+     * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sections_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * })
      */
-    private $sections;
+    private $section;
 
     /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="users_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
-    private $users;
+    private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Educations", mappedBy="student", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Education", mappedBy="student", fetch="EAGER")
      */
     private $educations;
 
@@ -261,12 +261,12 @@ class Students
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(int $phoneNumber): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 
@@ -333,14 +333,14 @@ class Students
         return $this;
     }
 
-    public function getSections(): ?Sections
+    public function getSection(): ?Section
     {
-        return $this->sections;
+        return $this->section;
     }
 
-    public function setSections(?Sections $sections): self
+    public function setSection(?Section $section): self
     {
-        $this->sections = $sections;
+        $this->section = $section;
 
         return $this;
     }
@@ -358,14 +358,14 @@ class Students
     }
 
     /**
-     * @return Collection|Educations[]
+     * @return Collection|Education[]
      */
     public function getEducations(): Collection
     {
         return $this->educations;
     }
 
-    public function addEducation(Educations $education): self
+    public function addEducation(Education $education): self
     {
         if (!$this->educations->contains($education)) {
             $this->educations[] = $education;
@@ -375,7 +375,7 @@ class Students
         return $this;
     }
 
-    public function removeEducation(Educations $education): self
+    public function removeEducation(Education $education): self
     {
         if ($this->educations->contains($education)) {
             $this->educations->removeElement($education);
@@ -387,12 +387,5 @@ class Students
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection|Educations[]
-    //  */
-    // public function getEducationss(): Collection
-    // {
-    //     return $this->educationss;
-    // }
+    
 }
