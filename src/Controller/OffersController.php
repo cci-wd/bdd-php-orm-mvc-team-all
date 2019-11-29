@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Validation;
 
 /**
- * @Route("/offers")
+ * @Route("/offres")
  */
 class OffersController extends AbstractController
 {
@@ -43,7 +43,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="offers_new", methods={"GET","POST"})
+     * @Route("/creer", name="offers_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -94,7 +94,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="offers_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Offers $offer): Response
     {
