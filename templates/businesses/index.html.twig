@@ -3,59 +3,54 @@
 {% block title %}Businesses index{% endblock %}
 
 {% block body %}
-    <h1>Businesses index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slogan</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Location</th>
-                <th>NbEmployees</th>
-                <th>Website</th>
-                <th>DateFoundation</th>
-                <th>PhoneNumber</th>
-                <th>Email</th>
-                <th>Facebook</th>
-                <th>Twitter</th>
-                <th>Linkedin</th>
-                <th>Youtube</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for business in businesses %}
-            <tr>
-                <td>{{ business.id }}</td>
-                <td>{{ business.name }}</td>
-                <td>{{ business.slogan }}</td>
-                <td>{{ business.description }}</td>
-                <td>{{ business.image }}</td>
-                <td>{{ business.location }}</td>
-                <td>{{ business.nbEmployees }}</td>
-                <td>{{ business.website }}</td>
-                <td>{{ business.dateFoundation ? business.dateFoundation|date('Y-m-d') : '' }}</td>
-                <td>{{ business.phoneNumber }}</td>
-                <td>{{ business.email }}</td>
-                <td>{{ business.facebook }}</td>
-                <td>{{ business.twitter }}</td>
-                <td>{{ business.linkedin }}</td>
-                <td>{{ business.youtube }}</td>
-                <td>
-                    <a href="{{ path('businesses_show', {'id': business.id}) }}">show</a>
-                    <a href="{{ path('businesses_edit', {'id': business.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="17">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <!-- Page header -->
+    <header class="page-header bg-img size-lg" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
+      <div class="container no-shadow">
+        <h1 class="text-center">{{ meta_title }}</h1>
+        <p class="lead text-center">{{ meta_desc }}</p>
+      </div>
+    </header>
+    <!-- END Page header -->
 
-    <a href="{{ path('businesses_new') }}">Create new</a>
+
+    <!-- Main container -->
+    <main>
+      <section class="no-padding-top bg-alt">
+        <div class="container">
+          <div class="row item-blocks-condensed">
+
+            <div class="col-xs-12 text-right">
+              <h5>{{businesses|length}} entreprises trouvés.</h5>
+              <a class="btn btn-primary btn-sm" href="{{ path('businesses_new') }}">Ajouter une nouvelle Entreprise</a>
+              <br/><br/>
+            </div>
+
+            <!-- Company item -->
+            {% for business in businesses %}
+                <div class="col-xs-12">{{dump(business)}}
+                    <div class="item-block">
+                        <header>
+                        <a href="{{ path('businesses_show', {'id': business.id}) }}"><img src="{{ asset('assets/img/logo-google.jpg') }}" alt=""></a>
+                        <div class="hgroup">
+                            <h4><a href="{{ path('businesses_show', {'id': business.id}) }}">{{ business.name }}</a></h4>
+                            <h5>{{ business.slogan }} <a href="{{ path('businesses_show', {'id': business.id}) }}"><span class="label label-info">{{ business.offers|length }} offres d'emploi</span></a></h5>
+                        </div>
+                        <div class="action-btn">
+                            <a class="btn btn-xs btn-gray" href="{{ path('businesses_edit', {'id': business.id}) }}">Modifer</a>
+                            <div class="delete-btn">{{ include('businesses/_delete_form.html.twig') }}</div>
+                        </div>
+                        </header>
+                    </div>
+                </div>
+            {% else %}
+                Il n'y a aucune entreprise disponible.
+            {% endfor %}
+            <!-- END Company item -->
+
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- END Main container -->
 {% endblock %}
