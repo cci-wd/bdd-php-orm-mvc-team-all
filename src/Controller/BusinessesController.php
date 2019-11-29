@@ -2,21 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Sections;
-use App\Entity\Students;
 use App\Entity\Businesses;
 use App\Entity\Educations;
 use App\Entity\Experiences;
+use App\Entity\Sections;
+use App\Entity\Students;
 use App\Form\BusinessesType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/businesses")
  */
-class BusinessesController extends AbstractController
+class BusinessController extends AbstractController
 {
     /**
      * @Route("/", name="businesses_index", methods={"GET"})
@@ -37,7 +37,8 @@ class BusinessesController extends AbstractController
     /**
      * @Route("/new", name="businesses_new", methods={"GET","POST"})
      */
-    function new (Request $request): Response {
+    public function create(Request $request): Response
+    {
         $business = new Businesses();
         $form = $this->createForm(BusinessesType::class, $business);
         $form->handleRequest($request);
@@ -107,7 +108,7 @@ class BusinessesController extends AbstractController
         return $this->render('businesses/show.html.twig', [
             'business' => $business,
             'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
-            'meta_desc' => 'Description des metas'
+            'meta_desc' => 'Description des metas',
         ]);
     }
 
