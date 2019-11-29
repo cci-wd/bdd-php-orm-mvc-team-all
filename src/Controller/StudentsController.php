@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\FileUploader;
 
 /**
- * @Route("/students")
+ * @Route("/apprenant")
  */
 class StudentsController extends AbstractController
 {
@@ -43,7 +43,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="students_new", methods={"GET","POST"})
+     * @Route("/creer", name="students_new", methods={"GET","POST"})
      */
     function new (Request $request, FileUploader $fileUploader): Response {
         $student = new Students();
@@ -72,7 +72,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/businesses", name="students_businesses", methods={"GET"})
+     * @Route("/entreprises", name="students_businesses", methods={"GET"})
      */
     public function businesses(Request $request): Response
     {
@@ -109,7 +109,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/offers", name="students_offers", methods={"GET"})
+     * @Route("/offres", name="students_offers", methods={"GET"})
      */
     public function offers(Request $request): Response
     {
@@ -157,7 +157,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/offer/{id}", name="students_offer", methods={"GET"})
+     * @Route("/offre/{id}", name="students_offer", methods={"GET"})
      */
     public function offer(Request $request, $id): Response
     {
@@ -185,7 +185,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/business/{id}", name="students_business", methods={"GET"})
+     * @Route("/entreprise/{id}", name="students_business", methods={"GET"})
      */
     public function business(Request $request, $id): Response
     {
@@ -209,7 +209,7 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="students_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="students_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Students $student, FileUploader $fileUploader): Response
     {
