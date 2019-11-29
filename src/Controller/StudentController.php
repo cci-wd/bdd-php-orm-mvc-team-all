@@ -113,45 +113,46 @@ class StudentController extends AbstractController
      */
     public function offers(Request $request): Response
     {
-        //$user = $this->getUser();
-        //$student = $user->student;
-        $offers = $this->getDoctrine()
-            ->getRepository(Offers::class)
-            ->findAll();
-
         $sections = $this->getDoctrine()
             ->getRepository(Sections::class)
+            ->findAll();
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
             ->findAll();
 
         $keyword = $request->query->get("keyword");
         $location = $request->query->get("location");
         $section = $request->query->get("section");
-
-        if ($keyword != "") {
-            $entityManager = $this->getDoctrine()->getManager();
-            $queryBuilder = $entityManager->createQueryBuilder();
-            $queryBuilder->select('o')
-                ->from(Offers::class, 'o')
-                ->where('o.title LIKE :keyword')
-                ->orWhere('o.description LIKE :keyword')
-
-                ->setParameter('keyword', '%' . $keyword . '%');
-
-            $query = $queryBuilder->getQuery();
-            $offers = $query->getResult();
-        } else {
-            $offers = $this->getDoctrine()
-                ->getRepository(Offers::class)
-                ->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('o')
+            ->from(Offers::class, 'o')
+            ->where('o.title LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%');
+        if ($location != "Toutes les communes") {
+            $queryBuilder->andWhere('o.location = :location')
+                ->setParameter('location', $location);
+        }
+        if ($section != "Toutes les sections") {
+            $queryBuilder
+                ->leftJoin('o.sections', 'sections')
+                ->andWhere('sections.name = :section')
+                ->setParameter('section', $section);
         }
 
+        $query = $queryBuilder->getQuery();
+        $offers = $query->getResult();
+
         return $this->render('students/offers.html.twig', [
-            //'student' => $student,
             'offers' => $offers,
+            'parameters' => [
+                'keyword' => $keyword,
+                'location' => $location,
+                'section' => $section,
+            ],
+            'cities' => $cities,
             'sections' => $sections,
-            'keyword' => $keyword,
-            'location' => $location,
-            'section' => $section,
             'meta_title' => "Liste des offres",
         ]);
     }
