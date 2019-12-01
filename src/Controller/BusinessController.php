@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Section;
 use App\Entity\Student;
 use App\Entity\Business;
-use App\Entity\Offer;
 use App\Entity\Education;
 use App\Entity\Experience;
 use App\Form\BusinessesType;
@@ -30,7 +29,7 @@ class BusinessController extends AbstractController
 
         return $this->render('businesses/index.html.twig', [
             'businesses' => $businesses,
-            'meta_title' => 'Liste des entreprises',
+            'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
             'meta_desc' => 'Description des metas',
         ]);
     }
