@@ -71,7 +71,7 @@ class Education
      *   @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      * })
      */
-    private $students;
+    private $student;
 
     public function getId(): ?int
     {
