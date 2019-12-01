@@ -155,9 +155,9 @@ class Student
     private $section;
 
     /**
-     * @var \Users
+     * @var \User
      *
-     * @ORM\OneToOne(targetEntity="Users", inversedBy="student")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="student")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -345,14 +345,14 @@ class Student
         return $this;
     }
 
-    public function getUsers(): ?Users
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function setUsers(?Users $users): self
+    public function setUser(?User $user): self
     {
-        $this->users = $users;
+        $this->user = $user;
 
         return $this;
     }
