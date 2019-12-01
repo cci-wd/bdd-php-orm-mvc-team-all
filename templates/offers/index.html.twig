@@ -17,7 +17,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 text-right">
-                        <h5>{{offers|length}} résultats trouvés.</h5>
+                        <h5>{{offers|length}} offres d'emplois trouvés.</h5>
                     	<a href="{{ path('offers_new') }}" class="btn btn-primary btn-sm">Ajouter une offre d'emplois</a>
 					</div>
 					{# Job detail #}
@@ -59,7 +59,7 @@
 
                                     <div class="action-btn">
                                         <a class="btn btn-xs btn-gray" href="{{ path('offers_edit', {'id': offer.id}) }}">Modifier</a>
-                                        <div class="offer-del">{{ include('offers/_delete_form.html.twig') }}</div>
+                                        <div class="delete-btn">{{ include('offers/_delete_form.html.twig') }}</div>
                                     </div>
                                 </footer>
                             </div>

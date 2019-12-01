@@ -104,7 +104,7 @@ class Offer
     /**
      * @var \Business
      *
-     * @ORM\ManyToOne(targetEntity="Business")
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="offers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      * })
@@ -233,6 +233,4 @@ class Offer
 
         return $this;
     }
-
-
 }
