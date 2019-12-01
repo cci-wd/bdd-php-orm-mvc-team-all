@@ -177,9 +177,9 @@ class Business
     private $youtube;
 
     /**
-     * @var \Users
+     * @var \User
      *
-     * @ORM\OneToOne(targetEntity="Users", inversedBy="business")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="business")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -359,14 +359,14 @@ class Business
         return $this;
     }
 
-    public function getUsers(): ?Users
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function setUsers(?Users $users): self
+    public function setUser(?User $user): self
     {
-        $this->users = $users;
+        $this->user = $user;
 
         return $this;
     }

@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"}), @ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})})
- * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
+ * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"}), @ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})})
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class Users implements UserInterface
+class User implements UserInterface
 {
     /**
      * @var int

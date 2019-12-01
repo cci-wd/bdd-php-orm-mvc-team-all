@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\City;
-use App\Entity\Users;
+use App\Entity\User;
 use App\Entity\Offer;
 use App\Entity\Section;
 use App\Entity\Student;
@@ -29,13 +29,13 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 10; $i++) {
 
-            $users = new Users();
-            $users->setName('user'.+$i);
-            $users->setUsername('user'.+$i);
-            $users->setLocation('Nouméa');
-            $users->setEmail('user@cci-formation.nc');
-            $users->setPassword('$argon2id$v=19$m=65536,t=4,p=1$RExSYWh1eTVSdnhjSFFqMw$zhyWsvYpLmNBi6L4CYFNsAs5zqsn8AUob5CHko1g1nE');
-            $users->setRoles(["ROLE_APPRENANT"]);
+            $user = new User();
+            $user->setName('user'.+$i);
+            $user->setUsername('user'.+$i);
+            $user->setLocation('Nouméa');
+            $user->setEmail('user@cci-formation.nc');
+            $user->setPassword('$argon2id$v=19$m=65536,t=4,p=1$RExSYWh1eTVSdnhjSFFqMw$zhyWsvYpLmNBi6L4CYFNsAs5zqsn8AUob5CHko1g1nE');
+            $user->setRoles(["ROLE_APPRENANT"]);
             // BUSINESSES
             $businesses = new Business();
             $businesses->setName('businesses'.+$i);
@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
             $businesses->setTwitter('twitter');  
             $businesses->setLinkedin('linkedin');  
             $businesses->setYoutube('Youtube');
-            $businesses->setUsers($users);
+            $businesses->setUser($user);
             // SECTIONS
             $sections = new Section();
             $sections->setName('sections'.$i);
@@ -63,7 +63,7 @@ class AppFixtures extends Fixture
             $students->setLocation('c koi sa');
             $students->setPhoneNumber('123456');
             $students->setEmail('test@test.test');
-            $students->setUsers($users);
+            $students->setUser($user);
             $students->setSection($sections);
             // OFFERS
             $offers = new Offer();
@@ -76,7 +76,7 @@ class AppFixtures extends Fixture
             $offers->setBusiness($businesses);
             $offers->setSection($sections);
             // PERSIST DATA             
-            $manager->persist($users);           
+            $manager->persist($user);           
             $manager->persist($businesses);
             $manager->persist($sections);
             $manager->persist($offers);
