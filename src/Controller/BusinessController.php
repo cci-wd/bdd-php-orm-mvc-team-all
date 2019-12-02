@@ -2,18 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Section;
 use App\Entity\Student;
 use App\Entity\Business;
 use App\Entity\Education;
 use App\Entity\Experience;
 use App\Form\BusinessesType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/entreprises")
@@ -22,18 +23,39 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class BusinessController extends AbstractController
 {
     /**
-     * @Route("/", name="businesses_index", methods={"GET"})
+     * @Route("/les-entreprises", name="businesses_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $businesses = $this->getDoctrine()
-            ->getRepository(Business::class)
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
             ->findAll();
+
+        $keyword = $request->query->get("keyword");
+        $location = $request->query->get("location");
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('b')
+            ->from(Business::class, 'b')
+            ->where('b.name LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%');
+
+        if ($location && $location != "Toutes les communes") {
+            $queryBuilder->andWhere('b.location = :location')
+                ->setParameter('location', $location);
+        }
+
+        $query = $queryBuilder->getQuery();
+        $businesses = $query->getResult();
 
         return $this->render('businesses/index.html.twig', [
             'businesses' => $businesses,
-            'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
-            'meta_desc' => 'Description des metas',
+            'keyword' => $keyword,
+            'location' => $location,
+            'cities' => $cities,
+            'meta_title' => 'Liste des entreprises',
         ]);
     }
 

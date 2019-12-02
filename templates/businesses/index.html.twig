@@ -1,61 +1,104 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Businesses index{% endblock %}
-
 {% block body %}
-    <h1>Businesses index</h1>
+        <!-- Page header -->
+    <header class="page-header bg-img" style="background-image: url(assets/img/bg-banner1.jpg);">
+      <div class="container page-name">
+        <h1 class="text-center">Parcourir les entreprises</h1>
+        <p class="lead text-center">Utilisez le champ de recherche suivant pour trouver les entreprises qui vous conviennent le mieux</p>
+      </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slogan</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Location</th>
-                <th>NbEmployees</th>
-                <th>Website</th>
-                <th>DateFoundation</th>
-                <th>PhoneNumber</th>
-                <th>Email</th>
-                <th>Facebook</th>
-                <th>Twitter</th>
-                <th>Linkedin</th>
-                <th>Youtube</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+      <div class="container">
+        <form action="#">
+
+          <div class="row">
+            <div class="form-group col-xs-12 col-sm-8">
+              <input type="text" name="keyword" class="form-control" placeholder="Mot clé" value={{ keyword }}>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-4">
+              <select name="location" class="form-control selectpicker">
+               <option selected>Toutes les communes</option>
+                {% for city in cities %}
+                  {% if location == city.name %}
+                    <option selected>{{ city.name }}</option>
+                  {% else %}
+                    <option >{{ city.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+
+          </div>
+
+          <div class="button-group">
+            <div class="action-buttons">
+              <button class="btn btn-primary">Appliquer le filtre</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+      <section class="no-padding-top bg-alt">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-xs-12">
+              <br>
+            </div>
+
+            <!-- Company detail -->
         {% for business in businesses %}
-            <tr>
-                <td>{{ business.id }}</td>
-                <td>{{ business.name }}</td>
-                <td>{{ business.slogan }}</td>
-                <td>{{ business.description }}</td>
-                <td>{{ business.image }}</td>
-                <td>{{ business.location }}</td>
-                <td>{{ business.nbEmployees }}</td>
-                <td>{{ business.website }}</td>
-                <td>{{ business.dateFoundation ? business.dateFoundation|date('Y-m-d') : '' }}</td>
-                <td>{{ business.phoneNumber }}</td>
-                <td>{{ business.email }}</td>
-                <td>{{ business.facebook }}</td>
-                <td>{{ business.twitter }}</td>
-                <td>{{ business.linkedin }}</td>
-                <td>{{ business.youtube }}</td>
-                <td>
-                    <a href="{{ path('businesses_show', {'id': business.id}) }}">show</a>
-                    <a href="{{ path('businesses_edit', {'id': business.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="17">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col-xs-12">
+              <a class="item-block" href="{{ path('students_business', {'id': business.id}) }}">
+                <header>
+                  <img src="{{ business.image }}" alt="">
+                  <div class="hgroup">
+                    <h4><td>{{ business.name }}</td></h4>
+                    <h5><td>{{ business.slogan }}</td></h5>
+                  </div>
+                </header>
 
-    <a href="{{ path('businesses_new') }}">Create new</a>
+                <div class="item-body">
+                  <p>{{ (business.description|length > 260 ? business.description|slice(0, 260) ~ '…' : business.description)|striptags|raw  }}</p>
+                </div>
+              </a>
+            </div>
+        {% endfor %}
+            <!-- END Company detail -->
+
+            <!-- Page navigation -->
+            <nav class="text-center">
+              <ul class="pagination">
+                <li>
+                  <a href="#" aria-label="Previous">
+                    <i class="ti-angle-left"></i>
+                  </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li class="active"><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li>
+                  <a href="#" aria-label="Next">
+                    <i class="ti-angle-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- END Page navigation -->
+
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- END Main container -->
 {% endblock %}
