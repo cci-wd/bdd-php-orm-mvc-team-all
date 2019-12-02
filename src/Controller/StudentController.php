@@ -3,20 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Business;
-use App\Entity\City;
 use App\Entity\Education;
 use App\Entity\Experience;
 use App\Entity\Offer;
 use App\Entity\Section;
 use App\Entity\Skill;
 use App\Entity\Student;
-use App\Form\StudentsType;
+use App\Form\StudentType;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -53,13 +51,14 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/mon-profil", name="student_profil", methods={"GET"})
+     * @Route("/mon-profil", name="student_profile", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
      */
     public function profile(Request $request, FileUploader $fileUploader): Response
     {
         $student = $this->getUser()->getStudent();
         
-        $form = $this->createForm(StudentsType::class, $student);
+        $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,10 +71,10 @@ class StudentController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('students_index');
+            return $this->redirectToRoute('student_list');
         }
 
-        return $this->render('students/profil.html.twig', [
+        return $this->render('students/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
             'meta_title' => "Mon profil",
@@ -85,12 +84,12 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/creer", name="student_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function create(Request $request, FileUploader $fileUploader): Response
     {
         $student = new Student();
-        $form = $this->createForm(StudentsType::class, $student);
+        $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -105,7 +104,7 @@ class StudentController extends AbstractController
             $entityManager->persist($student);
             $entityManager->flush();
 
-            return $this->redirectToRoute('students_index');
+            return $this->redirectToRoute('student_list');
         }
 
         return $this->render('students/new.html.twig', [
@@ -145,7 +144,7 @@ class StudentController extends AbstractController
      */
     public function edit(Request $request, Student $student, FileUploader $fileUploader): Response
     {
-        $form = $this->createForm(StudentsType::class, $student);
+        $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -158,7 +157,7 @@ class StudentController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('students_index');
+            return $this->redirectToRoute('student_list');
         }
 
         return $this->render('students/edit.html.twig', [
@@ -171,7 +170,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}", name="student_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Student $student): Response
     {
@@ -181,7 +180,7 @@ class StudentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('students_index');
+        return $this->redirectToRoute('student_list');
     }
 
     /**
