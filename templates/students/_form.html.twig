@@ -1,505 +1,531 @@
-{% form_theme form 'form/form_errors.html.twig' %}
-
-{{ form_start(form) }}
-
-<div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-sm-4">
-			<div class="form-group">
-				{{form_widget(form.image)}}
-				<span class="help-block">Définir une image de profil</span>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-8">
-			<div class="form-group">
-				{% if not form.lastName.vars.valid %}
-					<div class="has-error">
-						{{form_widget(form.lastName)}}
-					</div>
-				{% else %}
-					{{form_widget(form.lastName)}}
-				{% endif %}
-				{{ form_errors(form.lastName) }}
-			</div>
-			<div class="form-group">
-				{% if not form.firstName.vars.valid %}
-					<div class="has-error">
-						{{form_widget(form.firstName)}}
-					</div>
-				{% else %}
-					{{form_widget(form.firstName)}}
-				{% endif %}
-				{{ form_errors(form.firstName) }}
-			</div>
-
-			<div class="form-group">
-				{{form_widget(form.minDescription)}}
-			</div>
-
-			<hr class="hr-lg">
-
-			<h6>Basic information</h6>
-			<div class="row">
-
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-map-marker"></i>
-						</span>
-						{{form_widget(form.location)}}
-					</div>
-				</div>
-
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-globe"></i>
-						</span>
-						{{form_widget(form.website)}}
-					</div>
-				</div>
-
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-birthday-cake"></i>
-						</span>
-						{% if not form.age.vars.valid %}
-							<div class="has-error">
-								{{form_widget(form.age)}}
-							</div>
-						{% else %}
-							{{form_widget(form.age)}}
-						{% endif %}
-						{{ form_errors(form.age) }}
-						<span class="input-group-addon">Years old</span>
-					</div>
-				</div>
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-phone"></i>
-						</span>
-						{% if not form.phoneNumber.vars.valid %}
-							<div class="has-error">
-								{{form_widget(form.phoneNumber)}}
-							</div>
-						{% else %}
-							{{form_widget(form.phoneNumber)}}
-						{% endif %}
-						{{ form_errors(form.phoneNumber) }}
-					</div>
-				</div>
-				<div class="form-group col-xs-8 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-envelope"></i>
-						</span>
-						{% if not form.email.vars.valid %}
-							<div class="has-error">
-								{{form_widget(form.email)}}
-							</div>
-						{% else %}
-							{{form_widget(form.email)}}
-						{% endif %}
-						{{ form_errors(form.email) }}
-					</div>
-				</div>
-			</div>
-			<div class="button-group">
-				<div class="action-buttons">
-					<div class="upload-button">
-						<button class="btn btn-block btn-primary">Choose a cover image</button>
-						{{form_widget(form.coverImage)}}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<main
-	style="width: fit-content;">
-	<!-- Social media -->
-	<section>
-		<div class="container">
-
-			<header class="section-header">
-				<span>Get connected</span>
-				<h2>Social media</h2>
-			</header>
-
-			<div class="row">
-				<div class="col-xs-12 col-sm-6">
-					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-facebook"></i>
-							</span>
-							<input type="text" class="form-control" placeholder="facebook">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-twitter"></i>
-							</span>
-							{{form_widget(form.twitter)}}
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6">
-
-					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-github"></i>
-							</span>
-							{{form_widget(form.github)}}
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-youtube"></i>
-							</span>
-							<input type="text" class="form-control" placeholder="Profile URL">
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</section>
-	<!-- Social media -->
-
-	<!-- Education -->
-	<section class=" bg-alt">
-		<div class="container">
-
-			<header class="section-header">
-				<span>Latest degrees</span>
-				<h2>Education</h2>
-			</header>
-
-			<div class="row">
-
-				<div class="col-xs-12">
-					<div class="item-block">
-						<div class="item-form">
-
-							<button class="btn btn-danger btn-float btn-remove">
-								<i class="ti-close"></i>
-							</button>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-4">
-									<div class="form-group">
-										<input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
-										<span class="help-block">Please choose a square logo</span>
-									</div>
-								</div>
-
-								<div class="col-xs-12 col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Degree, e.g. Bachelor">
-									</div>
-
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Major, e.g. Computer Science">
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="School name, e.g. Massachusetts Institute of Technology">
-									</div>
-
-									<div class="form-group">
-										<div class="input-group">
-											<span class="input-group-addon">Date from</span>
-											<input type="text" class="form-control" placeholder="e.g. 2012">
-											<span class="input-group-addon">Date to</span>
-											<input type="text" class="form-control" placeholder="e.g. 2016">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<textarea class="form-control" rows="3" placeholder="Short description"></textarea>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xs-12 duplicateable-content">
-					<div class="item-block">
-						<div class="item-form">
-
-							<button class="btn btn-danger btn-float btn-remove">
-								<i class="ti-close"></i>
-							</button>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-4">
-									<div class="form-group">
-										<input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
-										<span class="help-block">Please choose a square logo</span>
-									</div>
-								</div>
-
-								<div class="col-xs-12 col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Degree, e.g. Bachelor">
-									</div>
-
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Major, e.g. Computer Science">
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="School name, e.g. Massachusetts Institute of Technology">
-									</div>
-
-									<div class="form-group">
-										<div class="input-group">
-											<span class="input-group-addon">Date from</span>
-											<input type="text" class="form-control" placeholder="e.g. 2012">
-											<span class="input-group-addon">Date to</span>
-											<input type="text" class="form-control" placeholder="e.g. 2016">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<textarea class="form-control" rows="3" placeholder="Short description"></textarea>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xs-12 text-center">
-					<br>
-					<button class="btn btn-primary btn-duplicator">Add education</button>
-				</div>
-
-			</div>
-		</div>
-	</section>
-	<!-- END Education -->
-
-	<!-- Work Experience -->
-	<section>
-		<div class="container">
-			<header class="section-header">
-				<span>Past positions</span>
-				<h2>Work Experience</h2>
-			</header>
-
-			<div class="row">
-
-				<div class="col-xs-12">
-					<div class="item-block">
-						<div class="item-form">
-
-							<button class="btn btn-danger btn-float btn-remove">
-								<i class="ti-close"></i>
-							</button>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-4">
-									<div class="form-group">
-										<input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
-										<span class="help-block">Please choose a square logo</span>
-									</div>
-								</div>
-
-								<div class="col-xs-12 col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Company name">
-									</div>
-
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Position, e.g. UI/UX Researcher">
-									</div>
-
-									<div class="form-group">
-										<div class="input-group">
-											<span class="input-group-addon">Date from</span>
-											<input type="text" class="form-control" placeholder="e.g. 2012">
-											<span class="input-group-addon">Date to</span>
-											<input type="text" class="form-control" placeholder="e.g. 2016">
-										</div>
-									</div>
-
-								</div>
-
-								<div class="col-xs-12">
-									<div class="form-group">
-										<textarea class="summernote-editor"></textarea>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xs-12 duplicateable-content">
-					<div class="item-block">
-						<div class="item-form">
-
-							<button class="btn btn-danger btn-float btn-remove">
-								<i class="ti-close"></i>
-							</button>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-4">
-									<div class="form-group">
-										<input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
-										<span class="help-block">Please choose a square logo</span>
-									</div>
-								</div>
-
-								<div class="col-xs-12 col-sm-8">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Company name">
-									</div>
-
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Position, e.g. UI/UX Researcher">
-									</div>
-
-									<div class="form-group">
-										<div class="input-group">
-											<span class="input-group-addon">Date from</span>
-											<input type="text" class="form-control" placeholder="e.g. 2012">
-											<span class="input-group-addon">Date to</span>
-											<input type="text" class="form-control" placeholder="e.g. 2016">
-										</div>
-									</div>
-
-								</div>
-
-								<div class="col-xs-12">
-									<div class="form-group">
-										<textarea class="summernote-editor"></textarea>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xs-12 text-center">
-					<br>
-					<button class="btn btn-primary btn-duplicator">Add experience</button>
-				</div>
-
-			</div>
-
-		</div>
-	</section>
-	<!-- END Work Experience -->
-
-	<!-- Skills -->
-	<section class=" bg-alt">
-		<div class="container">
-			<header class="section-header">
-				<span>Expertise Areas</span>
-				<h2>Skills</h2>
-			</header>
-
-			<div class="row">
-
-				<div class="col-xs-12">
-					<div class="item-block">
-						<div class="item-form">
-
-							<button class="btn btn-danger btn-float btn-remove">
-								<i class="ti-close"></i>
-							</button>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-6">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Skill name, e.g. HTML">
-									</div>
-								</div>
-
-								<div class="col-xs-12 col-sm-6">
-
-									<div class="form-group">
-										<div class="input-group">
-											<input type="text" class="form-control" placeholder="Skill proficiency, e.g. 90">
-											<span class="input-group-addon">%</span>
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xs-12 duplicateable-content">
-					<div class="item-block">
-						<div class="item-form">
-
-							<button class="btn btn-danger btn-float btn-remove">
-								<i class="ti-close"></i>
-							</button>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-6">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Skill name, e.g. HTML">
-									</div>
-								</div>
-
-								<div class="col-xs-12 col-sm-6">
-
-									<div class="form-group">
-										<div class="input-group">
-											<input type="text" class="form-control" placeholder="Skill proficiency, e.g. 90">
-											<span class="input-group-addon">%</span>
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xs-12 text-center">
-					<br>
-					<button class="btn btn-primary btn-duplicator">Add experience</button>
-				</div>
-
-			</div>
-
-		</div>
-	</section>
-	<!-- END Skills -->
-	<!-- Submit -->
-	<section class=" bg-img" style="background-image: url(assets/img/bg-facts.jpg);">
-		<div class="container">
-			<header class="section-header">
-				<span>Are you done?</span>
-				<h2>Submit resume</h2>
-				<p>Please review your information once more and press the below button to put your resume online.</p>
-			</header>
-
-			<p class="text-center">
-				{{ form_widget(form.submit, { 'label': 'Valider' }) }}
-			</p>
-			{# <a href="{{ path('students_index') }}">
-																<<<backtolist</a></div></section><!--ENDSubmit--></main><!--ENDMaincontainer--> #}
-
-			{{ form_end(form) }}
+{% form_theme formStudent 'form/form_errors.html.twig' %}
+
+{{ form_start(formStudent) }}
+
+<header class="page-header">
+  <div class="container page-name">
+    <h1 class="text-center">Add your resume</h1>
+    <p class="lead text-center">Create your resume and put it online.</p>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <div class="form-group">
+          {{form_widget(formStudent.image)}}
+          <span class="help-block">Définir une image de profil</span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <div class="form-group">
+          {% if not formStudent.lastName.vars.valid %}
+            <div class="has-error">
+              {{form_widget(formStudent.lastName)}}
+            </div>
+          {% else %}
+            {{form_widget(formStudent.lastName)}}
+          {% endif %}
+          {{ form_errors(formStudent.lastName) }}
+        </div>
+        <div class="form-group">
+          {% if not formStudent.firstName.vars.valid %}
+            <div class="has-error">
+              {{form_widget(formStudent.firstName)}}
+            </div>
+          {% else %}
+            {{form_widget(formStudent.firstName)}}
+          {% endif %}
+          {{ form_errors(formStudent.firstName) }}
+        </div>
+
+        <div class="form-group">
+          {{form_widget(formStudent.minDescription)}}
+        </div>
+
+        <hr class="hr-lg">
+
+        <h6>Basic information</h6>
+        <div class="row">
+
+          <div class="form-group col-xs-12 col-sm-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-map-marker"></i>
+              </span>
+              {{form_widget(formStudent.location)}}
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-globe"></i>
+              </span>
+              {{form_widget(formStudent.website)}}
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-birthday-cake"></i>
+              </span>
+              {% if not formStudent.age.vars.valid %}
+                <div class="has-error">
+                  {{form_widget(formStudent.age)}}
+                </div>
+              {% else %}
+                {{form_widget(formStudent.age)}}
+              {% endif %}
+              {{ form_errors(formStudent.age) }}
+              <span class="input-group-addon">Years old</span>
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-phone"></i>
+              </span>
+              {% if not formStudent.phoneNumber.vars.valid %}
+                <div class="has-error">
+                  {{form_widget(formStudent.phoneNumber)}}
+                </div>
+              {% else %}
+                {{form_widget(formStudent.phoneNumber)}}
+              {% endif %}
+              {{ form_errors(formStudent.phoneNumber) }}
+            </div>
+          </div>
+          <div class="form-group col-xs-8 col-sm-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">
+                <i class="fa fa-envelope"></i>
+              </span>
+              {% if not formStudent.email.vars.valid %}
+                <div class="has-error">
+                  {{form_widget(formStudent.email)}}
+                </div>
+              {% else %}
+                {{form_widget(formStudent.email)}}
+              {% endif %}
+              {{ form_errors(formStudent.email) }}
+            </div>
+          </div>
+        </div>
+        <div class="button-group">
+          <div class="action-buttons">
+            <div class="upload-button">
+              <button class="btn btn-block btn-primary">Choose a cover image</button>
+              {{form_widget(formStudent.coverImage)}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+  <!-- Social media -->
+  <section>
+    <div class="container">
+
+      <header class="section-header">
+        <span>Get connected</span>
+        <h2>Social media</h2>
+      </header>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-facebook"></i>
+              </span>
+              <input type="text" class="form-control" placeholder="facebook">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-twitter"></i>
+              </span>
+              {{form_widget(formStudent.twitter)}}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-github"></i>
+              </span>
+              {{form_widget(formStudent.github)}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-youtube"></i>
+              </span>
+              <input type="text" class="form-control" placeholder="Profile URL">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- Social media -->
+
+  <!-- Education -->
+  <section class=" bg-alt">
+    <div class="container">
+
+      <header class="section-header">
+        <span>Latest degrees</span>
+        <h2>Education</h2>
+      </header>
+
+      <div class="row">
+
+        <div class="col-xs-12">
+          <div class="item-block">
+            <div class="item-form">
+
+              <button class="btn btn-danger btn-float btn-remove">
+                <i class="ti-close"></i>
+              </button>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
+                    <span class="help-block">Please choose a square logo</span>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-8">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Degree, e.g. Bachelor">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Major, e.g. Computer Science">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="School name, e.g. Massachusetts Institute of Technology">
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Date from</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2012">
+                      <span class="input-group-addon">Date to</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2016">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <textarea class="form-control" rows="3" placeholder="Short description"></textarea>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 duplicateable-content">
+          <div class="item-block">
+            <div class="item-form">
+
+              <button class="btn btn-danger btn-float btn-remove">
+                <i class="ti-close"></i>
+              </button>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
+                    <span class="help-block">Please choose a square logo</span>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-8">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Degree, e.g. Bachelor">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Major, e.g. Computer Science">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="School name, e.g. Massachusetts Institute of Technology">
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Date from</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2012">
+                      <span class="input-group-addon">Date to</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2016">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <textarea class="form-control" rows="3" placeholder="Short description"></textarea>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <br>
+          <button class="btn btn-primary btn-duplicator">Add education</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- END Education -->
+
+  <!-- Work Experience -->
+  <section>
+    <div class="container">
+      <header class="section-header">
+        <span>Past positions</span>
+        <h2>Work Experience</h2>
+      </header>
+
+      <div class="row">
+
+        <div class="col-xs-12">
+          <div class="item-block">
+            <div class="item-form">
+
+              <button class="btn btn-danger btn-float btn-remove">
+                <i class="ti-close"></i>
+              </button>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
+                    <span class="help-block">Please choose a square logo</span>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-8">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Company name">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Position, e.g. UI/UX Researcher">
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Date from</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2012">
+                      <span class="input-group-addon">Date to</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2016">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <textarea class="summernote-editor"></textarea>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 duplicateable-content">
+          <div class="item-block">
+            <div class="item-form">
+
+              <button class="btn btn-danger btn-float btn-remove">
+                <i class="ti-close"></i>
+              </button>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
+                    <span class="help-block">Please choose a square logo</span>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-8">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Company name">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Position, e.g. UI/UX Researcher">
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Date from</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2012">
+                      <span class="input-group-addon">Date to</span>
+                      <input type="text" class="form-control" placeholder="e.g. 2016">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <textarea class="summernote-editor"></textarea>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <br>
+          <button class="btn btn-primary btn-duplicator">Add experience</button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+  <!-- END Work Experience -->
+
+  <!-- Skills -->
+  <section class=" bg-alt">
+    <div class="container">
+      <header class="section-header">
+        <span>Expertise Area</span>
+        <h2>Mes qualifications</h2>
+      </header>
+
+      <div class="row">
+		{% for skill in formStudent.skills %}
+        <div class="col-xs-12">
+		
+          <div class="item-block">
+            <div class="item-form">
+
+              <button class="btn btn-danger btn-float btn-remove">
+                <i class="ti-close"></i>
+              </button>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    {# <input type="text" class="form-control" placeholder="exemple: HTML, CSS, JS ..."> #}
+                    {% if not formStudent.title.vars.valid %}
+                      <div class="has-error">
+                        {{form_widget(formStudent.title)}}
+                      </div>
+                    {% else %}
+                      {{form_widget(formStudent.title)}}
+                    {% endif %}
+                    {{ form_errors(formStudent.title) }}
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      {# <input type="text" class="form-control" placeholder="exemple: 30,40,50,100..."> #}
+                      {% if not formStudent.percentage.vars.valid %}
+                        <div class="has-error">
+                          {{form_widget(formStudent.percentage)}}
+                        </div>
+                      {% else %}
+                        {{form_widget(formStudent.percentage)}}
+                      {% endif %}
+                      {{ form_errors(formStudent.percentage) }}
+                      <span class="input-group-addon">%</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+{% endfor %}
+        <div class="col-xs-12 duplicateable-content">
+          <div class="item-block">
+            <div class="item-form">
+
+              <button class="btn btn-danger btn-float btn-remove">
+                <i class="ti-close"></i>
+              </button>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="exemple: HTML, CSS, JS ...">
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="exemple: 30,40,50,100...">
+                      <span class="input-group-addon">%</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+		
+
+        <div class="col-xs-12 text-center">
+          <br>
+          <button class="btn btn-primary btn-duplicator">Ajouter qualification</button>
+        </div>
+		
+      </div>
+
+    </div>
+  </section>
+  <!-- END Skills -->
+  <!-- Submit -->
+  <section class=" bg-img" style="background-image: url(assets/img/bg-facts.jpg);">
+    <div class="container">
+      <header class="section-header">
+        <span>Are you done?</span>
+        <h2>Submit resume</h2>
+        <p>Please review your information once more and press the below button to put your resume online.</p>
+      </header>
+
+      <p class="text-center">
+        {{ form_widget(formStudent.submit, { 'label': 'Valider' }) }}
+      </p>
+      <a href="{{ path('students_index') }}"> <<< backtolist </a>
+	  </div>
+	</section><!--ENDSubmit-->
+</main><!--ENDMaincontainer-->
+
+
+      {{ form_end(formStudent) }}
