@@ -19,7 +19,7 @@
 					<div class="col-xs-12 text-right">
 						<h5>{{offers|length}}
 							offres trouvées.</h5>
-						{% if is_granted('ROLE_ENTREPRISE') %}
+						{% if is_granted('ROLE_BUSINESS') %}
 							<a href="{{ path('offer_new') }}" class="btn btn-primary btn-sm">Déposer une offre</a>
 						{% endif %}
 					</div>
