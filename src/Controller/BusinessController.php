@@ -29,7 +29,7 @@ class BusinessController extends AbstractController
 
         return $this->render('businesses/index.html.twig', [
             'businesses' => $businesses,
-            'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
+            'meta_title' => 'Liste des entreprises',
             'meta_desc' => 'Description des metas',
         ]);
     }
