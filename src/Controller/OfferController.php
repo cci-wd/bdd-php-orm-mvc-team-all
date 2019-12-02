@@ -98,7 +98,7 @@ class OfferController extends AbstractController
             $entityManager->persist($offer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('offer_index');
+            return $this->redirectToRoute('offer_list');
         }
 
         return $this->render('offers/new.html.twig', [
@@ -163,6 +163,6 @@ class OfferController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('offer_index');
+        return $this->redirectToRoute('offer_list');
     }
 }

@@ -19,15 +19,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class BusinessController extends AbstractController
 {
     /**
-     * @Route("/", name="businesses_index", methods={"GET"})
+     * @Route("/", name="business_index", methods={"GET"})
      */
     public function index(): Response
     {
-        return $this->redirectToRoute('businesses_list');
+        return $this->redirectToRoute('business_list');
     }
 
     /**
-     * @Route("/liste", name="businesses_list", methods={"GET"})
+     * @Route("/liste", name="business_list", methods={"GET"})
      */
     function list(Request $request): Response {
         $cities = $this->getDoctrine()
@@ -63,7 +63,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/mon-profil", name="business_profil", methods={"GET", "POST"})
+     * @Route("/mon-profil", name="business_profile", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_ENTREPRISE')")
      */
     public function profile(Request $request): Response
@@ -76,7 +76,7 @@ class BusinessController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('businesses_list');
+            return $this->redirectToRoute('business_list');
         }
 
         return $this->render('businesses/edit.html.twig', [
@@ -88,7 +88,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/creer", name="businesses_new", methods={"GET","POST"})
+     * @Route("/creer", name="business_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function create(Request $request): Response
@@ -102,7 +102,7 @@ class BusinessController extends AbstractController
             $entityManager->persist($business);
             $entityManager->flush();
 
-            return $this->redirectToRoute('businesses_index');
+            return $this->redirectToRoute('business_list');
         }
 
         return $this->render('businesses/new.html.twig', [
@@ -114,7 +114,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="businesses_show", methods={"GET"})
+     * @Route("/{id}", name="business_show", methods={"GET"})
      */
     public function show(Business $business): Response
     {
@@ -131,7 +131,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier", name="businesses_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="business_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, Business $business): Response
@@ -142,7 +142,7 @@ class BusinessController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('businesses_index');
+            return $this->redirectToRoute('business_list');
         }
 
         return $this->render('businesses/edit.html.twig', [
@@ -154,7 +154,7 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="businesses_delete", methods={"DELETE"})
+     * @Route("/{id}", name="business_delete", methods={"DELETE"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Business $business): Response
@@ -165,6 +165,6 @@ class BusinessController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('businesses_index');
+        return $this->redirectToRoute('business_list');
     }
 }

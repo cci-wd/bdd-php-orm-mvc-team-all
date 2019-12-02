@@ -19,7 +19,9 @@
 					<div class="col-xs-12 text-right">
 						<h5>{{offers|length}}
 							offres trouvées.</h5>
-						<a href="{{ path('offer_new') }}" class="btn btn-primary btn-sm">Déposer une offre</a>
+						{% if is_granted('ROLE_ENTREPRISE') %}
+							<a href="{{ path('offer_new') }}" class="btn btn-primary btn-sm">Déposer une offre</a>
+						{% endif %}
 					</div>
 					{# Job detail #}
 					{% for offer in offers %}
@@ -27,7 +29,7 @@
 							<div class="item-block">
 								<header>
 									{% if offer.business.image %}
-										<a href="{{ path('businesses_show', {'id': offer.business.id}) }}"><img src="{{ asset('uploads/images/' ~ offer.business.image) }}" alt=""></a>
+										<a href="{{ path('business_show', {'id': offer.business.id}) }}"><img src="{{ asset('uploads/images/' ~ offer.business.image) }}" alt=""></a>
 									{% else %}
 										<img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
 									{% endif %}
@@ -36,7 +38,7 @@
 											<a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
 										</h4>
 										<h5>
-											<a href="{{ path('businesses_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
+											<a href="{{ path('business_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
 										</h5>
 									</div>
 									<div class="header-meta">
