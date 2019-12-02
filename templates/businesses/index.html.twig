@@ -58,7 +58,7 @@
             <!-- Company detail -->
         {% for business in businesses %}
             <div class="col-xs-12">
-              <a class="item-block" href="{{ path('students_business', {'id': business.id}) }}">
+              <a class="item-block" href="{{ path('businesses_show', {'id': business.id}) }}">
                 <header>
                   <img src="{{ business.image }}" alt="">
                   <div class="hgroup">

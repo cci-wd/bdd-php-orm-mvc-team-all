@@ -2,31 +2,34 @@
 
 namespace App\Controller;
 
-use App\Entity\City;
-use App\Entity\Section;
-use App\Entity\Student;
 use App\Entity\Business;
-use App\Entity\Education;
-use App\Entity\Experience;
-use App\Form\BusinessesType;
+use App\Entity\City;
+use App\Entity\Offer;
+use App\Form\BusinessType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/entreprises")
+ * @Route("/entreprise")
  * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
  */
 class BusinessController extends AbstractController
 {
     /**
-     * @Route("/les-entreprises", name="businesses_index", methods={"GET"})
+     * @Route("/", name="businesses_index", methods={"GET"})
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
+        return $this->redirectToRoute('businesses_list');
+    }
+
+    /**
+     * @Route("/liste", name="businesses_list", methods={"GET"})
+     */
+    function list(Request $request): Response {
         $cities = $this->getDoctrine()
             ->getRepository(City::class)
             ->findAll();
@@ -60,12 +63,38 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/creer", name="businesses_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/mon-profil", name="business_profil", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_ENTREPRISE')")
      */
-    function create(Request $request): Response {
+    public function profile(Request $request): Response
+    {
+        $business = $this->getUser()->getBusiness();
+
+        $form = $this->createForm(BusinessType::class, $business);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('businesses_list');
+        }
+
+        return $this->render('businesses/edit.html.twig', [
+            'business' => $business,
+            'form' => $form->createView(),
+            'meta_title' => "Profil",
+            'meta_desc' => "Profil apprenant",
+        ]);
+    }
+
+    /**
+     * @Route("/creer", name="businesses_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
+     */
+    public function create(Request $request): Response
+    {
         $business = new Business();
-        $form = $this->createForm(BusinessesType::class, $business);
+        $form = $this->createForm(BusinessType::class, $business);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -85,53 +114,17 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/apprenants", name="businesses_students_list", methods={"GET"})
-     */
-    public function students(): Response
-    {
-        $students = $this->getDoctrine()
-            ->getRepository(Student::class)
-            ->findAll();
-
-        $sections = $this->getDoctrine()
-            ->getRepository(Section::class)
-            ->findAll();
-
-        return $this->render('businesses/students.html.twig', [
-            'students' => $students,
-            'sections' => $sections,
-            'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
-            'meta_desc' => 'Description des metas',
-        ]);
-    }
-
-    /**
-     * @Route("/apprenant/{id}", name="businnesses_student_show", methods={"GET"})
-     */
-    public function student(Student $student): Response
-    {
-        $educations = $this->getDoctrine()
-            ->getRepository(Education::class)
-            ->findBy(array('student' => $student->getId()));
-
-        $experiences = $this->getDoctrine()
-            ->getRepository(Experience::class)
-            ->findBy(array('student' => $student->getId()));
-
-        return $this->render('businesses/student.html.twig', [
-            'student' => $student,
-            'educations' => $educations,
-            'experiences' => $experiences,
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="businesses_show", methods={"GET"})
      */
     public function show(Business $business): Response
     {
+        $offers = $this->getDoctrine()
+            ->getRepository(Offer::class)
+            ->findBy(array('business' => $business->getId()));
+
         return $this->render('businesses/show.html.twig', [
             'business' => $business,
+            'offers' => $offers,
             'meta_title' => 'CCI-LINK, votre site de rencontres professionnel au CFA',
             'meta_desc' => 'Description des metas',
         ]);
@@ -139,11 +132,11 @@ class BusinessController extends AbstractController
 
     /**
      * @Route("/{id}/modifier", name="businesses_edit", methods={"GET","POST"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, Business $business): Response
     {
-        $form = $this->createForm(BusinessesType::class, $business);
+        $form = $this->createForm(BusinessType::class, $business);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -162,7 +155,7 @@ class BusinessController extends AbstractController
 
     /**
      * @Route("/{id}", name="businesses_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Business $business): Response
     {
