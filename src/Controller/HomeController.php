@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Offers;
+use App\Entity\Offer;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -17,7 +17,7 @@ class HomeController extends AbstractController
         $queryBuilder = $entityManager->createQueryBuilder();
         $offers = $queryBuilder
             ->select('offers')
-            ->from(Offers::class, 'offers')
+            ->from(Offer::class, 'offers')
             ->orderBy('offers.publishDate', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
