@@ -63,7 +63,7 @@
             <header>
               <div class="hgroup">
                 <h4>
-                  <a href="{{ path('offers_show', {'id': offer.id}) }}">{{ offer.title }}</a>
+                  <a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
                 </h4>
                 <h5>
                   {% if offer.business %}
@@ -87,7 +87,7 @@
                 {{ offer.statut ? 'En cours' : 'En attente de validation' }}</p>
 
               <div class="action-btn">
-                <a class="btn btn-xs btn-gray" href="{{ path('offers_edit', {'id': offer.id}) }}">Modifier</a>
+                <a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
               </div>
             </footer>
           </div>
