@@ -259,60 +259,69 @@ class StudentController extends AbstractController
 
         $educations = $this->getDoctrine()
             ->getRepository(Education::class)
-            ->findBy(['students' => $student->getId()]);
+            ->findBy(['student' => $student->getId()]);
 
         $experiences = $this->getDoctrine()
             ->getRepository(Experience::class)
-            ->findBy(['students' => $student->getId()]);
+            ->findBy(['student' => $student->getId()]);
 
         $skills = $this->getDoctrine()
             ->getRepository(Skill::class)
-            ->findBy(['students' => $student->getId()]);
+            ->findBy(['student' => $student->getId()]);
 
         $tabEduc = '';
         foreach ( $educations as $education){
-            $tabEduc = $tabEduc.'<li>'.$education->getDateFrom()->format('Y').'-'.$education->getDateTo()->format('Y').' '.$education->getDegree().' '.$education->getSpeciality().' '.$education->getSchoolName().'</li>';
+            $tabEduc = $tabEduc.'
+                <li style="list-style:none">'.$education->getDateFrom()->format('Y').'-'.$education->getDateTo()->format('Y').'
+                     <span>'.$education->getDegree().', '.$education->getSpeciality().' '.$education->getSchoolName().'</span>
+                </li>'
+            ;
         }
 
         $tabExp = '';
         foreach ( $experiences as $experience){
-            $tabExp = $tabExp.'<li>'.$experience->getDateFrom()->format('Y').'-'.$experience->getDateTo()->format('Y').' '.$experience->getPost().' '.$experience->getTitle().'</li>';
+            $tabExp = $tabExp.'
+                <li>'.$experience->getDateFrom()->format('Y').'-'.$experience->getDateTo()->format('Y').'
+                    <span>'.$experience->getPost().' '.$experience->getTitle().'</span>
+                </li>'
+            ;
         }
 
         $tabSkill = '';
         foreach ( $skills as $skill){
-            $tabSkill = $tabSkill.'<li>'.$skill->getPercentage().'% '.$skill->getTitle().'</li>';
+            $tabSkill = $tabSkill.'
+                <li>'.$skill->getPercentage().'% </td> '.$skill->getTitle().'
+                </li>'
+            ;
         }
 
         $mpdf = new \Mpdf\Mpdf();
 
         $mpdf->WriteHTML('
-        <table width="100%" style="border-style: solid; border-width: 2px;">
+        <table width="100%" >
             <tr>
                 <td width="33%">
-                    <h1>'.$student->getFirstName().' '.$student->getLastName().'</h1>
-                    <p>adresse: '.$student->getLocation().'<p>
-                    <p>tel: '.$student->getPhoneNumber().'</p>
-                    <p>email: '.$student->getEmail().'</p>
-                </td>
-                <td width="33%" align="center"></td>
-                <td width="33%">
-                    <div style="background-color: #cccccc; width: 150px; height: 200px;"></div>
+                    <h3>'.$student->getFirstName().' '.$student->getLastName().'</h3>
+                    <p>Adresse : '.$student->getLocation().'<p>
+                    <p>Téléphone : '.$student->getPhoneNumber().'</p>
+                    <p>Email : '.$student->getEmail().'</p>
                 </td>
             </tr>
         </table>
-        <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
-            <h3>Etudes</h3>
+        <div style="background-color: #cccccc; width:100%;height:5px; margin-top: 20px; text-align: center">
+            <h3>Formations</h3>  
         </div>
-        <div style="">
+        <br>
+        <div style="" width="100%" >
             <ul>
                 '.$tabEduc.'
             </ul>
         </div>
         <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
-            <h3>Expériences</h3>
+            <h3>Expériences proféssionnelles </h3>
         </div>
-        <div style="">
+        <br>
+        <div style="" width="100%">
             <ul>
                 '.$tabExp.'
             </ul>
@@ -320,7 +329,8 @@ class StudentController extends AbstractController
         <div style="background-color: #cccccc; width: 100%; margin-top: 20px; text-align: center">
             <h3>Compétences</h3>
         </div>
-        <div style="">
+        <br>
+        <div style="" width="100%">
             <ul>
                 '.$tabSkill.'
             </ul>
