@@ -207,7 +207,7 @@ class AppFixtures extends Fixture
         $offer2->setSite('www.cfa.cci.nc');
         $offer2->setPublishDate(new \DateTime('06/04/2018'));
         $offer2->setBusiness($business0);
-        $offer2->setSection($section3);
+        $offer2->setSection($section2);
 
         // OFFER 3
         $offer3 = new Offer();
@@ -218,7 +218,7 @@ class AppFixtures extends Fixture
         $offer3->setSite('www.cfa.cci.nc');
         $offer3->setPublishDate(new \DateTime('06/04/2017'));
         $offer3->setBusiness($business1);
-        $offer3->setSection($section3);
+        $offer3->setSection($section2);
 
         // OFFER 4
         $offer4 = new Offer();
@@ -229,7 +229,7 @@ class AppFixtures extends Fixture
         $offer4->setSite('www.cfa.cci.nc');
         $offer4->setPublishDate(new \DateTime('06/04/2016'));
         $offer4->setBusiness($business1);
-        $offer4->setSection($section3);
+        $offer4->setSection($section1);
 
         // PERSIST DATA
         $manager->persist($user0);
