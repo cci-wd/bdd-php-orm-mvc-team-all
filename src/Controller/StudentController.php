@@ -281,7 +281,7 @@ class StudentController extends AbstractController
         $tabExp = '';
         foreach ( $experiences as $experience){
             $tabExp = $tabExp.'
-                <li>'.$experience->getDateFrom()->format('Y').'-'.$experience->getDateTo()->format('Y').'
+                <li style="list-style:none">'.$experience->getDateFrom()->format('Y').'-'.$experience->getDateTo()->format('Y').'
                     <span>'.$experience->getPost().' '.$experience->getTitle().'</span>
                 </li>'
             ;
@@ -290,7 +290,7 @@ class StudentController extends AbstractController
         $tabSkill = '';
         foreach ( $skills as $skill){
             $tabSkill = $tabSkill.'
-                <li>'.$skill->getPercentage().'% </td> '.$skill->getTitle().'
+                <li style="list-style:none">'.$skill->getPercentage().'% </td> '.$skill->getTitle().'
                 </li>'
             ;
         }
