@@ -20,13 +20,40 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Route("/apprenants")
+ * @Route("/apprenant")
  * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
  */
 class StudentController extends AbstractController
 {
     /**
-     * @Route("/profil", name="student_profil", methods={"GET"})
+     * @Route("/", name="student_index", methods={"GET"})
+     */
+    public function index()
+    {
+        return $this->redirectToRoute("student_list");
+    }
+
+    /**
+     * @Route("/liste", name="student_list", methods={"GET"})
+     */
+    public function list(): Response
+    {
+        $students = $this->getDoctrine()
+            ->getRepository(Student::class)
+            ->findAll();
+
+        $sections = $this->getDoctrine()
+            ->getRepository(Section::class)
+            ->findAll();
+
+        return $this->render('students/index.html.twig', [
+            'students' => $students,
+            'sections' => $sections,
+        ]);
+    }
+
+    /**
+     * @Route("/mon-profil", name="student_profil", methods={"GET"})
      */
     public function profile(Request $request, FileUploader $fileUploader): Response
     {
@@ -48,35 +75,16 @@ class StudentController extends AbstractController
             return $this->redirectToRoute('students_index');
         }
 
-        return $this->render('students/edit.html.twig', [
+        return $this->render('students/profil.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
-            'meta_title' => "Profil",
-            'meta_desc' => "Profil apprenant",
+            'meta_title' => "Mon profil",
+            'meta_desc' => "robots.txt",
         ]);
     }
 
     /**
-     * @Route("/", name="students_index", methods={"GET"})
-     */
-    public function index(): Response
-    {
-        $students = $this->getDoctrine()
-            ->getRepository(Student::class)
-            ->findAll();
-
-        $sections = $this->getDoctrine()
-            ->getRepository(Section::class)
-            ->findAll();
-
-        return $this->render('students/index.html.twig', [
-            'students' => $students,
-            'sections' => $sections,
-        ]);
-    }
-
-    /**
-     * @Route("/creer", name="students_new", methods={"GET","POST"})
+     * @Route("/creer", name="student_new", methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function create(Request $request, FileUploader $fileUploader): Response
@@ -104,114 +112,36 @@ class StudentController extends AbstractController
             'student' => $student,
             'form' => $form->createView(),
         ]);
-    }
-
+    }    
 
     /**
-     * @Route("/offres", name="students_offers", methods={"GET"})
+     * @Route("/{id}", name="student_show", methods={"GET"})
      */
-    public function offers(Request $request): Response
+    public function show(Student $student): Response
     {
         $sections = $this->getDoctrine()
             ->getRepository(Section::class)
             ->findAll();
 
-        $cities = $this->getDoctrine()
-            ->getRepository(City::class)
-            ->findAll();
+        $educations = $this->getDoctrine()
+            ->getRepository(Education::class)
+            ->findBy(array('student' => $student->getId()));
 
-        $keyword = $request->query->get("keyword");
-        $location = $request->query->get("location");
-        $section = $request->query->get("section");
+        $experiences = $this->getDoctrine()
+            ->getRepository(Experience::class)
+            ->findBy(array('student' => $student->getId()));
+            // dd($student);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder
-            ->select('o')
-            ->from(Offer::class, 'o')
-            ->where('o.title LIKE :keyword')
-            ->setParameter('keyword', '%' . $keyword . '%');
-
-        if ($location && $location != "Toutes les communes") {
-            $queryBuilder->andWhere('o.location = :location')
-                ->setParameter('location', $location);
-        }
-
-        if ($section && $section != "Toutes les sections") {
-            $queryBuilder
-                ->leftJoin('o.sections', 'sections')
-                ->andWhere('sections.name = :section')
-                ->setParameter('section', $section);
-        }
-
-        $query = $queryBuilder->getQuery();
-        $offers = $query->getResult();
-
-        return $this->render('students/offers.html.twig', [
-            'offers' => $offers,
-            'parameters' => [
-                'keyword' => $keyword,
-                'location' => $location,
-                'section' => $section,
-            ],
-            'cities' => $cities,
-            'sections' => $sections,
-            'meta_title' => "Liste des offres",
-        ]);
-    }
-
-    
-
-    /**
-     * @Route("/offre/{id}", name="students_offer", methods={"GET"})
-     */
-    public function offer(Request $request, $id): Response
-    {
-        $offer = $this->getDoctrine()
-            ->getRepository(Offer::class)
-            ->findOneBy(['id' => $id]);
-
-        return $this->render('students/offer.html.twig', [
-            //'student' => $student,
-            'offer' => $offer,
-            'meta_title' => "Offre détaillée",
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="students_show", methods={"GET"})
-     */
-    public function show(Student $student): Response
-    {
         return $this->render('students/show.html.twig', [
             'student' => $student,
+            'educations' => $educations,
+            'experiences' => $experiences,
         ]);
     }
 
     /**
-     * @Route("/entreprise/{id}", name="students_business", methods={"GET"})
-     */
-    public function business(Request $request, $id): Response
-    {
-        $business = $this->getDoctrine()
-            ->getRepository(Business::class)
-            ->findOneBy(['id' => $id]);
-        
-        $openPosts = $this->getDoctrine()
-            ->getRepository(Offer::class)
-            ->findBy(array('business' => $id));
-
-        return $this->render('students/business.html.twig', [
-            //'student' => $student,
-            'business' => $business,
-            'offers' => $openPosts,
-            'meta_title' => 'Une entreprise',
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/modifier", name="students_edit", methods={"GET","POST"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Route("/{id}/modifier", name="student_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, Student $student, FileUploader $fileUploader): Response
     {
@@ -240,7 +170,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="students_delete", methods={"DELETE"})
+     * @Route("/{id}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Student $student): Response
@@ -255,7 +185,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/cv", name="students_cv", methods={"GET"})
+     * @Route("/{id}/cv", name="student_cv", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
      */
     public function generateCv(Student $student)
@@ -355,7 +285,8 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/lm", name="students_lm", methods={"GET"})
+     * @Route("/{id}/lm", name="student_lm", methods={"POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
      */
     public function generateLm(Student $student, Business $business, Offer $offer, Section $section)
     {
