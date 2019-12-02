@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Business;
+use App\Entity\City;
 use App\Entity\Offer;
+use App\Entity\Section;
+use App\Entity\Business;
 use App\Form\OffersType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/offres")
@@ -21,19 +23,53 @@ class OfferController extends AbstractController
     /**
      * @Route("/", name="offers_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $user = $this->getUser();
+        $sections = $this->getDoctrine()
+            ->getRepository(Section::class)
+            ->findAll();
 
-        $offers = $this->getDoctrine()
-            ->getRepository(Offer::class)
-            ->findAll();            
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->findAll();
 
-        return $this->render('offers/index.html.twig', [
+        $keyword = $request->query->get("keyword");
+        $location = $request->query->get("location");
+        $section = $request->query->get("section");
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('o')
+            ->from(Offer::class, 'o')
+            ->where('o.title LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%');
+
+        if ($location && $location != "Toutes les communes") {
+            $queryBuilder->andWhere('o.location = :location')
+                ->setParameter('location', $location);
+        }
+
+        if ($section && $section != "Toutes les sections") {
+            $queryBuilder
+                ->leftJoin('o.sections', 'sections')
+                ->andWhere('sections.name = :section')
+                ->setParameter('section', $section);
+        }
+
+        $query = $queryBuilder->getQuery();
+        $offers = $query->getResult();
+
+        return $this->render('students/offers.html.twig', [
             'offers' => $offers,
-            'user' => $user,
-            'meta_desc' => "Liste des offres d'emplois",
-            'meta_title' => "Offres d'emplois",
+            'parameters' => [
+                'keyword' => $keyword,
+                'location' => $location,
+                'section' => $section,
+            ],
+            'cities' => $cities,
+            'sections' => $sections,
+            'meta_title' => "Liste des offres",
         ]);
     }
 

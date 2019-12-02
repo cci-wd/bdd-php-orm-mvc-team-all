@@ -1,123 +1,127 @@
 {% form_theme form 'form/form_errors.html.twig' %}
 
 {{ form_start(form) }}
-
-<div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-sm-4">
-			<div class="form-group">
-				{{form_widget(form.image)}}
-				<span class="help-block">Définir une image de profil</span>
+<header class="page-header">
+	<div class="container page-name">
+		<h1 class="text-center">Add your resume</h1>
+		<p class="lead text-center">Create your resume and put it online.</p>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4">
+				<div class="form-group">
+					{{form_widget(form.image)}}
+					<span class="help-block">Définir une image de profil</span>
+				</div>
 			</div>
-		</div>
-		<div class="col-xs-12 col-sm-8">
-			<div class="form-group">
-				{% if not form.lastName.vars.valid %}
-					<div class="has-error">
+			<div class="col-xs-12 col-sm-8">
+				<div class="form-group">
+					{% if not form.lastName.vars.valid %}
+						<div class="has-error">
+							{{form_widget(form.lastName)}}
+						</div>
+					{% else %}
 						{{form_widget(form.lastName)}}
-					</div>
-				{% else %}
-					{{form_widget(form.lastName)}}
-				{% endif %}
-				{{ form_errors(form.lastName) }}
-			</div>
-			<div class="form-group">
-				{% if not form.firstName.vars.valid %}
-					<div class="has-error">
+					{% endif %}
+					{{ form_errors(form.lastName) }}
+				</div>
+				<div class="form-group">
+					{% if not form.firstName.vars.valid %}
+						<div class="has-error">
+							{{form_widget(form.firstName)}}
+						</div>
+					{% else %}
 						{{form_widget(form.firstName)}}
-					</div>
-				{% else %}
-					{{form_widget(form.firstName)}}
-				{% endif %}
-				{{ form_errors(form.firstName) }}
-			</div>
-
-			<div class="form-group">
-				{{form_widget(form.minDescription)}}
-			</div>
-
-			<hr class="hr-lg">
-
-			<h6>Basic information</h6>
-			<div class="row">
-
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-map-marker"></i>
-						</span>
-						{{form_widget(form.location)}}
-					</div>
+					{% endif %}
+					{{ form_errors(form.firstName) }}
 				</div>
 
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-globe"></i>
-						</span>
-						{{form_widget(form.website)}}
-					</div>
+				<div class="form-group">
+					{{form_widget(form.minDescription)}}
 				</div>
 
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-birthday-cake"></i>
-						</span>
-						{% if not form.age.vars.valid %}
-							<div class="has-error">
+				<hr class="hr-lg">
+
+				<h6>Basic information</h6>
+				<div class="row">
+
+					<div class="form-group col-xs-12 col-sm-6">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon">
+								<i class="fa fa-map-marker"></i>
+							</span>
+							{{form_widget(form.location)}}
+						</div>
+					</div>
+
+					<div class="form-group col-xs-12 col-sm-6">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon">
+								<i class="fa fa-globe"></i>
+							</span>
+							{{form_widget(form.website)}}
+						</div>
+					</div>
+
+					<div class="form-group col-xs-12 col-sm-6">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon">
+								<i class="fa fa-birthday-cake"></i>
+							</span>
+							{% if not form.age.vars.valid %}
+								<div class="has-error">
+									{{form_widget(form.age)}}
+								</div>
+							{% else %}
 								{{form_widget(form.age)}}
-							</div>
-						{% else %}
-							{{form_widget(form.age)}}
-						{% endif %}
-						{{ form_errors(form.age) }}
-						<span class="input-group-addon">Years old</span>
+							{% endif %}
+							{{ form_errors(form.age) }}
+							<span class="input-group-addon">Years old</span>
+						</div>
 					</div>
-				</div>
-				<div class="form-group col-xs-12 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-phone"></i>
-						</span>
-						{% if not form.phoneNumber.vars.valid %}
-							<div class="has-error">
+					<div class="form-group col-xs-12 col-sm-6">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon">
+								<i class="fa fa-phone"></i>
+							</span>
+							{% if not form.phoneNumber.vars.valid %}
+								<div class="has-error">
+									{{form_widget(form.phoneNumber)}}
+								</div>
+							{% else %}
 								{{form_widget(form.phoneNumber)}}
-							</div>
-						{% else %}
-							{{form_widget(form.phoneNumber)}}
-						{% endif %}
-						{{ form_errors(form.phoneNumber) }}
+							{% endif %}
+							{{ form_errors(form.phoneNumber) }}
+						</div>
 					</div>
-				</div>
-				<div class="form-group col-xs-8 col-sm-6">
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon">
-							<i class="fa fa-envelope"></i>
-						</span>
-						{% if not form.email.vars.valid %}
-							<div class="has-error">
+					<div class="form-group col-xs-8 col-sm-6">
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon">
+								<i class="fa fa-envelope"></i>
+							</span>
+							{% if not form.email.vars.valid %}
+								<div class="has-error">
+									{{form_widget(form.email)}}
+								</div>
+							{% else %}
 								{{form_widget(form.email)}}
-							</div>
-						{% else %}
-							{{form_widget(form.email)}}
-						{% endif %}
-						{{ form_errors(form.email) }}
+							{% endif %}
+							{{ form_errors(form.email) }}
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="button-group">
-				<div class="action-buttons">
-					<div class="upload-button">
-						<button class="btn btn-block btn-primary">Choose a cover image</button>
-						{{form_widget(form.coverImage)}}
+				<div class="button-group">
+					<div class="action-buttons">
+						<div class="upload-button">
+							<button class="btn btn-block btn-primary">Choose a cover image</button>
+							{{form_widget(form.coverImage)}}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
+</header>
 <main
 	style="width: fit-content;">
 	<!-- Social media -->
@@ -499,7 +503,7 @@
 			<p class="text-center">
 				{{ form_widget(form.submit, { 'label': 'Valider' }) }}
 			</p>
-			{# <a href="{{ path('students_index') }}">
-																<<<backtolist</a></div></section><!--ENDSubmit--></main><!--ENDMaincontainer--> #}
+			{# <a href="{{ path('student_index') }}">
+																			<<<backtolist</a></div></section><!--ENDSubmit--></main><!--ENDMaincontainer--> #}
 
 			{{ form_end(form) }}
