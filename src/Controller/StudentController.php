@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/apprenant")
- * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT') or is_granted('ROLE_BUSINESS')")
  */
 class StudentController extends AbstractController
 {
@@ -52,7 +52,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/mon-profil", name="student_profile", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function profile(Request $request, FileUploader $fileUploader): Response
     {
@@ -185,7 +185,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}/cv", name="student_cv", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function generateCv(Student $student)
     {
@@ -285,7 +285,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}/lm", name="student_lm", methods={"POST"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function generateLm(Student $student, Business $business, Offer $offer, Section $section)
     {

@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/offre")
- * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT') or is_granted('ROLE_BUSINESS')")
  */
 class OfferController extends AbstractController
 {
@@ -80,7 +80,7 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/creer", name="offer_new", methods={"GET","POST"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUSINESS')")
      */
     public function create(Request $request): Response
     {
@@ -126,7 +126,7 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/{id}/modifier", name="offer_edit", methods={"GET","POST"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUSINESS')")
      */
     public function edit(Request $request, Offer $offer): Response
     {
@@ -153,7 +153,7 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/{id}", name="offer_delete", methods={"DELETE"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUSINESS')")
      */
     public function delete(Request $request, Offer $offer): Response
     {
