@@ -1,51 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Offers
+{% block title %}Offre
 {% endblock %}
 
 {% block body %}
-	<h1>Offers</h1>
-
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>id</th>
-				<td>{{ offer.id }}</td>
-			</tr>
-			<tr>
-				<th>Title</th>
-				<td>{{ offer.title }}</td>
-			</tr>
-			<tr>
-				<th>MinDescription</th>
-				<td>{{ offer.minDescription }}</td>
-			</tr>
-			<tr>
-				<th>Site</th>
-				<td>{{ offer.site }}</td>
-			</tr>
-			<tr>
-				<th>Location</th>
-				<td>{{ offer.location }}</td>
-			</tr>
-			<tr>
-				<th>HoursWeek</th>
-				<td>{{ offer.hoursWeek }}</td>
-			</tr>
-			<tr>
-				<th>Description</th>
-				<td>{{ offer.description }}</td>
-			</tr>
-			<tr>
-				<th>Statut</th>
-				<td>{{ offer.statut ? 'Yes' : 'No' }}</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<a href="{{ path('offers_index') }}">back to list</a>
-
-	<a href="{{ path('offers_edit', {'id': offer.id}) }}">edit</a>
-
-	{{ include('offers/_delete_form.html.twig') }}
+	<!-- Page header -->
+	<header class="page-header bg-img size-lg" style="background-image: url(assets/img/bg-banner2.jpg)">
+		<div class="container">
+			<div class="header-detail">
+				<img class="logo" src="assets/img/logo-google.jpg" alt="">
+				<div class="hgroup">
+					<h1>{{offer.title}}</h1>
+					<h3>
+						<a href="#">{{offer.business.name}}</a>
+					</h3>
+				</div>
+				<time>{{offer.publishdate|date("d/m/Y")}}</time>
+				<hr>
+				<p class="lead">{{offer.description}}</p>
+				<ul class="details cols-3">
+					<li>
+						<i class="fa fa-map-marker"></i>
+						<span>{{offer.location}}</span>
+					</li>
+					<li>
+						<i class="fa fa-briefcase"></i>
+						<span>{{offer.publishdate|date("d/m/Y")}}</span>
+					</li>
+					<li>
+						<i class="fa fa-certificate"></i>
+						<a href="#">{{offer.section.name}}</a>
+					</li>
+				</ul>
+				<div class="button-group">
+					<ul class="social-icons">
+						<li class="title">Share on</li>
+						<li>
+							<a class="facebook" href="#">
+								<i class="fa fa-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a class="google-plus" href="#">
+								<i class="fa fa-google-plus"></i>
+							</a>
+						</li>
+						<li>
+							<a class="twitter" href="#">
+								<i class="fa fa-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a class="linkedin" href="#">
+								<i class="fa fa-linkedin"></i>
+							</a>
+						</li>
+					</ul>
+					<div class="action-buttons">
+						{% if (app.user.id == offer.business.id or is_granted('ROLE_ADMIN')) %}
+							<a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
+							<div class="delete-btn">{{ include('offers/_delete_form.html.twig') }}</div>
+						{% else %}
+						<a class="btn btn-success" href="job-apply.html">Contacter ?</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- END Page header -->
 {% endblock %}

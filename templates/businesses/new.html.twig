@@ -46,15 +46,15 @@
               </div>
 
               <div class="form-group">
-                {% if not form.minDescription.vars.valid %}
+                {% if not form.description.vars.valid %}
                   <div class="has-error">
-                    {{ form_widget(form.minDescription) }}
+                    {{ form_widget(form.description) }}
                   </div>
                 {% else %}
-                  {{ form_widget(form.minDescription) }}
+                  {{ form_widget(form.description) }}
                 {% endif %}
 
-                {{ form_errors(form.minDescription) }}
+                {{ form_errors(form.description) }}
               </div>
             </div>
           </div>
