@@ -86,7 +86,7 @@
 										<img src="assets/img/logo-google.jpg" alt="">
 										<div class="hgroup">
 											<h4>{{ offer.title }}</h4>
-											<h5>{{ offer.businesses.name }}
+											<h5>{{ offer.business.name }}
 												<span class="label label-success">Full-time</span>
 											</h5>
 										</div>
@@ -95,7 +95,7 @@
 
 									<div class="item-body">
 										<p>
-											{{ offer.minDescription }}
+											{{ offer.description }}
 										</p>
 									</div>
 
@@ -108,7 +108,7 @@
 
 											<li>
 												<i class="fa fa-certificate"></i>
-												<span>{{ offer.sections.name }}</span>
+												<span>{{ offer.section.name }}</span>
 											</li>
 
 											<li>
@@ -138,10 +138,10 @@
 								<i class="ti-angle-left"></i>
 							</a>
 						</li>
-						<li>
+						<li class="active">
 							<a href="#">1</a>
 						</li>
-						<li class="active">
+						<li>
 							<a href="#">2</a>
 						</li>
 						<li>

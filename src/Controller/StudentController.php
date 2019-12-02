@@ -18,10 +18,41 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/apprenants")
+ * @Route("/apprenant")
  */
 class StudentController extends AbstractController
 {
+    /**
+     * @Route("/profil", name="student_profil", methods={"GET"})
+     */
+    public function profile(Request $request, FileUploader $fileUploader): Response
+    {
+        $student = $this->getUser()->getStudent();
+        
+        $form = $this->createForm(StudentsType::class, $student);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $student->setImage($imageName);
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('students_index');
+        }
+
+        return $this->render('students/edit.html.twig', [
+            'student' => $student,
+            'form' => $form->createView(),
+            'meta_title' => "Profil",
+            'meta_desc' => "Profil apprenant",
+        ]);
+    }
+
     /**
      * @Route("/", name="students_index", methods={"GET"})
      */
@@ -71,42 +102,6 @@ class StudentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/entreprises", name="students_businesses", methods={"GET"})
-     */
-    public function businesses(Request $request): Response
-    {
-        $cities = $this->getDoctrine()
-            ->getRepository(City::class)
-            ->findAll();
-
-        $keyword = $request->query->get("keyword");
-        $location = $request->query->get("location");
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder
-            ->select('b')
-            ->from(Business::class, 'b')
-            ->where('b.name LIKE :keyword')
-            ->setParameter('keyword', '%' . $keyword . '%');
-
-        if ($location != "Toutes les communes") {
-            $queryBuilder->andWhere('b.location = :location')
-                ->setParameter('location', $location);
-        }
-
-        $query = $queryBuilder->getQuery();
-        $businesses = $query->getResult();
-
-        return $this->render('students/businesses.html.twig', [
-            'businesses' => $businesses,
-            'keyword' => $keyword,
-            'location' => $location,
-            'cities' => $cities,
-            'meta_title' => 'Liste des entreprises',
-        ]);
-    }
 
     /**
      * @Route("/offres", name="students_offers", methods={"GET"})
@@ -129,16 +124,16 @@ class StudentController extends AbstractController
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder
             ->select('o')
-            ->from(Offers::class, 'o')
+            ->from(Offer::class, 'o')
             ->where('o.title LIKE :keyword')
             ->setParameter('keyword', '%' . $keyword . '%');
 
-        if ($location != "Toutes les communes") {
+        if ($location && $location != "Toutes les communes") {
             $queryBuilder->andWhere('o.location = :location')
                 ->setParameter('location', $location);
         }
 
-        if ($section != "Toutes les sections") {
+        if ($section && $section != "Toutes les sections") {
             $queryBuilder
                 ->leftJoin('o.sections', 'sections')
                 ->andWhere('sections.name = :section')
@@ -160,6 +155,8 @@ class StudentController extends AbstractController
             'meta_title' => "Liste des offres",
         ]);
     }
+
+    
 
     /**
      * @Route("/offre/{id}", name="students_offer", methods={"GET"})
@@ -195,7 +192,7 @@ class StudentController extends AbstractController
         $business = $this->getDoctrine()
             ->getRepository(Business::class)
             ->findOneBy(['id' => $id]);
-
+        
         $openPosts = $this->getDoctrine()
             ->getRepository(Offer::class)
             ->findBy(array('business' => $id));
@@ -203,7 +200,7 @@ class StudentController extends AbstractController
         return $this->render('students/business.html.twig', [
             //'student' => $student,
             'business' => $business,
-            'posts' => $openPosts,
+            'offers' => $openPosts,
             'meta_title' => 'Une entreprise',
         ]);
     }
