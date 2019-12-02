@@ -61,22 +61,22 @@
         <div class="col-xs-12">
           <div class="item-block">
             <header>
-              {% if offer.businesses %}
+              {# {% if offer.businesses %}
               <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}"><img
                   src="{{ asset('assets/img/logo-google.jpg') }}" alt=""></a>
-              {% else %}
+              {% else %} #}
               <img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
-              {% endif %}
+              {# {% endif %} #}
               <div class="hgroup">
                 <h4>
                   <a href="{{ path('offers_show', {'id': offer.id}) }}">{{ offer.title }}</a>
                 </h4>
                 <h5>
-                  {% if offer.businesses %}
+                  {# {% if offer.businesses %}
                   <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}">{{ offer.businesses.name }}</a>
-                  {% else %}
+                  {% else %} #}
                   attente BDD
-                  {% endif %}
+                  {# {% endif %} #}
                 </h5>
               </div>
               <div class="header-meta">

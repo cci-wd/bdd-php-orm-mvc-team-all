@@ -14,7 +14,7 @@
             <h3>{{ business.slogan }}</h3>
           </div>
           <hr>
-          <p class="lead">{{ business.minDescription }}</p>
+          <p class="lead">{{ business.description }}</p>
 
           <ul class="details cols-3">
             <li>
@@ -100,31 +100,31 @@
           <div class="row">
 
             <!-- Job item -->
-           {% for posts in posts %}
+           {% for offer in offers %}
             <div class="col-xs-12">
-              <a class="item-block" href="{{ path('students_offer', {'id': posts.id}) }}">
+              <a class="item-block" href="{{ path('students_offer', {'id': offer.id}) }}">
                 <header>
                   <img src="assets/img/logo-google.jpg" alt="">
                   <div class="hgroup">
-                    <h4><td>{{ posts.title }}</td></h4>
+                    <h4><td>{{ offer.title }}</td></h4>
                     <h5>{{ business.name }} <span class="label label-success">Full-time</span></h5>
                   </div>
-                  <time datetime="2016-03-10 20:00">{{ posts.hoursWeek }}</time>
+                  <time datetime="2016-03-10 20:00">{{ offer.hoursWeek }}</time>
                 </header>
 
                 <div class="item-body">
-                  <p>{{ posts.minDescription }}</p>
+                  <p>{{ offer.description }}</p>
                 </div>
 
                 <footer>
                   <ul class="details cols-3">
                     <li>
                       <i class="fa fa-map-marker"></i>
-                      <span>{{ posts.location }}</span>
+                      <span>{{ offer.location }}</span>
                     </li>
                     <li>
                       <i class="fa fa-certificate"></i>
-                      <span>{{ posts.sections.name }}</span>
+                      <span>{{ offer.section.name }}</span>
                     </li>
                   </ul>
                 </footer>
