@@ -61,12 +61,6 @@
         <div class="col-xs-12">
           <div class="item-block">
             <header>
-              {% if offer.business %}
-              <a href="{{ path('businesses_show', {'id': offer.business.id}) }}"><img
-                  src="{{ asset('assets/img/logo-google.jpg') }}" alt=""></a>
-              {% else %}
-              <img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
-              {% endif %}
               <div class="hgroup">
                 <h4>
                   <a href="{{ path('offers_show', {'id': offer.id}) }}">{{ offer.title }}</a>
@@ -74,8 +68,6 @@
                 <h5>
                   {% if offer.business %}
                   <a href="{{ path('businesses_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
-                  {% else %}
-                  attente BDD
                   {% endif %}
                 </h5>
               </div>
