@@ -90,6 +90,7 @@
 				<p>Description de l'entreprise, de l'emploi proposé, des compétences recherchées...
 				</p>
 			</header>
+			<p>Certaines descriptions (trop longues ?) ne sont pas responsives, et ça pop une balise paragraphe non censurée dans la BDD</p>
 			{% if not form.description.vars.valid %}
 				<div class="has-error">
 					{{ form_widget(form.description) }}
@@ -101,7 +102,7 @@
 			{{ form_errors(form.description) }}
 
 		</div>
-		{# <a href="{{ path('offers_index') }}">back to list</a> #}
+		{# <a href="{{ path('offer_list') }}">back to list</a> #}
 	</section>
 	<!-- END Job detail -->
 
@@ -110,11 +111,11 @@
 		<div class="container">
 			<header class="section-header">
 				<span>Terminé ?</span>
-				<h2>Déposer votre offre!</h2>
+				<h2>Valider votre offre!</h2>
 			</header>
 
 			<p class="text-center">
-				{{ form_widget(form.submit, { 'label': 'Créer une annonce' }) }}
+				{{ form_widget(form.submit, { 'label': 'Valider' }) }}
 			</p>
 
 		</div>

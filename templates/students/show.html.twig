@@ -1,70 +1,274 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Students{% endblock %}
+{% block title %}Liste des étudiants
+{% endblock %}
 
 {% block body %}
-    <h1>Students</h1>
+	<!-- Page header -->
+	<header class="page-header bg-img" style="background-image: url(assets/img/bg-banner1.jpg)">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4">
+					<img src="assets/img/avatar.jpg" alt="">
+				</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>id</th>
-                <td>{{ student.id }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ student.image }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ student.firstname }}</td>
-            </tr>
-            <tr>
-                <th>MinDescription</th>
-                <td>{{ student.minDescription }}</td>
-            </tr>
-            <tr>
-                <th>Location</th>
-                <td>{{ student.location }}</td>
-            </tr>
-            <tr>
-                <th>Website</th>
-                <td>{{ student.website }}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ student.age }}</td>
-            </tr>
-            <tr>
-                <th>PhoneNumber</th>
-                <td>{{ student.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ student.email }}</td>
-            </tr>
-            <tr>
-                <th>CoverImage</th>
-                <td>{{ student.coverImage }}</td>
-            </tr>
-            <tr>
-                <th>Facebook</th>
-                <td>colonne supprimée de la base</td>
-            </tr>
-            <tr>
-                <th>Twitter</th>
-                <td>{{ student.twitter }}</td>
-            </tr>
-            <tr>
-                <th>Github</th>
-                <td>{{ student.github }}</td>
-            </tr>
-        </tbody>
-    </table>
+				<div class="col-xs-12 col-sm-8 header-detail">
+					<div class="hgroup">
+						<h1>{{student.firstname}}
+							{{student.lastname}}</h1>
+						<h3>{{student.section.name}}</h3>
+					</div>
+					<hr>
+					<p class="lead">{{student.mindescription}}</p>
 
-    <a href="{{ path('students_index') }}">back to list</a>
+					<ul class="details cols-2">
+						<li>
+							<i class="fa fa-map-marker"></i>
+							<span>{{student.location}}</span>
+						</li>
 
-    <a href="{{ path('students_edit', {'id': student.id}) }}">edit</a>
+						<li>
+							<i class="fa fa-globe"></i>
+							<a href="#">
+								{% if student.website %}
+									{{student.website}}{% else %}Pas de site internet
+								{% endif %}
+							</a>
+						</li>
 
-    {{ include('students/_delete_form.html.twig') }}
+						<li>
+							<i class="fa fa-money"></i>
+							<span>Bobby il veut un gros salaire hein !</span>
+						</li>
+
+						<li>
+							<i class="fa fa-birthday-cake"></i>
+							<span>{{student.age}}</span>
+						</li>
+
+						<li>
+							<i class="fa fa-phone"></i>
+							<span>{{student.phonenumber}}</span>
+						</li>
+
+						<li>
+							<i class="fa fa-envelope"></i>
+							<a href="#">{{student.email}}</a>
+						</li>
+					</ul>
+
+					<div class="tag-list">
+						<span>HTML5</span>
+						<span>CSS3</span>
+						<span>Bootstrap</span>
+						<span>ReactJS</span>
+						<span>SASS / LESS</span>
+						<span>Grunt / Gulp</span>
+						<span>Wordpress</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="button-group">
+				<ul class="social-icons">
+					<li>
+						<a class="facebook" href="#">
+							<i class="fa fa-facebook"></i>
+						</a>
+					</li>
+					<li>
+						<a class="twitter" href="#">
+							<i class="fa fa-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a class="dribbble" href="#">
+							<i class="fa fa-dribbble"></i>
+						</a>
+					</li>
+					<li>
+						<a class="linkedin" href="#">
+							<i class="fa fa-linkedin"></i>
+						</a>
+					</li>
+					<li>
+						<a class="instagram" href="#">
+							<i class="fa fa-instagram"></i>
+						</a>
+					</li>
+				</ul>
+
+				<div class="action-buttons">
+					<a class="btn btn-gray" href="#">Télécharger le CV</a>
+					<a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contacter</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- END Page header -->
+
+	<!-- Main container -->
+	<main>
+
+		<!-- Education -->
+		<section>
+			<div class="container">
+
+				<header class="section-header">
+					<span>Derniers diplômes (pourquoi derniers ??)</span>
+					<h2>Diplômes</h2>
+				</header>
+				{% for education in educations %}
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="item-block">
+								<header>
+									<img src="assets/img/logo-mit.png" alt="">
+									<div class="hgroup">
+										<h4>{{education.degree}}
+											<small>{{education.speciality}}</small>
+										</h4>
+										<h5>{{education.schoolname}}</h5>
+									</div>
+									<h6 class="time">{{education.datefrom|date('Y')}} - {{education.dateto|date('Y')}}</h6>
+								</header>
+								<div class="item-body">
+									<p>Pas de colonne correspondante dans la BDD (educations->description ???).</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</section>
+		<!-- END Education -->
+
+		<!-- Work Experience -->
+		<section class="bg-alt">
+			<div class="container">
+				<header class="section-header">
+					<span>Derniers postes occupés (pourquoi derniers ??)</span>
+					<h2>Expérience professionnelle</h2>
+				</header>
+
+				<div
+					class="row">
+
+					<!-- Work item -->
+                    {% for experience in experiences %}
+					<div class="col-xs-12">
+						<div class="item-block">
+							<header>
+								<img src="assets/img/logo-google.jpg" alt="">
+								<div class="hgroup">
+									<h4>{{experience.title}}</h4>
+									<h5>{{experience.post}}</h5>
+								</div>
+								<h6 class="time">{{experience.datefrom|date('Y')}} - {{experience.dateto|date('Y')}}</h6>
+							</header>
+							<div class="item-body">
+								<p>{{experience.description}}</p>
+								<ul>
+									<li>lol</li>
+									<li>comment</li>
+									<li>tu
+									</li>
+									<li>veux
+									</li>
+									<li>faire
+									</li>
+									<li>ça
+									</li>
+									<li>avec un champs varchar</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+					<!-- END Work item -->
+
+				</div>
+
+			</div>
+		</section>
+		<!-- END Work Experience -->
+
+		<!-- Skills -->
+		<section>
+			<div class="container">
+				<header class="section-header">
+					<span>Expertise Areas (??)</span>
+					<h2>Compétences</h2>
+				</header>
+
+				<br>
+				<ul class="skills cols-3">
+					<li>
+						<div>
+							<span class="skill-name">Comment</span>
+							<span class="skill-value">100%</span>
+						</div>
+						<div class="progress">
+							<div class="progress-bar" style="width: 100%;"></div>
+						</div>
+					</li>
+
+					<li>
+						<div>
+							<span class="skill-name">Tu</span>
+							<span class="skill-value">95%</span>
+						</div>
+						<div class="progress">
+							<div class="progress-bar" style="width: 95%;"></div>
+						</div>
+					</li>
+
+					<li>
+						<div>
+							<span class="skill-name">Définis</span>
+							<span class="skill-value">80%</span>
+						</div>
+						<div class="progress">
+							<div class="progress-bar" style="width: 80%;"></div>
+						</div>
+					</li>
+
+					<li>
+						<div>
+							<span class="skill-name">Les</span>
+							<span class="skill-value">60%</span>
+						</div>
+						<div class="progress">
+							<div class="progress-bar" style="width: 60%;"></div>
+						</div>
+					</li>
+
+					<li>
+						<div>
+							<span class="skill-name">Skills</span>
+							<span class="skill-value">70%</span>
+						</div>
+						<div class="progress">
+							<div class="progress-bar" style="width: 70%;"></div>
+						</div>
+					</li>
+
+					<li>
+						<div>
+							<span class="skill-name">A juger ??</span>
+							<span class="skill-value">90%</span>
+						</div>
+						<div class="progress">
+							<div class="progress-bar" style="width: 90%;"></div>
+						</div>
+					</li>
+				</ul>
+
+			</div>
+		</section>
+		<!-- END Skills -->
+
+	</main>
+	<!-- END Main container -->
+
 {% endblock %}

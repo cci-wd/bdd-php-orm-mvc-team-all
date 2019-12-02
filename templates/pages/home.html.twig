@@ -61,21 +61,13 @@
         <div class="col-xs-12">
           <div class="item-block">
             <header>
-              {% if offer.businesses %}
-              <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}"><img
-                  src="{{ asset('assets/img/logo-google.jpg') }}" alt=""></a>
-              {% else %}
-              <img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
-              {% endif %}
               <div class="hgroup">
                 <h4>
-                  <a href="{{ path('offers_show', {'id': offer.id}) }}">{{ offer.title }}</a>
+                  <a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
                 </h4>
                 <h5>
-                  {% if offer.businesses %}
-                  <a href="{{ path('businesses_show', {'id': offer.businesses.id}) }}">{{ offer.businesses.name }}</a>
-                  {% else %}
-                  attente BDD
+                  {% if offer.business %}
+                  <a href="{{ path('business_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
                   {% endif %}
                 </h5>
               </div>
@@ -95,7 +87,7 @@
                 {{ offer.statut ? 'En cours' : 'En attente de validation' }}</p>
 
               <div class="action-btn">
-                <a class="btn btn-xs btn-gray" href="{{ path('offers_edit', {'id': offer.id}) }}">Modifier</a>
+                <a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
               </div>
             </footer>
           </div>

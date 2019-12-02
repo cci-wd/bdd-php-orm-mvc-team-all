@@ -3,9 +3,5 @@
 {% block title %}Edit Businesses{% endblock %}
 
 {% block body %}
-    {{ include('businesses/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('businesses_index') }}">back to list</a>
-
-    {{ include('businesses/_delete_form.html.twig') }}
+    {{ include('businesses/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 {% endblock %}
