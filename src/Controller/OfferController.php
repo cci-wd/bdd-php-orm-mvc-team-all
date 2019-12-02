@@ -5,26 +5,31 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Offer;
 use App\Entity\Section;
-use App\Entity\Business;
-use App\Form\OffersType;
+use App\Form\OfferType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/offres")
+ * @Route("/offre")
  * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
  */
 class OfferController extends AbstractController
 {
     /**
-     * @Route("/", name="offers_index", methods={"GET"})
+     * @Route("/", name="offer_index", methods={"GET"})
      */
     public function index(Request $request): Response
     {
+        return $this->redirectToRoute('offer_list');
+    }
+
+    /**
+     * @Route("/liste", name="offer_list", methods={"GET"})
+     */
+    function list(Request $request): Response {
         $sections = $this->getDoctrine()
             ->getRepository(Section::class)
             ->findAll();
@@ -60,7 +65,7 @@ class OfferController extends AbstractController
         $query = $queryBuilder->getQuery();
         $offers = $query->getResult();
 
-        return $this->render('students/offers.html.twig', [
+        return $this->render('offers/index.html.twig', [
             'offers' => $offers,
             'parameters' => [
                 'keyword' => $keyword,
@@ -74,7 +79,7 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/creer", name="offers_new", methods={"GET","POST"})
+     * @Route("/creer", name="offer_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
      */
     public function create(Request $request): Response
@@ -85,7 +90,7 @@ class OfferController extends AbstractController
         $offer->setStatut(0);
         $offer->setBusiness($user->getBusiness());
         $offer->setPublishDate(new \DateTime());
-        $form = $this->createForm(OffersType::class, $offer);
+        $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -93,7 +98,7 @@ class OfferController extends AbstractController
             $entityManager->persist($offer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('offers_index');
+            return $this->redirectToRoute('offer_index');
         }
 
         return $this->render('offers/new.html.twig', [
@@ -108,9 +113,9 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="offers_show", methods={"GET"})
+     * @Route("/{id}", name="offer_show", methods={"GET"})
      */
-    public function show( $offer): Response
+    public function show(Offer $offer): Response
     {
         return $this->render('offers/show.html.twig', [
             'offer' => $offer,
@@ -120,20 +125,20 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier", name="offers_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="offer_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
      */
     public function edit(Request $request, Offer $offer): Response
     {
         $offer->setStatut(0);
         $offer->setPublishDate(new \DateTime());
-        $form = $this->createForm(OffersType::class, $offer);
+        $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('offers_index');
+            return $this->redirectToRoute('offer_list');
         }
 
         return $this->render('offers/edit.html.twig', [
@@ -147,7 +152,7 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="offers_delete", methods={"DELETE"})
+     * @Route("/{id}", name="offer_delete", methods={"DELETE"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
      */
     public function delete(Request $request, Offer $offer): Response
@@ -158,6 +163,6 @@ class OfferController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('offers_index');
+        return $this->redirectToRoute('offer_index');
     }
 }
