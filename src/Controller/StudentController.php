@@ -355,13 +355,75 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/lm", name="students_lm", methods={"POST"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Route("/{id}/lm", name="students_lm", methods={"GET"})
      */
-    public function generateLm()
+    public function generateLm(Student $student, Business $business, Offer $offer, Section $section)
     {
+        $object = "Objet : Candidature à l'offre de contrat en alternance de".' '. $offer->getTitle();
+        $signature = $student->getFirstName().' '.$student->getLastName();
+        $company = $business->getName();
+        $section = $section->getName();
+
+        $text = "<br>Madame, Monsieur,<br><br>
+
+        Actuellement en classe de terminale et étant admis en $section, au sein de la CCI Formation Alternance, je suis à la recherche d'un contrat d'apprentissage pour la rentrée 2020, à partir du 2 septembre pour une durée de X mois (toujours préciser de manière claire ses disponibilités).<br><br>
+        
+        Votre entreprise $company, leader dans le domaine des... (acteur incontournable dans le monde de la distribution... montrez ici que vous connaissez bien l'entreprise en connaissant son secteur, et si possible réussir à caser que vous êtes séduit par l'entreprise), représente pour moi une très grande opportunité de m'ouvrir au domaine de l'industrie grâce à ses activités diverses. Passionné par la finance, je souhaite maintenant me former dans ce domaine pour y travailler dans le long terme. (indiquez ici votre projet à long terme, l'idée étant de montrer que vous souhaitez vous engager de manière très réfléchie dans ce secteur, vers ce type de métiers).<br><br>
+        
+        J'ai choisi cette formation en alternance, sur une durée de xx mois, car elle représente pour moi le moyen le plus efficace de mettre à profit mes connaissances et d'acquérir les savoirs pratiques nécessaires à l'obtention future de mon diplôme et la construction de mon début de carrière.
+        En alliant cours théorique et pratique je serai très opérationnel et compétent pour remplir toutes les missions que vous pourrez me confier comme l'organisation d'événements ou encore la gestion des factures. (indiquer ici des missions que vous aurez pu voir dans l'annonce d'alternance, ce qui montre que vous avez bien lu l'annonce et que vous avez pu en ressortir un ou deux points clés).<br><br>
+        
+        Dynamique et motivé, je suis déterminé à me former rapidement et efficacement, et je suis prêt à m'investir totalement afin de mener à bien les tâches qui me seront confiées.<br><br>
+        
+        C'est avec plaisir que je vous exposerai de vive voix mes motivations au cours d'un entretien.<br><br>
+        
+        Dans l'attente de votre réponse, je vous prie de croire, Madame, Monsieur, à l'assurance de toute ma considération.<br><br>
+        
+        $signature ";
+        
+        
         $mpdf = new \Mpdf\Mpdf();
-        $mpdf->WriteHTML('<h1>Lettre de motivation !</h1>');
+        $mpdf->WriteHTML('<h3 style="text-align:center">Lettre de motivation</h3> 
+        <table width="100%">
+        <tr>
+            <td>
+                <h3>'.$student->getFirstName().' '.$student->getLastName().'</h3>
+                <p>Adresse: '.$student->getLocation().'<p>
+                <p>Téléphone: '.$student->getPhoneNumber().'</p>
+                <p>Email: '.$student->getEmail().'</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:right">
+                <h3>'.$business->getName().'</h3>
+                <p>Adresse: '.$business->getLocation().'<p>
+                <p>Téléphone: '.$business->getPhoneNumber().'</p>
+                <p>Email: '.$business->getEmail().'</p>
+            </td>
+        </tr>
+        <br>
+        <tr>
+            <td style="text-align:right">
+            <p>Nouméa, le 02 Décembre 2019, </p>
+            </td>
+        </tr>
+        <br>
+        <tr>
+            <td style="">
+            <p>'.$object.'</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="">
+            <p>'.$text.'</p>
+            </td>
+        </tr>
+
+    </table>
+
+        
+        ');
+       
         $mpdf->Output();
     }
 }
