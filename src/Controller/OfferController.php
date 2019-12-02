@@ -9,9 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/offres")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
  */
 class OfferController extends AbstractController
 {
@@ -36,6 +39,7 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/creer", name="offers_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
      */
     public function create(Request $request): Response
     {
@@ -81,6 +85,7 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/{id}/modifier", name="offers_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
      */
     public function edit(Request $request, Offer $offer): Response
     {
@@ -107,6 +112,7 @@ class OfferController extends AbstractController
 
     /**
      * @Route("/{id}", name="offers_delete", methods={"DELETE"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
      */
     public function delete(Request $request, Offer $offer): Response
     {

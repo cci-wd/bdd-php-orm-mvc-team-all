@@ -12,12 +12,14 @@ use App\Form\BusinessesType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 /**
-     * @Route("/entreprises")
-     */
+ * @Route("/entreprises")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
+ */
 class BusinessController extends AbstractController
 {
     /**
@@ -59,6 +61,7 @@ class BusinessController extends AbstractController
 
     /**
      * @Route("/creer", name="businesses_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     function create(Request $request): Response {
         $business = new Business();
@@ -135,7 +138,8 @@ class BusinessController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier-entreprise", name="businesses_edit", methods={"GET","POST"})
+     * @Route("/{id}/modifier", name="businesses_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENTREPRISE')")
      */
     public function edit(Request $request, Business $business): Response
     {
@@ -158,6 +162,7 @@ class BusinessController extends AbstractController
 
     /**
      * @Route("/{id}", name="businesses_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Business $business): Response
     {

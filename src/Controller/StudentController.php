@@ -16,9 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @Route("/apprenant")
+ * @Route("/apprenants")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
  */
 class StudentController extends AbstractController
 {
@@ -74,6 +77,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/creer", name="students_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function create(Request $request, FileUploader $fileUploader): Response
     {
@@ -207,6 +211,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}/modifier", name="students_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
      */
     public function edit(Request $request, Student $student, FileUploader $fileUploader): Response
     {
@@ -236,6 +241,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}", name="students_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Student $student): Response
     {
@@ -250,6 +256,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}/cv", name="students_cv", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
      */
     public function generateCv(Student $student)
     {
@@ -339,6 +346,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}/lm", name="students_lm", methods={"POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
      */
     public function generateLm()
     {
