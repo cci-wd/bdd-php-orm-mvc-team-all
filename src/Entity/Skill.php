@@ -37,8 +37,8 @@ class Skill
 
     /**
      * @var \Student
-     *
-     * @ORM\ManyToOne(targetEntity="Student")
+     * 
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="skills")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      * })

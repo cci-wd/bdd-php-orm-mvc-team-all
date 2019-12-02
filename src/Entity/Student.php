@@ -169,9 +169,15 @@ class Student
      */
     private $educations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="student", fetch="EAGER")
+     */
+    private $skills;
+
     public function __construct()
     {
         $this->educations = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -382,6 +388,37 @@ class Student
             // set the owning side to null (unless already changed)
             if ($education->getStudent() === $this) {
                 $education->setStudent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+            $skill->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skills->contains($skill)) {
+            $this->skills->removeElement($skill);
+            // set the owning side to null (unless already changed)
+            if ($skill->getStudent() === $this) {
+                $skill->setStudent(null);
             }
         }
 
