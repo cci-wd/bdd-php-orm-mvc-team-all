@@ -71,45 +71,30 @@ class AppFixtures extends Fixture
         // USER 0
         $user0 = new User();
         $user0->setUsername('user0');
-        $user0->setPhone('+687111111');
-        $user0->setLocation('Nouméa');
-        $user0->setEmail('user@cci-formation.nc');
         $user0->setPassword($this->encoder->encodePassword($user0, "1234"));
         $user0->setRoles(["ROLE_ADMIN"]);
 
         // USER 1
         $user1 = new User();
         $user1->setUsername('user1');
-        $user1->setPhone('+687111112');
-        $user1->setLocation('Nouméa');
-        $user1->setEmail('user@cci-formation.nc');
         $user1->setPassword($this->encoder->encodePassword($user1, "1234"));
         $user1->setRoles(["ROLE_STUDENT"]);
 
         // USER 2
         $user2 = new User();
         $user2->setUsername('user2');
-        $user2->setPhone('+687111113');
-        $user2->setLocation('Nouméa');
-        $user2->setEmail('user@cci-formation.nc');
         $user2->setPassword($this->encoder->encodePassword($user2, "1234"));
         $user2->setRoles(["ROLE_BUSINESS"]);
 
         // USER 3
         $user3 = new User();
         $user3->setUsername('user3');
-        $user3->setPhone('+687111114');
-        $user3->setLocation('Bourail');
-        $user3->setEmail('user@cci-formation.nc');
         $user3->setPassword($this->encoder->encodePassword($user3, "1234"));
         $user3->setRoles(["ROLE_STUDENT"]);
 
         // USER 4
         $user4 = new User();
         $user4->setUsername('user4');
-        $user4->setPhone('+687111115');
-        $user4->setLocation('Bourail');
-        $user4->setEmail('user@cci-formation.nc');
         $user4->setPassword($this->encoder->encodePassword($user4, "1234"));
         $user4->setRoles(["ROLE_BUSINESS"]);
 
