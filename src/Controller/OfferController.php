@@ -57,8 +57,8 @@ class OfferController extends AbstractController
 
         if ($section && $section != "Toutes les sections") {
             $queryBuilder
-                ->leftJoin('o.sections', 'sections')
-                ->andWhere('sections.name = :section')
+                ->leftJoin('o.section', 'section')
+                ->andWhere('section.name = :section')
                 ->setParameter('section', $section);
         }
 
