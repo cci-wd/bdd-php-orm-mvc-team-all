@@ -117,6 +117,8 @@ class StudentController extends AbstractController
             'form' => $form->createView(),
             'meta_title' => "Mon profil",
             'meta_desc' => "robots.txt",
+            'form_title' => "Mon profil",
+            'form_desc' => "Profil d'un compte apprenant"
         ]);
     }
 

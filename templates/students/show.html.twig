@@ -31,7 +31,9 @@
 							<i class="fa fa-globe"></i>
 							<a href="#">
 								{% if student.website %}
-									{{student.website}}{% else %}Pas de site internet
+									{{student.website}}
+								{% else %}
+									Pas de site internet
 								{% endif %}
 							</a>
 						</li>
@@ -171,14 +173,10 @@
 								<ul>
 									<li>lol</li>
 									<li>comment</li>
-									<li>tu
-									</li>
-									<li>veux
-									</li>
-									<li>faire
-									</li>
-									<li>ça
-									</li>
+									<li>tu</li>
+									<li>veux</li>
+									<li>faire</li>
+									<li>ça</li>
 									<li>avec un champs varchar</li>
 								</ul>
 							</div>
@@ -267,8 +265,9 @@
 			</div>
 		</section>
 		<!-- END Skills -->
-
 	</main>
 	<!-- END Main container -->
-
+	{% if is_granted('ROLE_ADMIN') %}
+		{{ include('students/_delete_form.html.twig') }}
+	{% endif %}
 {% endblock %}

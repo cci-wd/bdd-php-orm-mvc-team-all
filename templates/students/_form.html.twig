@@ -163,8 +163,8 @@
     <div class="container">
 
       <header class="section-header">
-        <span>Get connected</span>
-        <h2>Social media</h2>
+        <span>Restez connectés</span>
+        <h2>Médias sociaux</h2>
       </header>
 
       <div class="row">
@@ -172,9 +172,9 @@
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon">
-                <i class="fa fa-facebook"></i>
+                <i class="fa fa-linkedin"></i>
               </span>
-              <input type="text" class="form-control" placeholder="facebook">
+              {{form_widget(form.linkedin)}}
             </div>
           </div>
 
@@ -198,14 +198,14 @@
             </div>
           </div>
 
-          <div class="form-group">
+          {# <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon">
                 <i class="fa fa-youtube"></i>
               </span>
               <input type="text" class="form-control" placeholder="Profile URL">
             </div>
-          </div>
+          </div> #}
         </div>
       </div>
 
@@ -476,15 +476,15 @@
   <section class=" bg-img" style="background-image: url(assets/img/bg-facts.jpg);">
     <div class="container">
       <header class="section-header">
-        <span>Are you done?</span>
-        <h2>Submit resume</h2>
-        <p>Please review your information once more and press the below button to put your resume online.</p>
+        <span>Terminer?</span>
+        <h2>Soumettre</h2>
+        <p>Veuillez revoir vos informations une fois de plus et appuyer sur le bouton ci-dessous pour mettre votre entreprise en ligne.</p>
       </header>
 
       <p class="text-center">
         {{ form_widget(form.submit, { 'label': 'Valider' }) }}
       </p>
-      <a href="{{ path('student_index') }}"> <<< backtolist </a>
+      <a href="{{ path('student_index') }}" class="btn btn-primary"> <<< backtolist </a>
 	  </div>
 	</section>
   <!--ENDSubmit-->

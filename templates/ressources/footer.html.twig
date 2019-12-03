@@ -37,7 +37,7 @@
       <h6>Entreprises</h6>
       <ul class="footer-links">
         <li><a href="{{ path("business_profile") }}">Mon Entreprise</a></li>
-        <li><a href="{{ path('business_show', {'id': app.user.business.id}) }}">Mes offres d'emploi</a></li>
+        {# <li><a href="{{ path('business_show', {'id': app.user.business.id}) }}">Mes offres d'emploi</a></li> #}
         <li><a href="{{ path("student_list") }}">Les Apprenants</a></li>
       </ul>
     {% endif %}
