@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"}), @ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -23,23 +23,9 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="username", type="string", length=180, unique=true)
      */
     private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="location", type="string", length=255, nullable=false)
-     */
-    private $location;
 
     /**
      * @var string
@@ -75,18 +61,6 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**

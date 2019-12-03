@@ -70,45 +70,35 @@ class AppFixtures extends Fixture
 
         // USER 0
         $user0 = new User();
-        $user0->setName('user0');
-        $user0->setUsername('user0');
-        $user0->setLocation('Nouméa');
+        $user0->setUsername('+687123456');
         $user0->setEmail('user@cci-formation.nc');
         $user0->setPassword($this->encoder->encodePassword($user0, "1234"));
         $user0->setRoles(["ROLE_ADMIN"]);
 
         // USER 1
         $user1 = new User();
-        $user1->setName('user1');
-        $user1->setUsername('user1');
-        $user1->setLocation('Nouméa');
+        $user1->setUsername('+687123457');
         $user1->setEmail('user@cci-formation.nc');
         $user1->setPassword($this->encoder->encodePassword($user1, "1234"));
         $user1->setRoles(["ROLE_STUDENT"]);
 
         // USER 2
         $user2 = new User();
-        $user2->setName('user2');
-        $user2->setUsername('user2');
-        $user2->setLocation('Nouméa');
+        $user2->setUsername('+687123458');
         $user2->setEmail('user@cci-formation.nc');
         $user2->setPassword($this->encoder->encodePassword($user2, "1234"));
         $user2->setRoles(["ROLE_BUSINESS"]);
 
         // USER 3
         $user3 = new User();
-        $user3->setName('user3');
-        $user3->setUsername('user3');
-        $user3->setLocation('Nouméa');
+        $user3->setUsername('+687123459');
         $user3->setEmail('user@cci-formation.nc');
         $user3->setPassword($this->encoder->encodePassword($user3, "1234"));
         $user3->setRoles(["ROLE_STUDENT"]);
 
         // USER 4
         $user4 = new User();
-        $user4->setName('user4');
-        $user4->setUsername('user4');
-        $user4->setLocation('Nouméa');
+        $user4->setUsername('+687123450');
         $user4->setEmail('user@cci-formation.nc');
         $user4->setPassword($this->encoder->encodePassword($user4, "1234"));
         $user4->setRoles(["ROLE_BUSINESS"]);
