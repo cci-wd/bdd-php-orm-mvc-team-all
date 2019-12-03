@@ -55,7 +55,11 @@ class BusinessController extends AbstractController
 
         return $this->render('businesses/index.html.twig', [
             'businesses' => $businesses,
-            'keyword' => $keyword,
+            'parameters' => [
+                'keyword' => $keyword,
+                'location' => $location,
+
+            ],
             'location' => $location,
             'cities' => $cities,
             'meta_title' => 'Liste des entreprises',
