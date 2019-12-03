@@ -71,6 +71,10 @@ class StudentType extends AbstractType
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'file'],
                 'required' => false,
             ])
+            ->add('linkedin', TextType::class, [
+                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Linkedin'],
+                'required' => false,
+            ])
             ->add('twitter', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Twitter'],
                 'required' => false,

@@ -86,15 +86,7 @@ class Offer
      */
     private $publishDate;
 
-    /**
-     * @var \Business
-     *
-     * @ORM\ManyToOne(targetEntity="Business")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="business_id", referencedColumnName="id")
-     * })
-     */
-    private $business;
+
 
     /**
      * @var \Section
@@ -105,6 +97,16 @@ class Offer
      * })
      */
     private $section;
+
+    /**
+     * @var \Business
+     * 
+     * @ORM\ManyToOne(targetEntity="App\Entity\Business", inversedBy="offers")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $business;
 
     public function getId(): ?int
     {
