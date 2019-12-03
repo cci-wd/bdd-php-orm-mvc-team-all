@@ -4,12 +4,54 @@
 {% endblock %}
 
 {% block body %}
-	<header class="page-header bg-img size-lg" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
-		<div class="container no-shadow">
+	<header class="page-header bg-img" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
+		<div class="container page-name">
 			<h1 class="text-center">Liste des offres d'emploi disponibles</h1>
-			<p class="lead text-center">
-				Ajouter du texte ici ?
-			</p>
+			<p class="lead text-center">Utilisez le champ de recherche suivant pour trouver les offres qui vous conviennent le mieux</p>
+		<div class="container">
+			<form action="#">
+
+				<div class="row">
+					<div class="form-group col-xs-12 col-sm-4">
+						<input type="text" name="keyword" class="form-control" placeholder="Mots clés:" value={{ parameters.keyword }}>
+					</div>
+
+					<div class="form-group col-xs-12 col-sm-4">
+						<select name="location" class="form-control selectpicker">
+							<option selected>Toutes les communes</option>
+							{% for city in cities %}
+								{% if parameters.location == city.name %}
+									<option selected>{{ city.name }}</option>
+								{% else %}
+									<option>{{ city.name }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+
+					<div class="form-group col-xs-12 col-sm-4">
+						<select name="section" class="form-control selectpicker">
+							<option selected>Toutes les sections</option>
+							{% for section in sections %}
+								{% if parameters.section == section.name %}
+									<option selected>{{ section.name }}</option>
+								{% else %}
+									<option>{{ section.name }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+
+				</div>
+
+				<div class="button-group">
+					<div class="action-buttons">
+						<button class="btn btn-primary">Filtrer</button>
+					</div>
+				</div>
+
+			</form>
+
 		</div>
 	</header>
 	<main>
@@ -19,7 +61,7 @@
 					<div class="col-xs-12 text-right">
 						<h5>{{offers|length}}
 							offres trouvées.</h5>
-						{% if is_granted('ROLE_ENTREPRISE') %}
+						{% if is_granted('ROLE_BUSINESS') %}
 							<a href="{{ path('offer_new') }}" class="btn btn-primary btn-sm">Déposer une offre</a>
 						{% endif %}
 					</div>

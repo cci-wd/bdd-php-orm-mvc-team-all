@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Offer;
 use App\Entity\Skill;
 use App\Entity\Section;
@@ -20,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/apprenant")
- * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT') or is_granted('ROLE_BUSINESS')")
  */
 class StudentController extends AbstractController
 {
@@ -35,25 +36,61 @@ class StudentController extends AbstractController
     /**
      * @Route("/liste", name="student_list", methods={"GET"})
      */
-    public function list(): Response
+    public function list(Request $request): Response
     {
-        $students = $this->getDoctrine()
-            ->getRepository(Student::class)
-            ->findAll();
-
         $sections = $this->getDoctrine()
             ->getRepository(Section::class)
             ->findAll();
 
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->findAll();
+            
+        $keyword = $request->query->get("keyword");
+        $location = $request->query->get("location");
+        $section = $request->query->get("section");
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('student')
+            ->from(Student::class, 'student')
+            ->where('student.firstName LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%');
+
+ 
+
+        if ($location && $location != "Toutes les communes") {
+            $queryBuilder->andWhere('student.location = :location')
+                ->setParameter('location', $location);
+        }
+
+        if ($section && $section != "Toutes les sections") {
+            $queryBuilder
+                ->leftJoin('student.section', 'section')
+                ->andWhere('section.name = :section')
+                ->setParameter('section', $section);
+        }
+
+        $query = $queryBuilder->getQuery();
+        $students = $query->getResult();
+
         return $this->render('students/index.html.twig', [
             'students' => $students,
+            'parameters' => [
+                'keyword' => $keyword,
+                'location' => $location,
+                'section' => $section,
+            ],
             'sections' => $sections,
+            'cities' => $cities,
+            'meta_title' => "Liste des alternants",
         ]);
     }
 
     /**
      * @Route("/mon-profil", name="student_profile", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function profile(Request $request, FileUploader $fileUploader): Response
     {
@@ -207,7 +244,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}/cv", name="student_cv", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function generateCv(Student $student)
     {
@@ -307,7 +344,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/{id}/lm", name="student_lm", methods={"POST"})
-     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT')")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function generateLm(Student $student, Business $business, Offer $offer, Section $section)
     {

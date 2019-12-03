@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/entreprise")
- * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_APPRENANT') or is_granted('ROLE_ENTREPRISE')")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT') or is_granted('ROLE_BUSINESS')")
  */
 class BusinessController extends AbstractController
 {
@@ -55,7 +55,11 @@ class BusinessController extends AbstractController
 
         return $this->render('businesses/index.html.twig', [
             'businesses' => $businesses,
-            'keyword' => $keyword,
+            'parameters' => [
+                'keyword' => $keyword,
+                'location' => $location,
+
+            ],
             'location' => $location,
             'cities' => $cities,
             'meta_title' => 'Liste des entreprises',
@@ -64,7 +68,7 @@ class BusinessController extends AbstractController
 
     /**
      * @Route("/mon-profil", name="business_profile", methods={"GET", "POST"})
-     * @Security("is_granted('ROLE_ENTREPRISE')")
+     * @Security("is_granted('ROLE_BUSINESS')")
      */
     public function profile(Request $request): Response
     {
