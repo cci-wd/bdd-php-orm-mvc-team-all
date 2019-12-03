@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Offer;
+use App\Entity\Skill;
+use App\Entity\Section;
+use App\Entity\Student;
 use App\Entity\Business;
 use App\Entity\Education;
-use App\Entity\Experience;
-use App\Entity\Offer;
-use App\Entity\Section;
-use App\Entity\Skill;
-use App\Entity\Student;
 use App\Form\StudentType;
+use App\Entity\Experience;
 use App\Service\FileUploader;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/apprenant")
@@ -110,6 +111,8 @@ class StudentController extends AbstractController
         return $this->render('students/new.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
+            'form_title' => "Création",
+            'form_desc' => "Création d'un compte apprenant"
         ]);
     }    
 
@@ -144,6 +147,14 @@ class StudentController extends AbstractController
      */
     public function edit(Request $request, Student $student, FileUploader $fileUploader): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $originalSkills = new ArrayCollection();
+
+        foreach ($student->getSkills() as $skill) {
+            $originalSkills->add($skill);
+        }
+
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
@@ -153,6 +164,15 @@ class StudentController extends AbstractController
             if ($image) {
                 $imageName = $fileUploader->upload($image);
                 $student->setImage($imageName);
+            }
+
+            foreach ($originalSkills as $skill) {
+                if (false === $student->getSkills()->contains($skill)) {
+                    $skill->getStudent()->removeSkill($skill);
+                    $skill->setStudent(null);
+                    $entityManager->persist($skill);
+                    $entityManager->remove($skill);
+                }
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -165,6 +185,8 @@ class StudentController extends AbstractController
             'form' => $form->createView(),
             'meta_title' => "Profil",
             'meta_desc' => "Profil apprenant",
+            'form_title' => "Modification",
+            'form_desc' => "Modifier un compte apprenant"
         ]);
     }
 

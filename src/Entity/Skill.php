@@ -79,7 +79,7 @@ class Skill
         return $this->student;
     }
 
-    public function setStudent(?Students $student): self
+    public function setStudent(?Student $student): self
     {
         $this->student = $student;
 

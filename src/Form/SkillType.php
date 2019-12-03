@@ -15,10 +15,10 @@ class SkillType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'attr' => [ 'class' => 'form-control', 'type' => 'text', 'id' => '69']
+                'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Titre']
             ])
             ->add('percentage', TextType::class, [
-                'attr' => [ 'class' => 'form-control', 'type' => 'text']
+                'attr' => [ 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Pourcentage']
             ]);
     }
 
