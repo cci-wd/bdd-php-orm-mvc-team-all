@@ -28,27 +28,6 @@ class User implements UserInterface
     private $username;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="phone", type="string", length=180, unique=true)
-     */
-    private $phone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="location", type="string", length=255)
-     */
-    private $location;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     */
-    private $email;
-
-    /**
      * @var string The hashed password
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
@@ -94,42 +73,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(string $location): self
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-    
     /**
      * @see UserInterface
      */
