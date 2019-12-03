@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
+use App\Entity\Offer;
+use App\Entity\Skill;
+use App\Entity\Section;
+use App\Entity\Student;
 use App\Entity\Business;
 use App\Entity\Education;
-use App\Entity\Experience;
-use App\Entity\Offer;
-use App\Entity\Section;
-use App\Entity\Skill;
-use App\Entity\Student;
 use App\Form\StudentType;
+use App\Entity\Experience;
 use App\Service\FileUploader;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/apprenant")
@@ -34,19 +35,55 @@ class StudentController extends AbstractController
     /**
      * @Route("/liste", name="student_list", methods={"GET"})
      */
-    public function list(): Response
+    public function list(Request $request): Response
     {
-        $students = $this->getDoctrine()
-            ->getRepository(Student::class)
-            ->findAll();
-
         $sections = $this->getDoctrine()
             ->getRepository(Section::class)
             ->findAll();
 
+        $cities = $this->getDoctrine()
+            ->getRepository(City::class)
+            ->findAll();
+            
+        $keyword = $request->query->get("keyword");
+        $location = $request->query->get("location");
+        $section = $request->query->get("section");
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->select('student')
+            ->from(Student::class, 'student')
+            ->where('student.firstName LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%');
+
+ 
+
+        if ($location && $location != "Toutes les communes") {
+            $queryBuilder->andWhere('student.location = :location')
+                ->setParameter('location', $location);
+        }
+
+        if ($section && $section != "Toutes les sections") {
+            $queryBuilder
+                ->leftJoin('student.section', 'section')
+                ->andWhere('section.name = :section')
+                ->setParameter('section', $section);
+        }
+
+        $query = $queryBuilder->getQuery();
+        $students = $query->getResult();
+
         return $this->render('students/index.html.twig', [
             'students' => $students,
+            'parameters' => [
+                'keyword' => $keyword,
+                'location' => $location,
+                'section' => $section,
+            ],
             'sections' => $sections,
+            'cities' => $cities,
+            'meta_title' => "Liste des alternants",
         ]);
     }
 
