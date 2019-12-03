@@ -72,6 +72,11 @@ class User implements UserInterface
      */
     private $business;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $status = '0';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -199,6 +204,18 @@ class User implements UserInterface
     public function setBusiness(?Business $business): self
     {
         $this->business = $business;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
