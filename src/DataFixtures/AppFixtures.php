@@ -10,9 +10,17 @@ use App\Entity\Student;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         // $product = new Product();
@@ -66,7 +74,7 @@ class AppFixtures extends Fixture
         $user0->setUsername('user0');
         $user0->setLocation('Nouméa');
         $user0->setEmail('user@cci-formation.nc');
-        $user0->setPassword('$argon2id$v=19$m=65536,t=4,p=1$RExSYWh1eTVSdnhjSFFqMw$zhyWsvYpLmNBi6L4CYFNsAs5zqsn8AUob5CHko1g1nE');
+        $user0->setPassword($this->encoder->encodePassword($user0, "1234"));
         $user0->setRoles(["ROLE_ADMIN"]);
 
         // USER 1
@@ -75,7 +83,7 @@ class AppFixtures extends Fixture
         $user1->setUsername('user1');
         $user1->setLocation('Nouméa');
         $user1->setEmail('user@cci-formation.nc');
-        $user1->setPassword('$argon2id$v=19$m=65536,t=4,p=1$RExSYWh1eTVSdnhjSFFqMw$zhyWsvYpLmNBi6L4CYFNsAs5zqsn8AUob5CHko1g1nE');
+        $user1->setPassword($this->encoder->encodePassword($user1, "1234"));
         $user1->setRoles(["ROLE_STUDENT"]);
 
         // USER 2
@@ -84,7 +92,7 @@ class AppFixtures extends Fixture
         $user2->setUsername('user2');
         $user2->setLocation('Nouméa');
         $user2->setEmail('user@cci-formation.nc');
-        $user2->setPassword('$argon2id$v=19$m=65536,t=4,p=1$RExSYWh1eTVSdnhjSFFqMw$zhyWsvYpLmNBi6L4CYFNsAs5zqsn8AUob5CHko1g1nE');
+        $user2->setPassword($this->encoder->encodePassword($user2, "1234"));
         $user2->setRoles(["ROLE_BUSINESS"]);
 
         // USER 3
@@ -93,7 +101,7 @@ class AppFixtures extends Fixture
         $user3->setUsername('user3');
         $user3->setLocation('Nouméa');
         $user3->setEmail('user@cci-formation.nc');
-        $user3->setPassword('$argon2id$v=19$m=65536,t=4,p=1$RExSYWh1eTVSdnhjSFFqMw$zhyWsvYpLmNBi6L4CYFNsAs5zqsn8AUob5CHko1g1nE');
+        $user3->setPassword($this->encoder->encodePassword($user3, "1234"));
         $user3->setRoles(["ROLE_STUDENT"]);
 
         // USER 4
@@ -102,7 +110,7 @@ class AppFixtures extends Fixture
         $user4->setUsername('user4');
         $user4->setLocation('Nouméa');
         $user4->setEmail('user@cci-formation.nc');
-        $user4->setPassword('$argon2id$v=19$m=65536,t=4,p=1$RExSYWh1eTVSdnhjSFFqMw$zhyWsvYpLmNBi6L4CYFNsAs5zqsn8AUob5CHko1g1nE');
+        $user4->setPassword($this->encoder->encodePassword($user4, "1234"));
         $user4->setRoles(["ROLE_BUSINESS"]);
 
         // BUSINESS 0

@@ -27,9 +27,8 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
             'meta_title' => 'Connexion - CCI-LINK',
-            'meta_desc' => 'connexion'
-             
-             ]);
+            'meta_desc' => 'connexion',
+        ]);
     }
 
     /**
