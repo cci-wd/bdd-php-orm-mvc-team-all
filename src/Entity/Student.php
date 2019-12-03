@@ -96,7 +96,7 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="phone_number", type="string", length=8, nullable=false)
+     * @ORM\Column(name="phone_number", type="string", length=10, nullable=false)
      * 
      * @Assert\Length(
      *      min = 6,

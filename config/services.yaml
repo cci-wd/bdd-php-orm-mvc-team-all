@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
+    twilio_sid: '%env(string:TWILIO_SID)%'
+    twilio_token: '%env(string:TWILIO_TOKEN)%'
+    twilio_number: '%env(string:TWILIO_NUMBER)%'
 
 services:
     # default configuration for services in *this* file
@@ -30,3 +33,11 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%images_directory%'
+    
+    # ...
+    twilio.client:
+       class: Twilio\Rest\Client
+       arguments: ['%twilio_sid%', '%twilio_token%']
+  
+    # Add an alias for the twilio.client service
+    Twilio\Rest\Client: '@twilio.client'
