@@ -170,6 +170,11 @@ class Student
     private $educations;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Experience", mappedBy="student", fetch="EAGER", cascade={"persist"})
+     */
+    private $experiences;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="student", fetch="EAGER", cascade={"persist"})
      */
     private $skills;
@@ -177,6 +182,7 @@ class Student
     public function __construct()
     {
         $this->educations = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
         $this->skills = new ArrayCollection();
     }
 
@@ -388,6 +394,37 @@ class Student
             // set the owning side to null (unless already changed)
             if ($education->getStudent() === $this) {
                 $education->setStudent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->contains($experience)) {
+            $this->experiences->removeElement($experience);
+            // set the owning side to null (unless already changed)
+            if ($experience->getStudent() === $this) {
+                $experience->setStudent(null);
             }
         }
 

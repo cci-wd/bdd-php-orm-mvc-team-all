@@ -96,14 +96,24 @@ class StudentType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => false
-            ])->add('skills', CollectionType::class, [
+            ])
+            ->add('experiences', CollectionType::class, [
+                'entry_type' => ExperienceType::class,
+                'entry_options' => ['label' => false],
+                'allow_add'=> true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false
+            ])
+            ->add('skills', CollectionType::class, [
                 'entry_type' => SkillType::class,
                 'entry_options' => ['label' => false],
                 'allow_add'=> true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => false
-            ])->add('section', EntityType::class, [
+            ])
+            ->add('section', EntityType::class, [
                 'class' => Section::class,
                 'choice_label' => 'name',
                 'placeholder' => "Choisir la section de l'apprenant",
