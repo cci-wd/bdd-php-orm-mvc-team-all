@@ -145,6 +145,7 @@ class StudentController extends AbstractController
             $user->setUsername($student->getPhoneNumber());
             $user->setPassword($encoder->encodePassword($user, random_bytes(8)));
 
+            $student->setPhoneNumber('+687' . $form['phoneNumber']->getData());
             $student->setUser($user);
 
             $entityManager = $this->getDoctrine()->getManager();
