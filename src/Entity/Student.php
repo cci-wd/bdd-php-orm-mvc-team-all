@@ -62,14 +62,14 @@ class Student
     /**
      * @var string|null
      *
-     * @ORM\Column(name="min_description", type="string", length=100, nullable=true)
+     * @ORM\Column(name="description", type="string", length=100, nullable=true)
      */
-    private $minDescription;
+    private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255, nullable=false)
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
      */
     private $location;
 
@@ -83,7 +83,7 @@ class Student
     /**
      * @var int
      *
-     * @ORM\Column(name="age", type="integer", nullable=false)
+     * @ORM\Column(name="age", type="integer", nullable=true)
      * 
      * @Assert\Length(
      *      min = 2,
@@ -96,7 +96,7 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="phone_number", type="string", length=10, nullable=false)
+     * @ORM\Column(name="phone", type="string", length=10, nullable=false)
      * 
      * @Assert\Length(
      *      min = 6,
