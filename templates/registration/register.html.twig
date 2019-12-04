@@ -1,4 +1,6 @@
-{{ form_start(registrationForm) }}
+{% form_theme form 'form/form_errors.html.twig' %}
+
+{{ form_start(form) }}
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -31,7 +33,14 @@
 							<span class="input-group-addon">
 								<i class="ti-unlock"></i>
 							</span>
-							{{ form_widget(registrationForm.newPassword) }}
+							{% if not form.password.first.vars.valid %}
+								<div class="has-error">
+									{{form_widget(form.password.first)}}
+								</div>
+							{% else %}
+								{{form_widget(form.password.first)}}
+							{% endif %}
+							{{ form_errors(form.password.first) }}
 						</div>
 					</div>
 					<hr class="hr-xs">
@@ -40,7 +49,14 @@
 							<span class="input-group-addon">
 								<i class="ti-unlock"></i>
 							</span>
-							{{ form_widget(registrationForm.confirmPassword) }}
+							{% if not form.password.second.vars.valid %}
+								<div class="has-error">
+									{{form_widget(form.password.second)}}
+								</div>
+							{% else %}
+								{{form_widget(form.password.second)}}
+							{% endif %}
+							{{ form_errors(form.password.second) }}
 						</div>
 					</div>
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -48,7 +64,7 @@
 					<div class="login-footer">
 						<h6>Si vous n'arrivez pas à vous connectez, veuillez contacter le CFA</h6>
 					</div>
-					{{ form_end(registrationForm) }}
+					{{ form_end(form) }}
 				</form>
 			</main>
 		</body>
