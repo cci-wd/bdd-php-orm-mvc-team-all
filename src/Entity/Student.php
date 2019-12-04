@@ -165,7 +165,7 @@ class Student
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Education", mappedBy="student", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Education", mappedBy="student", fetch="EAGER", cascade={"persist"})
      */
     private $educations;
 
@@ -414,15 +414,14 @@ class Student
 
     public function removeSkill(Skill $skill): self
     {
-        /* if ($this->skills->contains($skill)) {
+        if ($this->skills->contains($skill)) {
             $this->skills->removeElement($skill);
             // set the owning side to null (unless already changed)
             if ($skill->getStudent() === $this) {
                 $skill->setStudent(null);
             }
-        } */
+        }
 
-        $this->skills->removeElement($skill);
         return $this;
     }
     
