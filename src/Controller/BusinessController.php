@@ -80,7 +80,7 @@ class BusinessController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('business_list');
+            return $this->redirectToRoute('business_profile');
         }
 
         return $this->render('businesses/edit.html.twig', [
