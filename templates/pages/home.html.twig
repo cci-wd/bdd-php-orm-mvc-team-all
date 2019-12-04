@@ -1,203 +1,155 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<!-- Site header -->
-{# <header class="site-header size-lg text-center" style="background-image: url(img/bg-banner1.jpg)"> #}
-<header class="site-header size-lg text-center" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
-  <div class="container">
-    <div class="col-xs-12">
-      <br><br>
-      <h2>Nous avons <mark>{{ totaloffers|length }}</mark> offres d'emplois à promouvoir!</h2>
-      <h5 class="font-alt">Un outil pour les apprenants et les entreprises propulsé par le CFA</h5>
-      <br><br><br>
-      {# <form class="header-job-search">
-        <div class="input-keyword">
-          <input type="text" class="form-control" placeholder="Job title, skills, or company">
-        </div>
+	<!-- Site header -->
+	{# <header class="site-header size-lg text-center" style="background-image: url(img/bg-banner1.jpg)"> #}
+		<header class="site-header size-lg text-center" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})"> <div class="container">
+			<div class="col-xs-12">
+				<br><br>
+				<h2>Nous avons
+					<mark>{{ totaloffers|length }}</mark>
+					offres d'emploi à promouvoir !</h2>
+				<h5 class="font-alt">Un outil pour les apprenants et les entreprises liés au CFA</h5>
+				<br><br><br>
+			</div>
+		</div>
+	</header>
+	<!-- END Site header -->
 
-        <div class="input-location">
-          <input type="text" class="form-control" placeholder="City, state or zip">
-        </div>
+	<!-- Main container -->
+	<main>
+		<!-- Recent jobs -->
+		<section>
+			<div class="container">
+				<header class="section-header">
+					<span>RÉCENT</span>
+					<h2>Les dernières offres</h2>
+				</header>
+				<div
+					class="row item-blocks-connected">
+					<!-- Job item -->
+					{% for offer in offers %}
+						<div class="col-xs-12">
+							<div class="item-block">
+								<header>
+									<div class="hgroup">
+										<h4>
+											<a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
+										</h4>
+										<h5>
+											{% if offer.business %}
+												<a href="{{ path('business_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
+											{% endif %}
+										</h5>
+									</div>
+									<div class="header-meta">
+										<span class="location">{{ offer.location }}</span>
+										<time>Publié le
+											{{ offer.publishDate|date("d/m/Y") }}</time>
+									</div>
+								</header>
+								{% if app.user %}
+									{% if (app.user.id == offer.business.user.id or is_granted('ROLE_ADMIN')) %}
+										<footer>
+											<div class="action-btn">
+												<a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
+												<div class="delete-btn">{{ include('offers/_delete_form.html.twig') }}</div>
+											</div>
+										</footer>
+									{% endif %}
+								{% endif %}
+							</div>
+						</div>
+					{% else %}
+						Il n'y a aucune offre d'emploi disponible.
+					{% endfor %}
+					<!-- END Job item -->
+				</div>
+				<br><br>
+				<p class="text-center">
+					<a class="btn btn-info" href="{{ path("offer_list") }}">Voir toutes les offres</a>
+				</p>
+			</div>
+		</section>
+		<!-- END Recent jobs -->
 
-        <div class="btn-search">
-          <button class="btn btn-primary" type="submit">Find jobs</button>
-          <a href="job-list.html">Advanced Job Search</a>
-        </div>
-      </form> #}
-    </div>
+		<!-- Facts -->
+		<section class="bg-img bg-repeat no-overlay section-sm" style="background-image: url({{ asset('assets/img/bg-pattern.png') }})">
+			<div class="container">
+				<div class="row">
+					<div class="counter col-md-3 col-sm-6">
+						<p>
+							<span data-from="0" data-to="{{ totaloffers|length }}"></span>+</p>
+						<h6>Emplois</h6>
+					</div>
+					<div class="counter col-md-3 col-sm-6">
+						<p>
+							<span data-from="0" data-to="{{ totalcompagny|length }}"></span>+</p>
+						<h6>Entreprises</h6>
+					</div>
+					<div class="counter col-md-3 col-sm-6">
+						<p>
+							<span data-from="0" data-to="{{ totalstudents|length }}"></span>+</p>
+						<h6>Apprenants</h6>
+					</div>
+					<div class="counter col-md-3 col-sm-6">
+						<p>
+							<span data-from="0" data-to="10"></span>+</p>
+						<h6>A RAJOUTER</h6>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- END Facts -->
 
-  </div>
-</header>
-<!-- END Site header -->
+		<!-- How it works -->
+		<section>
+			<div class="container">
+				<div class="col-sm-12 col-md-6">
+					<header class="section-header text-left">
+						<span>EN SAVOIR PLUS</span>
+						<h2>Qu'est-ce que le CCI-LINK</h2>
+					</header>
+					<p class="lead">CCI-LINK est un site de mise en relation entre entreprise et apprenant créé par le centre de formation en alternance.</p>
+					<p>Il a pour but de rendre la communication entre apprenants et entreprises plus simple, plus rapide et plus claire !</p>
+					<br><br>
+					<a class="btn btn-primary" href="https://www.cfa.cci.nc/">En savoir plus</a>
+				</div>
+				<div class="col-sm-12 col-md-6 hidden-xs hidden-sm">
+					<br>
+					<img class="center-block" src="{{ asset('assets/img/how-it-works.png') }}" alt="how it works">
+				</div>
+			</div>
+		</section>
+		<!-- END How it works -->
 
-
-<!-- Main container -->
-<main>
-  <!-- Recent jobs -->
-  <section>
-    <div class="container">
-      <header class="section-header">
-        <span>RÉCENT</span>
-        <h2>Les dernières offres</h2>
-      </header>
-      <div class="row item-blocks-connected">
-        <!-- Job item -->
-        {# <div class="col-xs-12">
-              <a class="item-block" href="job-detail.html">
-                <header>
-                  <img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
-                  <div class="hgroup">
-                    <h4>Senior front-end developer</h4>
-                    <h5>Google</h5>
-                  </div>
-                  <div class="header-meta">
-                    <span class="location">Menlo park, CA</span>
-                    <span class="label label-success">Full-time</span>
-                  </div>
-                </header>
-              </a>
-            </div> #}
-        {% for offer in offers %}
-        <div class="col-xs-12">
-          <div class="item-block">
-            <header>
-              <div class="hgroup">
-                <h4>
-                  <a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
-                </h4>
-                <h5>
-                  {% if offer.business %}
-                  <a href="{{ path('business_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
-                  {% endif %}
-                </h5>
-              </div>
-              <div class="header-meta">
-                <span class="location">{{ offer.location }}</span>
-                {% if offer.publishDate %}
-                <time>Publié le {{ offer.publishDate|date("d/m/Y") }}</time>
-                {% else %}
-                attente BDD
-                {% endif %}
-              </div>
-            </header>
-
-            <footer>
-              <p class="status">
-                <strong>Status:</strong>
-                {{ offer.statut ? 'En cours' : 'En attente de validation' }}</p>
-
-              <div class="action-btn">
-                <a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
-              </div>
-            </footer>
-          </div>
-        </div>
-        {% else %}
-        Il n'y a aucune offre d'emploi disponible.
-        {% endfor %}
-        <!-- END Job item -->
-      </div>
-      <br><br>
-      <p class="text-center"><a class="btn btn-info" href="#">Voir toutes les offres</a></p>
-    </div>
-  </section>
-  <!-- END Recent jobs -->
-
-
-  <!-- Facts -->
-  <section class="bg-img bg-repeat no-overlay section-sm"
-    style="background-image: url({{ asset('assets/img/bg-pattern.png') }})">
-    <div class="container">
-
-      <div class="row">
-        <div class="counter col-md-3 col-sm-6">
-          <p><span data-from="0" data-to="{{ totaloffers|length }}"></span>+</p>
-          <h6>Emplois</h6>
-        </div>
-
-        <div class="counter col-md-3 col-sm-6">
-          <p><span data-from="0" data-to="{{ totalcompagny|length }}"></span>+</p>
-          <h6>Entreprises</h6>
-        </div>
-
-        <div class="counter col-md-3 col-sm-6">
-          <p><span data-from="0" data-to="{{ totalstudents|length }}"></span>+</p>
-          <h6>Apprenants</h6>
-        </div>
-
-        <div class="counter col-md-3 col-sm-6">
-          <p><span data-from="0" data-to="10"></span>+</p>
-          <h6>A RAJOUTER</h6>
-        </div>
-      </div>
-
-    </div>
-  </section>
-  <!-- END Facts -->
-
-
-  <!-- How it works -->
-  <section>
-    <div class="container">
-
-      <div class="col-sm-12 col-md-6">
-        <header class="section-header text-left">
-          <span>EN SAVOIR PLUS</span>
-          <h2>Comprendre à quoi sert CCI-LINK</h2>
-        </header>
-
-        <p class="lead">CCI-LINK est un site de relation entre entreprise et apprenant mis en place par le centre de formation
-        en alternance.</p>
-        <p>Il a pour but de rendre la communication entre apprenants et entreprises plus simple, plus rapide et plus clair !</p>
-
-
-        <br><br>
-        <a class="btn btn-primary" href="https://www.cfa.cci.nc/">En savoir plus</a>
-      </div>
-
-      <div class="col-sm-12 col-md-6 hidden-xs hidden-sm">
-        <br>
-        <img class="center-block" src="{{ asset('assets/img/how-it-works.png') }}" alt="how it works">
-      </div>
-
-    </div>
-  </section>
-  <!-- END How it works -->
-
-
-  <!-- Categories -->
-  <section class="bg-alt">
-    <div class="container">
-      <header class="section-header">
-        <span>SE CONNECTER</span>
-        <h2>SE CONNECTER</h2>
-        <p>Connecter vous pour commencer !</p>
-      </header>
-
-      <div class="category-grid text-center">
-        <a href="{{ path("app_login") }}">
-          <i class="fa fa-briefcase"></i>
-          <h6>Entreprises</h6>
-          <p>Connecter vous sur votre compte entreprise</p>
-        </a>
-        <a href="{{ path("app_login") }}">
-          <i class="fa fa-user"></i>
-          <h6>Apprenants</h6>
-          <p>Connecter vous sur votre compte apprenant</p>
-        </a>
-        <a href="{{ path("app_login") }}">
-          <i class="fa fa-building"></i>
-          <h6>Conseillers</h6>
-          <p>Connecter vous sur votre compte conseiller</p>
-        </a>
-      </div>
-
-    </div>
-  </section>
-  <!-- END Categories -->
-
-
-</main>
-<!-- END Main container -->
-
+		<!-- Categories -->
+		<section class="bg-alt">
+			<div class="container">
+				<header class="section-header">
+					<h2>SE CONNECTER</h2>
+					<p>Connectez-vous pour commencer !</p>
+				</header>
+				<div class="category-grid text-center">
+					<a href="{{ path("app_login") }}">
+						<i class="fa fa-briefcase"></i>
+						<h6>Entreprises</h6>
+						<p>Connectez-vous sur votre compte entreprise</p>
+					</a>
+					<a href="{{ path("app_login") }}">
+						<i class="fa fa-user"></i>
+						<h6>Apprenants</h6>
+						<p>Connectz-vous sur votre compte apprenant</p>
+					</a>
+					<a href="{{ path("app_login") }}">
+						<i class="fa fa-building"></i>
+						<h6>Conseillers</h6>
+						<p>Connectez-vous sur votre compte conseiller</p>
+					</a>
+				</div>
+			</div>
+		</section>
+		<!-- END Categories -->
+	</main>
+	<!-- END Main container -->
 {% endblock %}
