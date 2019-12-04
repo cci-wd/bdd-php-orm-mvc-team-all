@@ -83,7 +83,7 @@
 										{% endif %}
 									</div>
 								</header>
-								{% if (is_granted('ROLE_ADMIN')) %}
+								{% if (app.user.business.id == offer.business.id or is_granted('ROLE_ADMIN')) %}
 									<footer>
 										<div class="action-btn">
 											<a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
