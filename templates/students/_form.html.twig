@@ -1,50 +1,118 @@
 {% form_theme form 'form/form_errors.html.twig' %}
 
 {% macro printEducationRow(education) %}
-      <div class="col-xs-12">
-        <div class="item-block">
-          <div class="item-form">
+  <div class="col-xs-12">
+    <div class="item-block">
+      <div class="item-form">
 
-            <button class="btn btn-danger btn-float btn-remove">
-              <i class="ti-close"></i>
-            </button>
+        <button class="btn btn-danger btn-float btn-remove">
+          <i class="ti-close"></i>
+        </button>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group">
+              {{form_widget(education.image)}}
+              <span class="help-block">Définir une image de profil</span>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-8">
+            <div class="form-group">
+              {{form_widget(education.degree)}}
+            </div>
+
+            <div class="form-group">
+              {{form_widget(education.speciality)}}
+            </div>
+
+            <div class="form-group">
+              {{form_widget(education.schoolName)}}
+            </div>
 
             <div class="row">
-              <div class="col-xs-12 col-sm-4">
-                <div class="form-group">
-                  {{form_widget(education.image)}}
-                  <span class="help-block">Définir une image de profil</span>
-                </div>
-              </div>
-
-              <div class="col-xs-12 col-sm-8">
-                <div class="form-group">
-                  {{form_widget(education.degree)}}
-                </div>
-
-                <div class="form-group">
-                  {{form_widget(education.speciality)}}
-                </div>
-
-                <div class="form-group">
-                  {{form_widget(education.schoolName)}}
-                </div>
-
+              <div class="col-xs-12 col-md-6 mb-md-3">
                 <div class="form-group">
                   <div class="input-group">
                     <span class="input-group-addon">Date de début</span>
                     {{form_widget(education.dateFrom)}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
                     <span class="input-group-addon">Date de fin</span>
                     {{form_widget(education.dateTo)}}
                   </div>
                 </div>
-
               </div>
-                
+            </div>     
+
+          </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro printExperienceRow(experience) %}
+  <div class="col-xs-12">
+    <div class="item-block">
+      <div class="item-form">
+
+        <button class="btn btn-danger btn-float btn-remove">
+          <i class="ti-close"></i>
+        </button>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group">
+              {{form_widget(experience.image)}}
+              <span class="help-block">Veuillez choisir un logo au format carré</span>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-8">
+            <div class="form-group">
+              {{form_widget(experience.title)}}
+            </div>
+
+            <div class="form-group">
+              {{form_widget(experience.post)}}
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-md-6 mb-md-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Date de début</span>
+                    {{form_widget(experience.dateFrom)}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Date de fin</span>
+                    {{form_widget(experience.dateTo)}}
+                  </div>
+                </div>
+              </div>
+            </div>           
+            
+            <div class="form-group">
+              {{form_widget(experience.description)}}
             </div>
           </div>
         </div>
+
       </div>
+    </div>
+  </div>
 {% endmacro %}
 
 {% macro printSkillRow(skill) %}
@@ -144,7 +212,7 @@
 
         <hr class="hr-lg">
 
-        <h6>Basic information</h6>
+        <h6>Informations basiques</h6>
         <div class="row">
 
           <div class="form-group col-xs-12 col-sm-6">
@@ -178,7 +246,7 @@
                 {{form_widget(form.age)}}
               {% endif %}
               {{ form_errors(form.age) }}
-              <span class="input-group-addon">Years old</span>
+              <span class="input-group-addon">ans</span>
             </div>
           </div>
           <div class="form-group col-xs-8 col-sm-6">
@@ -200,13 +268,13 @@
       </div>
     </div>
     <div class="button-group">
-          <div class="action-buttons">
-            <div class="upload-button">
-              <button class="btn btn-block btn-primary">Choose a cover image</button>
-              {{form_widget(form.coverImage)}}
-            </div>
-          </div>
+      <div class="action-buttons">
+        <div class="upload-button">
+          <button class="btn btn-block btn-primary"><i class="fa fa-plus-square"></i> Image de couverture</button>
+          {{form_widget(form.coverImage)}}
         </div>
+      </div>
+    </div>
   </div>
 </header>
 <main>
@@ -216,12 +284,12 @@
     <div class="container">
 
       <header class="section-header">
-        <span>Restez connectés</span>
-        <h2>Médias sociaux</h2>
+        <span>Restez connecté !</span>
+        <h2>Résaux sociaux</h2>
       </header>
 
       <div class="row">
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon">
@@ -239,8 +307,6 @@
               {{form_widget(form.twitter)}}
             </div>
           </div>
-        </div>
-        <div class="col-xs-12 col-sm-6">
 
           <div class="form-group">
             <div class="input-group">
@@ -268,16 +334,16 @@
 
       <div class="row">
         <div class="educations" data-prototype="{{ _self.printEducationRow(form.educations.vars.prototype)|e('html_attr')}}">
-
-        <div class="result-educations">
-          {% for education in form.educations %}
-            {{ _self.printEducationRow(education) }}
-          {% endfor %}
-        </div>
-          
-        <div class="col-xs-12 text-center btn-add-education">
-          <br>
-          <button class="btn btn-primary btn-add-education">Ajouter un diplôme</button>
+          <div class="result-educations">
+            {% for education in form.educations %}
+              {{ _self.printEducationRow(education) }}
+            {% endfor %}
+          </div>
+            
+          <div class="col-xs-12 text-center btn-add-education">
+            <br>
+            <button class="btn btn-primary btn-add-education">Ajouter un diplôme</button>
+          </div>
         </div>
       </div>
     </div>
@@ -285,146 +351,53 @@
   <!-- END Education -->
 
   <!-- Work Experience -->
-  <section>
-    <div class="container">
-      <header class="section-header">
-        <span>Past positions</span>
-        <h2>Work Experience</h2>
-      </header>
+   <section>
+		<div class="container">
+			<header class="section-header">
+				<span>Postes occupés</span>
+				<h2>Expérience professionnelle</h2>
+			</header>
 
-      <div class="row">
+			<div class="row">
+        <div class="experiences" data-prototype="{{ _self.printExperienceRow(form.experiences.vars.prototype)|e('html_attr')}}">
+          <div class="result-experiences">
+            {% for experience in form.experiences %}
+              {{ _self.printExperienceRow(experience) }}
+            {% endfor %}
+          </div>
 
-        <div class="col-xs-12">
-          <div class="item-block">
-            <div class="item-form">
-
-              <button class="btn btn-danger btn-float btn-remove">
-                <i class="ti-close"></i>
-              </button>
-
-              <div class="row">
-                <div class="col-xs-12 col-sm-4">
-                  <div class="form-group">
-                    <input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
-                    <span class="help-block">Please choose a square logo</span>
-                  </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-8">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Company name">
-                  </div>
-
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Position, e.g. UI/UX Researcher">
-                  </div>
-
-                  <div class="form-group">
-                    <div class="input-group">
-                      <span class="input-group-addon">Date from</span>
-                      <input type="text" class="form-control" placeholder="e.g. 2012">
-                      <span class="input-group-addon">Date to</span>
-                      <input type="text" class="form-control" placeholder="e.g. 2016">
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="col-xs-12">
-                  <div class="form-group">
-                    <textarea class="summernote-editor"></textarea>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+          <div class="col-xs-12 text-center btn-add-experience">
+            <br>
+            <button class="btn btn-primary btn-add-experience">Ajouter une expérience pro</button>
           </div>
         </div>
-
-        <div class="col-xs-12 duplicateable-content">
-          <div class="item-block">
-            <div class="item-form">
-
-              <button class="btn btn-danger btn-float btn-remove">
-                <i class="ti-close"></i>
-              </button>
-
-              <div class="row">
-                <div class="col-xs-12 col-sm-4">
-                  <div class="form-group">
-                    <input type="file" class="dropify" data-default-file="assets/img/logo-default.png">
-                    <span class="help-block">Please choose a square logo</span>
-                  </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-8">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Company name">
-                  </div>
-
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Position, e.g. UI/UX Researcher">
-                  </div>
-
-                  <div class="form-group">
-                    <div class="input-group">
-                      <span class="input-group-addon">Date from</span>
-                      <input type="text" class="form-control" placeholder="e.g. 2012">
-                      <span class="input-group-addon">Date to</span>
-                      <input type="text" class="form-control" placeholder="e.g. 2016">
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="col-xs-12">
-                  <div class="form-group">
-                    <textarea class="summernote-editor"></textarea>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-12 text-center">
-          <br>
-          <button class="btn btn-primary btn-duplicator">Add experience</button>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
+			</div>
+		</div>
+	</section>
   <!-- END Work Experience -->
 
   <!-- Skills -->
   <section class=" bg-alt">
     <div class="container">
       <header class="section-header">
-        <span>Expertise Area</span>
+        <span>Zone de compétence</span>
         <h2>Mes qualifications</h2>
       </header>
 
       <div class="row">
+        <div class="skills" data-prototype="{{ _self.printSkillRow(form.skills.vars.prototype)|e('html_attr')}}">
+          <div class="result-skills">
+            {% for skill in form.skills %}
+              {{ _self.printSkillRow(skill) }}
+            {% endfor %}
+          </div>
 
-      <div class="skills" data-prototype="{{ _self.printSkillRow(form.skills.vars.prototype)|e('html_attr')}}" >
-
-        <div class="result-skills">
-          {% for skill in form.skills %}
-            {{ _self.printSkillRow(skill) }}
-          {% endfor %}
+          <div class="col-xs-12 text-center btn-add-skill">
+            <br>
+            <button class="btn btn-primary btn-add-skill">Ajouter une qualification</button>
+          </div>
         </div>
-
-
-        <div class="col-xs-12 text-center btn-add-skill">
-          <br>
-          <button class="btn btn-primary btn-add-skill">Ajouter qualification</button>
-        </div>
-		
       </div>
-
     </div>
   </section>
   <!-- END Skills -->
@@ -441,7 +414,6 @@
       <p class="text-center">
         {{ form_widget(form.submit, { 'label': 'Valider' }) }}
       </p>
-      <a href="{{ path('student_index') }}" class="btn btn-primary"> <<< backtolist </a>
 	  </div>
 	</section>
   <!--ENDSubmit-->

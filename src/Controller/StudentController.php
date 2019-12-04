@@ -98,17 +98,6 @@ class StudentController extends AbstractController
     {
         $student = $this->getUser()->getStudent();
 
-        $originalSkills = new ArrayCollection();
-        $originalEducations = new ArrayCollection();
-
-        foreach ($student->getSkills() as $skill) {
-            $originalSkills->add($skill);
-        }
-
-        foreach ($student->getEducations() as $education) {
-            $originalEducations->add($education);
-        }
-
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 

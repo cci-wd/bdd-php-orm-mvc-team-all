@@ -22,11 +22,11 @@ jQuery(document).ready(function () {
         addEducationForm($educationCollection, $newEducation);
     });
 
-    $(document).on("click", ".item-block .btn-remove", function (a) {
-        a.preventDefault();
+    $(document).on("click", ".item-block .btn-remove", function (e) {
+        e.preventDefault();
 
         $(this).parents(".item-block").parent("div").fadeOut(600, function () {
-            b.remove();
+            $(this).remove();
         });
     });
 });
