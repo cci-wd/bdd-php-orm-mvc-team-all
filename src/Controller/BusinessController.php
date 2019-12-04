@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Business;
 use App\Entity\City;
+use App\Entity\User;
 use App\Entity\Offer;
+use App\Entity\Business;
 use App\Form\BusinessType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/entreprise")
@@ -95,14 +97,23 @@ class BusinessController extends AbstractController
      * @Route("/creer", name="business_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $user = new User();
         $business = new Business();
         $form = $this->createForm(BusinessType::class, $business);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setUsername($business->getEmail());
+            $user->setRoles(['ROLE_BUSINESS']);
+            $user->setPassword($encoder->encodePassword($user, random_bytes(8)));
+
+            $business->setUser($user);
+
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
             $entityManager->persist($business);
             $entityManager->flush();
 

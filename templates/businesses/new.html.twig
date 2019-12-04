@@ -5,7 +5,7 @@
 
   {{ form_start(form) }}
   <!-- Page header -->
-  <header class="page-header">
+  <header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }});">
     <div class="container page-name">
       <h1 class="text-center">Ajouter votre entreprise</h1>
       <p class="lead text-center">Créez un profil pour votre entreprise et mettez-le en ligne.</p>
@@ -138,25 +138,23 @@
                 {% else %}
                   {{ form_widget(form.phoneNumber) }}
                 {% endif %}
-
-                {{ form_errors(form.phoneNumber) }}
               </div>
+              {{ form_errors(form.phoneNumber) }}
             </div>
-            <div class="form-group col-xs-12 col-sm-6 col-md-4">
-              <div class="input-group input-group-sm">
-                <span class="input-group-addon">
-                  <i class="fa fa-envelope"></i>
-                </span>
-                {% if not form.email.vars.valid %}
-                  <div class="has-error">
+            <div class="form-group col-xs-12 col-sm-6 col-md-4">     
+                <div class="input-group input-group-sm">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                  {% if not form.email.vars.valid %}
+                    <div class="has-error">
+                      {{ form_widget(form.email) }}
+                    </div>
+                  {% else %}
                     {{ form_widget(form.email) }}
-                  </div>
-                {% else %}
-                  {{ form_widget(form.email) }}
-                {% endif %}
-
+                  {% endif %}
+                </div>
                 {{ form_errors(form.email) }}
-              </div>
             </div>
           </div>
         </div>
@@ -174,6 +172,7 @@
   <!-- END Page header -->
   <!-- Main container -->
   <main>
+    {% if is_granted('ROLE_BUSINESS') %}
     <!-- Social media -->
     <section>
       <div class="container">
@@ -254,6 +253,8 @@
       </div>
     </section>
     <!-- Social media -->
+    {% endif %}
+
     <!-- Submit -->
     <section>
       <div class="container">
@@ -268,6 +269,7 @@
     <!-- END Submit -->
   </main>
   <!-- END Main container -->
-  {{ form_end(form) }}
+  {{ form_row(form._token) }}
+  {{ form_end(form, {'render_rest': false}) }}
 
 {% endblock %}

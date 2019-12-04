@@ -40,10 +40,10 @@ class BusinessType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Nom de l'entreprise"],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => "Nom de l'entreprise"],
             ])
             ->add('slogan', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Slogan"],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => "Slogan"],
                 'required' => false,
             ])
             ->add('description', TextareaType::class, [
@@ -58,38 +58,38 @@ class BusinessType extends AbstractType
                 'required' => false,
             ])
             ->add('nbEmployees', IntegerType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'number', 'min' => '1', 'placeholder' => 'Nombre d\'employés'],
+                'attr' => ['class' => 'form-control input-lg', 'min' => '1', 'placeholder' => 'Nombre d\'employés'],
                 'required' => false,
             ])
             ->add('website', UrlType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'url', 'placeholder' => "Site Web"],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => "Site Web"],
                 'required' => false,
             ])
             ->add('dateFoundation', DateType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'date', 'placeholder' => "Année de création de l'entreprise"],
+                'attr' => ['class' => 'form-control', 'placeholder' => "Année de création de l'entreprise"],
                 "widget" => 'single_text',
                 'required' => false,
             ])
             ->add('phoneNumber', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'number', 'placeholder' => "Numéro de téléphone"],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => "Numéro de téléphone"],
             ])
             ->add('email', EmailType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'email', 'placeholder' => "Adresse E-mail"],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => "Adresse E-mail"],
             ])
             ->add('facebook', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Facebook"],
+                'attr' => ['class' => 'form-control', 'placeholder' => "URL Facebook"],
                 'required' => false,
             ])
             ->add('twitter', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Twitter"],
+                'attr' => ['class' => 'form-control', 'placeholder' => "URL Twitter"],
                 'required' => false,
             ])
             ->add('linkedin', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Linkedin"],
+                'attr' => ['class' => 'form-control', 'placeholder' => "URL Linkedin"],
                 'required' => false,
             ])
             ->add('youtube', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Youtube"],
+                'attr' => ['class' => 'form-control', 'placeholder' => "URL Youtube"],
                 'required' => false,
             ])
             ->add('submit', SubmitType::class, [
