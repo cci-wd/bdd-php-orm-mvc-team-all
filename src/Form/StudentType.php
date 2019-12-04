@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Section;
 use App\Entity\Student;
 use App\Form\SkillType;
+use App\Form\EducationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,7 +24,7 @@ class StudentType extends AbstractType
         $builder
             ->add('image', FileType::class, [
                 'label' => 'Image de profil',
-                'attr' => [ 'class' => 'dropify', 'type' => 'file'],
+                'attr' => [ 'class' => 'dropify'],
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 // make it optional so you don't have to re-upload the PDF file
@@ -44,53 +45,58 @@ class StudentType extends AbstractType
                 ],
             ])
             ->add('firstName', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Prénom'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Prénom'],
             ])
             ->add('lastName', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Nom'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Nom'],
             ])
             ->add('minDescription', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'row' => 8, 'placeholder' => 'Description'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Description', 'row' => 8],
                 'required' => false,
             ])
             ->add('location', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text','placeholder' => 'Ville'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Ville'],
                 'required' => false,
             ])
             ->add('website', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text','placeholder' => 'URL'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'URL'],
                 'required' => false,
             ])
             ->add('age', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text','placeholder' => 'Age'],
-                'required' => false,
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Age'],
             ])
             ->add('phoneNumber', TelType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'tel','placeholder' => 'Téléphone', 'pattern' => "[0-9]{6}"],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Téléphone', 'pattern' => "[0-9]{6}"],
             ])
             ->add('email', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Email'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Email'],
             ])
             ->add('coverImage', FileType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'file'],
+                'attr' => ['class' => 'form-control input-lg'],
                 'required' => false,
             ])
             ->add('linkedin', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Linkedin'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Linkedin'],
                 'required' => false,
             ])
             ->add('twitter', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Twitter'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Twitter'],
                 'required' => false,
             ])
             ->add('github', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Github'],
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Github'],
                 'required' => false,
             ])
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-success btn-xl btn-round ', 'type' => 'submit'],
-            ])
-            ->add('skills', CollectionType::class, [
+                'attr' => ['class' => 'btn btn-success btn-xl btn-round '],
+            ])->add('educations', CollectionType::class, [
+                'entry_type' => EducationType::class,
+                'entry_options' => ['label' => false],
+                'allow_add'=> true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false
+            ])->add('skills', CollectionType::class, [
                 'entry_type' => SkillType::class,
                 'entry_options' => ['label' => false],
                 'allow_add'=> true,

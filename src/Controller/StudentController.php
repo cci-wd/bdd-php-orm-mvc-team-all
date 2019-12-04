@@ -91,13 +91,24 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/mon-profil", name="student_profile", methods={"GET"})
+     * @Route("/mon-profil", name="student_profile", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function profile(Request $request, FileUploader $fileUploader): Response
     {
         $student = $this->getUser()->getStudent();
-        
+
+        $originalSkills = new ArrayCollection();
+        $originalEducations = new ArrayCollection();
+
+        foreach ($student->getSkills() as $skill) {
+            $originalSkills->add($skill);
+        }
+
+        foreach ($student->getEducations() as $education) {
+            $originalEducations->add($education);
+        }
+
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
@@ -111,16 +122,14 @@ class StudentController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('student_list');
+            return $this->redirectToRoute('student_profile');
         }
 
         return $this->render('students/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
-            'meta_title' => "Mon profil",
-            'meta_desc' => "robots.txt",
             'form_title' => "Mon profil",
-            'form_desc' => "Profil d'un compte apprenant"
+            'form_desc' => "Modifier mon profil"
         ]);
     }
 
@@ -198,12 +207,6 @@ class StudentController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $originalSkills = new ArrayCollection();
-
-        foreach ($student->getSkills() as $skill) {
-            $originalSkills->add($skill);
-        }
-
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
@@ -213,15 +216,6 @@ class StudentController extends AbstractController
             if ($image) {
                 $imageName = $fileUploader->upload($image);
                 $student->setImage($imageName);
-            }
-
-            foreach ($originalSkills as $skill) {
-                if (false === $student->getSkills()->contains($skill)) {
-                    $skill->getStudent()->removeSkill($skill);
-                    $skill->setStudent(null);
-                    $entityManager->persist($skill);
-                    $entityManager->remove($skill);
-                }
             }
 
             $this->getDoctrine()->getManager()->flush();
