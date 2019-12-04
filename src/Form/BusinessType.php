@@ -2,21 +2,40 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Business;
+use App\Repository\CityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class BusinessType extends AbstractType
 {
+    private $userRepository;
+
+    public function __construct(CityRepository $cityRepository)
+    {
+        $this->cityRepository = $cityRepository;
+    }
+
+    public function getAllCityName()
+    {
+        $names = [];
+        foreach($this->cityRepository->findAllCityAlphabetical() as $city) {
+            $names[$city->getName()] = $city->getName();
+        }
+        return $names;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -25,23 +44,31 @@ class BusinessType extends AbstractType
             ])
             ->add('slogan', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => "Slogan"],
+                'required' => false,
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...'],
+                'required' => false,
             ])
             ->add('image', FileType::class, array('data_class' => null, 'required' => false))
-            ->add('location', TextType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'text', 'placeholder' => "Localisation"],
+            ->add('location', ChoiceType::class, [
+                'placeholder' => 'Commune',
+                'choices' => $this->getAllCityName(),
+                'attr' => ['class' => 'form-control selectpicker custom-picker-location'],
+                'required' => false,
             ])
             ->add('nbEmployees', IntegerType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'number', 'min' => '1', 'placeholder' => 'Nombre d\'employés'],
+                'required' => false,
             ])
             ->add('website', UrlType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'url', 'placeholder' => "Site Web"],
+                'required' => false,
             ])
             ->add('dateFoundation', DateType::class, [
                 'attr' => ['class' => 'form-control', 'type' => 'date', 'placeholder' => "Année de création de l'entreprise"],
                 "widget" => 'single_text',
+                'required' => false,
             ])
             ->add('phoneNumber', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'number', 'placeholder' => "Numéro de téléphone"],
@@ -50,16 +77,20 @@ class BusinessType extends AbstractType
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'email', 'placeholder' => "Adresse E-mail"],
             ])
             ->add('facebook', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "Profil URL"],
+                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Facebook"],
+                'required' => false,
             ])
             ->add('twitter', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "Profil URL"],
+                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Twitter"],
+                'required' => false,
             ])
             ->add('linkedin', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "Profil URL"],
+                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Linkedin"],
+                'required' => false,
             ])
             ->add('youtube', UrlType::class, [
-                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "Profil URL"],
+                'attr' => ['class' => 'form-control', 'type' => 'url', 'placeholder' => "URL Youtube"],
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-success btn-xl btn-round'],
