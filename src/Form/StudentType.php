@@ -2,12 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\Section;
 use App\Entity\Student;
 use App\Form\SkillType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -60,9 +63,10 @@ class StudentType extends AbstractType
             ])
             ->add('age', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'text','placeholder' => 'Age'],
+                'required' => false,
             ])
-            ->add('phoneNumber', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'type' => 'text','placeholder' => 'Téléphone'],
+            ->add('phoneNumber', TelType::class, [
+                'attr' => ['class' => 'form-control input-lg', 'type' => 'tel','placeholder' => 'Téléphone', 'pattern' => "[0-9]{6}"],
             ])
             ->add('email', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'type' => 'text', 'placeholder' => 'Email'],
@@ -85,13 +89,19 @@ class StudentType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-success btn-xl btn-round ', 'type' => 'submit'],
-            ])->add('skills', CollectionType::class, [
+            ])
+            ->add('skills', CollectionType::class, [
                 'entry_type' => SkillType::class,
                 'entry_options' => ['label' => false],
                 'allow_add'=> true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => false
+            ])->add('section', EntityType::class, [
+                'class' => Section::class,
+                'choice_label' => 'name',
+                'placeholder' => "Choisir la section de l'apprenant",
+                'attr' => ['class' => 'form-control selectpicker'],
             ]);
     }
 

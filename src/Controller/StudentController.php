@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\City;
+use App\Entity\User;
 use App\Entity\Offer;
 use App\Entity\Skill;
 use App\Entity\Section;
@@ -18,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/apprenant")
@@ -126,8 +128,9 @@ class StudentController extends AbstractController
      * @Route("/creer", name="student_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function create(Request $request, FileUploader $fileUploader): Response
+    public function create(Request $request, FileUploader $fileUploader, UserPasswordEncoderInterface $encoder): Response
     {
+        $user = new User();
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
@@ -140,7 +143,14 @@ class StudentController extends AbstractController
                 $product->setImage($imageName);
             }
 
+            $user->setRoles(['ROLE_STUDENT']);
+            $user->setUsername($student->getPhoneNumber());
+            $user->setPassword($encoder->encodePassword($user, random_bytes(8)));
+
+            $student->setUser($user);
+
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
             $entityManager->persist($student);
             $entityManager->flush();
 
