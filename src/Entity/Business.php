@@ -69,14 +69,14 @@ class Business
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255, nullable=false)
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
      */
     private $location;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="nb_employees", type="integer", nullable=true)
+     * @ORM\Column(name="employees", type="integer", nullable=true)
      */
     private $nbEmployees;
 
@@ -100,7 +100,7 @@ class Business
     /**
      * @var string
      *
-     * @ORM\Column(name="phone_number", type="string", length=8, nullable=false)
+     * @ORM\Column(name="phone", type="string", length=8, nullable=false)
      * @Assert\Regex("/^([\d]{2}[\s.]?[\d]{2}[\s.]?[\d]{2})$/")
      */
     private $phoneNumber;

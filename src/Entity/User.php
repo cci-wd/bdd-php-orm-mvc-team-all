@@ -37,7 +37,7 @@ class User implements UserInterface
     /**
      * @var json|null
      *
-     * @ORM\Column(name="roles", type="json", nullable=true)
+     * @ORM\Column(name="roles", type="json", nullable=false)
      */
     private $roles = [];
 
