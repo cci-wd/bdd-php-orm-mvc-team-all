@@ -124,31 +124,33 @@
 		<!-- END How it works -->
 
 		<!-- Categories -->
-		<section class="bg-alt">
-			<div class="container">
-				<header class="section-header">
-					<h2>SE CONNECTER</h2>
-					<p>Connectez-vous pour commencer !</p>
-				</header>
-				<div class="category-grid text-center">
-					<a href="{{ path("app_login") }}">
-						<i class="fa fa-briefcase"></i>
-						<h6>Entreprises</h6>
-						<p>Connectez-vous sur votre compte entreprise</p>
-					</a>
-					<a href="{{ path("app_login") }}">
-						<i class="fa fa-user"></i>
-						<h6>Apprenants</h6>
-						<p>Connectz-vous sur votre compte apprenant</p>
-					</a>
-					<a href="{{ path("app_login") }}">
-						<i class="fa fa-building"></i>
-						<h6>Conseillers</h6>
-						<p>Connectez-vous sur votre compte conseiller</p>
-					</a>
+		{% if not app.user %}
+			<section class="bg-alt">
+				<div class="container">
+					<header class="section-header">
+						<h2>SE CONNECTER</h2>
+						<p>Connectez-vous pour commencer !</p>
+					</header>
+					<div class="category-grid text-center">
+						<a href="{{ path("app_login") }}">
+							<i class="fa fa-briefcase"></i>
+							<h6>Entreprises</h6>
+							<p>Connectez-vous sur votre compte entreprise</p>
+						</a>
+						<a href="{{ path("app_login") }}">
+							<i class="fa fa-user"></i>
+							<h6>Apprenants</h6>
+							<p>Connectz-vous sur votre compte apprenant</p>
+						</a>
+						<a href="{{ path("app_login") }}">
+							<i class="fa fa-building"></i>
+							<h6>Conseillers</h6>
+							<p>Connectez-vous sur votre compte conseiller</p>
+						</a>
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		{% endif %}
 		<!-- END Categories -->
 	</main>
 	<!-- END Main container -->
