@@ -64,12 +64,14 @@ class StudentType extends AbstractType
             ])
             ->add('age', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Age'],
+                'required' => false,
             ])
             ->add('phoneNumber', TelType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Téléphone', 'pattern' => "[0-9]{6}"],
             ])
             ->add('email', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Email'],
+                'required' => false,
             ])
             ->add('coverImage', FileType::class, [
                 'attr' => ['class' => 'form-control input-lg'],
