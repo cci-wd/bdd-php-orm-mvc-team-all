@@ -56,6 +56,11 @@ class User implements UserInterface
      */
     private $status = '0';
 
+    /**
+     * @ORM\Column(type="string", length=8, nullable=true)
+     */
+    private $token;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -159,6 +164,18 @@ class User implements UserInterface
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }
