@@ -24,12 +24,12 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $form->get('newPassword')->getData() === $form->get('confirmPassword')->getData()) {
+        if ($form->isSubmitted() && $form->isValid()) {
                 $user
                     ->setPassword(
                         $passwordEncoder->encodePassword(
                             $user,
-                            $form->get('newPassword')->getData()
+                            $form->get('password')->getData()
                         )
                     )
                     ->setStatus('1')
@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'user' => $user,
-            'registrationForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 }
