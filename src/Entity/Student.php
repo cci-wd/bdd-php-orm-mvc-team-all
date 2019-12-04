@@ -219,14 +219,14 @@ class Student
         return $this;
     }
 
-    public function getMinDescription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->minDescription;
+        return $this->description;
     }
 
-    public function setMinDescription(?string $minDescription): self
+    public function setDescription(?string $description): self
     {
-        $this->minDescription = $minDescription;
+        $this->description = $description;
 
         return $this;
     }

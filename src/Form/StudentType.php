@@ -50,7 +50,7 @@ class StudentType extends AbstractType
             ->add('lastName', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Nom'],
             ])
-            ->add('minDescription', TextType::class, [
+            ->add('description', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Description', 'row' => 8],
                 'required' => false,
             ])
