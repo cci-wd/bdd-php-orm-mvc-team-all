@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\City;
+use App\Entity\User;
 use App\Entity\Offer;
 use App\Entity\Skill;
 use App\Entity\Section;
@@ -18,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/apprenant")
@@ -89,13 +91,24 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/mon-profil", name="student_profile", methods={"GET"})
+     * @Route("/mon-profil", name="student_profile", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     public function profile(Request $request, FileUploader $fileUploader): Response
     {
         $student = $this->getUser()->getStudent();
-        
+
+        $originalSkills = new ArrayCollection();
+        $originalEducations = new ArrayCollection();
+
+        foreach ($student->getSkills() as $skill) {
+            $originalSkills->add($skill);
+        }
+
+        foreach ($student->getEducations() as $education) {
+            $originalEducations->add($education);
+        }
+
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
@@ -109,16 +122,14 @@ class StudentController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('student_list');
+            return $this->redirectToRoute('student_profile');
         }
 
         return $this->render('students/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
-            'meta_title' => "Mon profil",
-            'meta_desc' => "robots.txt",
             'form_title' => "Mon profil",
-            'form_desc' => "Profil d'un compte apprenant"
+            'form_desc' => "Modifier mon profil"
         ]);
     }
 
@@ -126,8 +137,9 @@ class StudentController extends AbstractController
      * @Route("/creer", name="student_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function create(Request $request, FileUploader $fileUploader): Response
+    public function create(Request $request, FileUploader $fileUploader, UserPasswordEncoderInterface $encoder): Response
     {
+        $user = new User();
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
@@ -140,7 +152,14 @@ class StudentController extends AbstractController
                 $product->setImage($imageName);
             }
 
+            $user->setRoles(['ROLE_STUDENT']);
+            $user->setUsername($student->getPhoneNumber());
+            $user->setPassword($encoder->encodePassword($user, random_bytes(8)));
+
+            $student->setUser($user);
+
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
             $entityManager->persist($student);
             $entityManager->flush();
 
@@ -188,12 +207,6 @@ class StudentController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $originalSkills = new ArrayCollection();
-
-        foreach ($student->getSkills() as $skill) {
-            $originalSkills->add($skill);
-        }
-
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
@@ -203,15 +216,6 @@ class StudentController extends AbstractController
             if ($image) {
                 $imageName = $fileUploader->upload($image);
                 $student->setImage($imageName);
-            }
-
-            foreach ($originalSkills as $skill) {
-                if (false === $student->getSkills()->contains($skill)) {
-                    $skill->getStudent()->removeSkill($skill);
-                    $skill->setStudent(null);
-                    $entityManager->persist($skill);
-                    $entityManager->remove($skill);
-                }
             }
 
             $this->getDoctrine()->getManager()->flush();

@@ -12,3 +12,13 @@
 .custom-picker-location > div {
     max-height: 300px !important;
 }
+.page-header:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: rgba(0,24,40,.55);
+}

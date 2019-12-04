@@ -62,14 +62,14 @@ class Student
     /**
      * @var string|null
      *
-     * @ORM\Column(name="min_description", type="string", length=100, nullable=true)
+     * @ORM\Column(name="description", type="string", length=100, nullable=true)
      */
-    private $minDescription;
+    private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255, nullable=false)
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
      */
     private $location;
 
@@ -83,7 +83,7 @@ class Student
     /**
      * @var int
      *
-     * @ORM\Column(name="age", type="integer", nullable=false)
+     * @ORM\Column(name="age", type="integer", nullable=true)
      * 
      * @Assert\Length(
      *      min = 2,
@@ -96,7 +96,7 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="phone_number", type="string", length=10, nullable=false)
+     * @ORM\Column(name="phone", type="string", length=10, nullable=false)
      * 
      * @Assert\Length(
      *      min = 6,
@@ -165,7 +165,7 @@ class Student
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Education", mappedBy="student", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Education", mappedBy="student", fetch="EAGER", cascade={"persist"})
      */
     private $educations;
 
@@ -219,14 +219,14 @@ class Student
         return $this;
     }
 
-    public function getMinDescription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->minDescription;
+        return $this->description;
     }
 
-    public function setMinDescription(?string $minDescription): self
+    public function setDescription(?string $description): self
     {
-        $this->minDescription = $minDescription;
+        $this->description = $description;
 
         return $this;
     }
@@ -414,15 +414,14 @@ class Student
 
     public function removeSkill(Skill $skill): self
     {
-        /* if ($this->skills->contains($skill)) {
+        if ($this->skills->contains($skill)) {
             $this->skills->removeElement($skill);
             // set the owning side to null (unless already changed)
             if ($skill->getStudent() === $this) {
                 $skill->setStudent(null);
             }
-        } */
+        }
 
-        $this->skills->removeElement($skill);
         return $this;
     }
     

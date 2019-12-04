@@ -37,7 +37,7 @@ class User implements UserInterface
     /**
      * @var json|null
      *
-     * @ORM\Column(name="roles", type="json", nullable=true)
+     * @ORM\Column(name="role", type="json", nullable=false)
      */
     private $roles = [];
 
@@ -55,6 +55,11 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $status = '0';
+
+    /**
+     * @ORM\Column(name="token", type="string", length=8, nullable=true)
+     */
+    private $token;
 
     public function getId(): ?int
     {
@@ -159,6 +164,18 @@ class User implements UserInterface
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }
