@@ -91,6 +91,7 @@ class AppFixtures extends Fixture
         $user3->setUsername('user3');
         $user3->setPassword($this->encoder->encodePassword($user3, "1234"));
         $user3->setRoles(["ROLE_STUDENT"]);
+        $user3->setToken("12345678");
 
         // USER 4
         $user4 = new User();

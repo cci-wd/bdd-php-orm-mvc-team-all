@@ -1,0 +1,58 @@
+{{ form_start(registrationForm) }}
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta
+		name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Styles -->
+		<link
+		href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet">
+
+		<!-- Fonts -->
+		<link
+		href='http://fonts.googleapis.com/css?family=Oswald:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" href="assets/img/favicon.ico">
+	</head>
+
+	<body class="login-page">
+		<main>
+			<div class="login-block">
+				<img src="https://www.cfa.cci.nc/themes/custom/cci/src/img/logo-cci-color-header.png" alt="">
+				<h1>Bienvenue sur CCI-LINK,<br>{{user.student.firstName}}</h1>
+				<form method="post">
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="ti-unlock"></i>
+							</span>
+							{{ form_widget(registrationForm.newPassword) }}
+						</div>
+					</div>
+					<hr class="hr-xs">
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="ti-unlock"></i>
+							</span>
+							{{ form_widget(registrationForm.confirmPassword) }}
+						</div>
+					</div>
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+					<div class="login-footer">
+						<h6>Si vous n'arrivez pas à vous connectez, veuillez contacter le CFA</h6>
+					</div>
+					{{ form_end(registrationForm) }}
+				</form>
+			</main>
+		</body>
+		<!-- Scripts -->
+		{{ encore_entry_script_tags('main') }}
+	</body>
+</html>
