@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +13,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="businesses", indexes={@ORM\Index(name="Business_User", columns={"user_id"})})
  * @ORM\Entity
+ * @UniqueEntity(
+ *      fields = {"email"},
+ *      message = "L'email fourni existe déjà"
+ * )
+ * 
  */
 class Business
 {
@@ -53,7 +59,7 @@ class Business
      *
      * @ORM\Column(name="description", type="text", length=400, nullable=true)
      * @Assert\Length(
-     *      max = 255,
+     *      max = 400,
      *      maxMessage = "Le description ne doit pas dépasser {{ limit }} caractères"
      * )
      */
@@ -101,7 +107,10 @@ class Business
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=8, nullable=false)
-     * @Assert\Regex("/^([\d]{2}[\s.]?[\d]{2}[\s.]?[\d]{2})$/")
+     * @Assert\Regex(
+     *      pattern = "/^([\d]{2}[\s.]?[\d]{2}[\s.]?[\d]{2})$/",
+     *      message = "Le numéro fourni n'est pas valide"
+     * )
      */
     private $phoneNumber;
 
