@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Offre
-{% endblock %}
-
 {% block body %}
 	<!-- Page header -->
 	<header class="page-header bg-img size-lg" style="background-image: url(assets/img/bg-banner2.jpg)">
@@ -33,35 +30,10 @@
 					</li>
 				</ul>
 				<div class="button-group">
-					<ul class="social-icons">
-						<li class="title">Share on</li>
-						<li>
-							<a class="facebook" href="#">
-								<i class="fa fa-facebook"></i>
-							</a>
-						</li>
-						<li>
-							<a class="google-plus" href="#">
-								<i class="fa fa-google-plus"></i>
-							</a>
-						</li>
-						<li>
-							<a class="twitter" href="#">
-								<i class="fa fa-twitter"></i>
-							</a>
-						</li>
-						<li>
-							<a class="linkedin" href="#">
-								<i class="fa fa-linkedin"></i>
-							</a>
-						</li>
-					</ul>
 					<div class="action-buttons">
-						{% if (app.user.id == offer.business.id or is_granted('ROLE_ADMIN')) %}
+						{% if (app.user.business.id == offer.business.id or is_granted('ROLE_ADMIN')) %}
 							<a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
 							<div class="delete-btn">{{ include('offers/_delete_form.html.twig') }}</div>
-						{% else %}
-						<a class="btn btn-success" href="job-apply.html">Contacter ?</a>
 						{% endif %}
 					</div>
 				</div>

@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des offres
-{% endblock %}
-
 {% block body %}
 	<header class="page-header bg-img" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
 		<div class="container page-name">
@@ -10,12 +7,10 @@
 			<p class="lead text-center">Utilisez le champ de recherche suivant pour trouver les offres qui vous conviennent le mieux</p>
 		<div class="container">
 			<form action="#">
-
 				<div class="row">
 					<div class="form-group col-xs-12 col-sm-4">
 						<input type="text" name="keyword" class="form-control" placeholder="Mots clés:" value={{ parameters.keyword }}>
 					</div>
-
 					<div class="form-group col-xs-12 col-sm-4">
 						<select name="location" class="form-control selectpicker">
 							<option selected>Toutes les communes</option>
@@ -28,7 +23,6 @@
 							{% endfor %}
 						</select>
 					</div>
-
 					<div class="form-group col-xs-12 col-sm-4">
 						<select name="section" class="form-control selectpicker">
 							<option selected>Toutes les sections</option>
@@ -41,17 +35,13 @@
 							{% endfor %}
 						</select>
 					</div>
-
 				</div>
-
 				<div class="button-group">
 					<div class="action-buttons">
 						<button class="btn btn-primary">Filtrer</button>
 					</div>
 				</div>
-
 			</form>
-
 		</div>
 	</header>
 	<main>
@@ -93,7 +83,7 @@
 										{% endif %}
 									</div>
 								</header>
-								{% if (app.user.id == offer.business.id or is_granted('ROLE_ADMIN')) %}
+								{% if (app.user.business.id == offer.business.id or is_granted('ROLE_ADMIN')) %}
 									<footer>
 										<div class="action-btn">
 											<a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
