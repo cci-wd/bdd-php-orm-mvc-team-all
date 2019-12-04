@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des étudiants
-{% endblock %}
-
 {% block body %}
 	<!-- Page header -->
 	<header class="page-header bg-img" style="background-image: url(assets/img/bg-banner1.jpg)">
@@ -11,7 +8,6 @@
 				<div class="col-xs-12 col-sm-4">
 					<img src="assets/img/avatar.jpg" alt="">
 				</div>
-
 				<div class="col-xs-12 col-sm-8 header-detail">
 					<div class="hgroup">
 						<h1>{{student.firstname}}
@@ -20,13 +16,11 @@
 					</div>
 					<hr>
 					<p class="lead">{{student.mindescription}}</p>
-
 					<ul class="details cols-2">
 						<li>
 							<i class="fa fa-map-marker"></i>
 							<span>{{student.location}}</span>
 						</li>
-
 						<li>
 							<i class="fa fa-globe"></i>
 							<a href="#">
@@ -37,28 +31,19 @@
 								{% endif %}
 							</a>
 						</li>
-
-						<li>
-							<i class="fa fa-money"></i>
-							<span>Bobby il veut un gros salaire hein !</span>
-						</li>
-
 						<li>
 							<i class="fa fa-birthday-cake"></i>
 							<span>{{student.age}}</span>
 						</li>
-
 						<li>
 							<i class="fa fa-phone"></i>
 							<span>{{student.phonenumber}}</span>
 						</li>
-
 						<li>
 							<i class="fa fa-envelope"></i>
 							<a href="#">{{student.email}}</a>
 						</li>
 					</ul>
-
 					<div class="tag-list">
 						<span>HTML5</span>
 						<span>CSS3</span>
@@ -70,22 +55,11 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="button-group">
 				<ul class="social-icons">
 					<li>
-						<a class="facebook" href="#">
-							<i class="fa fa-facebook"></i>
-						</a>
-					</li>
-					<li>
 						<a class="twitter" href="#">
 							<i class="fa fa-twitter"></i>
-						</a>
-					</li>
-					<li>
-						<a class="dribbble" href="#">
-							<i class="fa fa-dribbble"></i>
 						</a>
 					</li>
 					<li>
@@ -93,13 +67,7 @@
 							<i class="fa fa-linkedin"></i>
 						</a>
 					</li>
-					<li>
-						<a class="instagram" href="#">
-							<i class="fa fa-instagram"></i>
-						</a>
-					</li>
 				</ul>
-
 				<div class="action-buttons">
 					<a class="btn btn-gray" href="#">Télécharger le CV</a>
 					<a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contacter</a>
@@ -108,16 +76,13 @@
 		</div>
 	</header>
 	<!-- END Page header -->
-
 	<!-- Main container -->
 	<main>
-
 		<!-- Education -->
 		<section>
 			<div class="container">
-
 				<header class="section-header">
-					<span>Derniers diplômes (pourquoi derniers ??)</span>
+					<span>Derniers diplômes obtenus</span>
 					<h2>Diplômes</h2>
 				</header>
 				{% for education in educations %}
@@ -149,7 +114,7 @@
 		<section class="bg-alt">
 			<div class="container">
 				<header class="section-header">
-					<span>Derniers postes occupés (pourquoi derniers ??)</span>
+					<span>Dernières expériences acquises</span>
 					<h2>Expérience professionnelle</h2>
 				</header>
 

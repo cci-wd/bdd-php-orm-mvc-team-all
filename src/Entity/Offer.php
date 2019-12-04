@@ -86,8 +86,6 @@ class Offer
      */
     private $publishDate;
 
-
-
     /**
      * @var \Section
      *
