@@ -7,7 +7,7 @@
 			<div class="row">
 				{% if student.image %}
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{ asset('uploads/images/' ~ student.image) }}">
+						<img src="{{ asset('uploads/images/' ~ student.image) }}" alt="profile-image">
 					</div>
 				{% endif %}
 				<div class="col-xs-12 col-sm-8 header-detail">
@@ -118,12 +118,10 @@
 		<!-- Work Experience -->
 		<section class="bg-alt">
 			<div class="container">
-				<header
-					class="section-header">
+				<header class="section-header">
 					{# <span>Dernières expériences acquises</span> #}
 					<h2>Expérience professionnelle</h2>
 				</header>
-
 				<div
 					class="row">
 

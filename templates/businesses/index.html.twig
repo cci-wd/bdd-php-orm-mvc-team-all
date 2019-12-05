@@ -64,7 +64,7 @@
             <div class="col-xs-12">
               <a class="item-block" href="{{ path('business_show', {'id': business.id}) }}">
                 <header>
-                  <img src="{{ business.image }}" alt="">
+                  <img src="{{ asset('uploads/images/' ~ business.image) }}" alt="logo-business">
                   <div class="hgroup">
                     <h4><td>{{ business.name }}</td></h4>
                     <h5><td>{{ business.slogan }}</td></h5>
