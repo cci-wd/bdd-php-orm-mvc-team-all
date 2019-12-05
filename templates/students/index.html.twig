@@ -17,39 +17,35 @@
 		{% if app.user %}
 			<div class="container">
 				<form action="#">
-
 					<div class="row">
 						<div class="form-group col-xs-12 col-sm-4">
 							<input type="text" class="form-control" placeholder="Nom de l'apprenant" name="keyword" value={{ parameters.keyword }}>
 						</div>
-
 						<div class="form-group col-xs-12 col-sm-4">
 							<select class="form-control selectpicker" name="location">
 								<option selected>Toutes les communes</option>
-									{% for city in cities %}
-										{% if parameters.location == city.name %}
-											<option selected>{{ city.name }}</option>
-										{% else %}
-											<option>{{ city.name }}</option>
-										{% endif %}
-									{% endfor %}
+								{% for city in cities %}
+									{% if parameters.location == city.name %}
+										<option selected>{{ city.name }}</option>
+									{% else %}
+										<option>{{ city.name }}</option>
+									{% endif %}
+								{% endfor %}
 							</select>
 						</div>
-
 						<div class="form-group col-xs-12 col-sm-4">
 							<select class="form-control selectpicker" name="section">
 								<option selected>Toutes les sections</option>
-									{% for section in sections %}
-										{% if parameters.section == section.name %}
-											<option selected>{{ section.name }}</option>
-										{% else %}
-											<option>{{ section.name }}</option>
-										{% endif %}
-									{% endfor %}
+								{% for section in sections %}
+									{% if parameters.section == section.name %}
+										<option selected>{{ section.name }}</option>
+									{% else %}
+										<option>{{ section.name }}</option>
+									{% endif %}
+								{% endfor %}
 							</select>
 						</div>
 					</div>
-
 					<div class="button-group">
 						<div class="action-buttons">
 							<button class="btn btn-primary">Filtrer</button>
@@ -63,13 +59,12 @@
 	</header>
 	<!-- END Page header -->
 
+	<!-- Main container -->
 	{% if app.user %}
-		<!-- Main container -->
 		<main>
 			<section class="no-padding-top bg-alt">
 				<div class="container">
 					<div class="row">
-
 						<div class="col-xs-12">
 							<br>
 							<h5>
@@ -83,7 +78,9 @@
 							<div class="col-xs-12">
 								<a class="item-block" href="{{student.id}}">
 									<header>
-										<img class="resume-avatar" src="assets/img/avatar.jpg" alt="">
+										{% if student.image %}
+											<img src="{{ asset('uploads/images/' ~ student.image) }}">
+										{% endif %}
 										<div class="hgroup">
 											<h4>{{student.firstname}}
 												{{student.lastname}}</h4>
@@ -93,51 +90,38 @@
 											</h5>
 										</div>
 									</header>
-
 									<div class="item-body">
 										<p>{{student.description}}</p>
-
-										<div class="tag-list">
-											<span>HTML5</span>
-											<span>CSS3</span>
-											<span>Bootstrap</span>
-											<span>Wordpress</span>
-										</div>
-
 									</div>
+									<footer>
+										<ul class="details cols-3">
+											<li>
+												<i class="fa fa-certificate"></i>
+												<span>
+													{% if student.section %}
+														{{student.section.name}}
+													{% endif %}
+												</span>
+											</li>
+											<li>
+												<i class="fa fa-map-marker"></i>
+												<span>{{student.location}}</span>
+											</li>
+										</ul>
+									</footer>
+								</a>
+							</div>
+						{% endfor %}
+						<!-- END Resume detail -->
 
-								<footer>
-									<ul class="details cols-3">
-										<li>
-											<i class="fa fa-certificate"></i>
-											<span>
-												{% if student.section %}
-													{{student.section.name}}
-												{% else %}
-													Problème dans la BDD
-												{% endif %}
-											</span>
-										</li>
-
-										<li>
-											<i class="fa fa-map-marker"></i>
-											<span>{{student.location}}</span>
-										</li>
-									</ul>
-								</footer>
-							</a>
-							<a href="{{ asset('uploads/images/' ~ student.image) }}">Photo de profil</a>
-						</div>
-					{% endfor %}
-					<!-- END Resume detail -->
-					<!-- Page navigation -->
-					<nav class="text-center">
-						{{ knp_pagination_render(students) }}
-					</nav>
-					<!-- END Page navigation -->
-				</div>
-			</section>
-		</main>
-		<!-- END Main container -->
+						<!-- Page navigation -->
+						<nav class="text-center">
+							{{ knp_pagination_render(students) }}
+						</nav>
+						<!-- END Page navigation -->
+					</div>
+				</section>
+			</main>
+			<!-- END Main container -->
 		{% endif %}
 	{% endblock %}
