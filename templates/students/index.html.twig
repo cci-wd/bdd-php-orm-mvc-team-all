@@ -73,7 +73,7 @@
 						<div class="col-xs-12">
 							<br>
 							<h5>
-								<strong>{{students|length}}</strong>
+								<strong>{{students.getTotalItemCount}}</strong>
 								résultats trouvés.
 							</h5>
 						</div>
@@ -132,30 +132,7 @@
 					<!-- END Resume detail -->
 					<!-- Page navigation -->
 					<nav class="text-center">
-						<ul class="pagination">
-							<li>
-								<a href="#" aria-label="Previous">
-									<i class="ti-angle-left"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#">1</a>
-							</li>
-							<li class="active">
-								<a href="#">2</a>
-							</li>
-							<li>
-								<a href="#">3</a>
-							</li>
-							<li>
-								<a href="#">4</a>
-							</li>
-							<li>
-								<a href="#" aria-label="Next">
-									<i class="ti-angle-right"></i>
-								</a>
-							</li>
-						</ul>
+						{{ knp_pagination_render(students) }}
 					</nav>
 					<!-- END Page navigation -->
 				</div>
