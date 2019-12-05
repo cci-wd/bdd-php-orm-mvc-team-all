@@ -19,36 +19,36 @@
 	<!-- Main container -->
 	<main>
 		<!-- Recent jobs -->
-		<section>
-			<div class="container">
-				<header class="section-header">
-					<span>RÉCENT</span>
-					<h2>Les dernières offres</h2>
-				</header>
-				<div
-					class="row item-blocks-connected">
-					<!-- Job item -->
-					{% for offer in offers %}
-						<div class="col-xs-12">
-							<div class="item-block">
-								<header>
-									<div class="hgroup">
-										<h4>
-											<a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
-										</h4>
-										<h5>
-											{% if offer.business %}
-												<a href="{{ path('business_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
-											{% endif %}
-										</h5>
-									</div>
-									<div class="header-meta">
-										<span class="location">{{ offer.location }}</span>
-										<time>Publié le
-											{{ offer.publishDate|date("d/m/Y") }}</time>
-									</div>
-								</header>
-								{% if app.user %}
+		{% if app.user %}
+			<section>
+				<div class="container">
+					<header class="section-header">
+						<span>RÉCENT</span>
+						<h2>Les dernières offres</h2>
+					</header>
+					<div
+						class="row item-blocks-connected">
+						<!-- Job item -->
+						{% for offer in offers %}
+							<div class="col-xs-12">
+								<div class="item-block">
+									<header>
+										<div class="hgroup">
+											<h4>
+												<a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
+											</h4>
+											<h5>
+												{% if offer.business %}
+													<a href="{{ path('business_show', {'id': offer.business.id}) }}">{{ offer.business.name }}</a>
+												{% endif %}
+											</h5>
+										</div>
+										<div class="header-meta">
+											<span class="location">{{ offer.location }}</span>
+											<time>Publié le
+												{{ offer.publishDate|date("d/m/Y") }}</time>
+										</div>
+									</header>
 									{% if (app.user.id == offer.business.user.id or is_granted('ROLE_ADMIN')) %}
 										<footer>
 											<div class="action-btn">
@@ -57,20 +57,20 @@
 											</div>
 										</footer>
 									{% endif %}
-								{% endif %}
+								</div>
 							</div>
-						</div>
-					{% else %}
-						Il n'y a aucune offre d'emploi disponible.
-					{% endfor %}
-					<!-- END Job item -->
+						{% else %}
+							Il n'y a aucune offre d'emploi disponible.
+						{% endfor %}
+						<!-- END Job item -->
+					</div>
+					<br><br>
+					<p class="text-center">
+						<a class="btn btn-info" href="{{ path("offer_list") }}">Voir toutes les offres</a>
+					</p>
 				</div>
-				<br><br>
-				<p class="text-center">
-					<a class="btn btn-info" href="{{ path("offer_list") }}">Voir toutes les offres</a>
-				</p>
-			</div>
-		</section>
+			</section>
+		{% endif %}
 		<!-- END Recent jobs -->
 
 		<!-- Facts -->
