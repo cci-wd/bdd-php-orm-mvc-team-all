@@ -57,7 +57,7 @@ class User implements UserInterface
     private $status = '0';
 
     /**
-     * @ORM\Column(name="token", type="string", length=8, nullable=true)
+     * @ORM\Column(name="token", type="string", length=16, nullable=true)
      */
     private $token;
 
