@@ -65,8 +65,6 @@ class BusinessController extends AbstractController
             10 /*limit per page*/
         );
 
-        $businesses = $query->getResult();
-
         return $this->render('businesses/index.html.twig', [
             'businesses' => $pagination,
             'parameters' => [

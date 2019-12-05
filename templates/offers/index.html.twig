@@ -49,7 +49,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 text-right">
-							<h5>{{offers|length}}
+							<h5>{{offers.getTotalItemCount}}
 								offres trouvées.</h5>
 							{% if is_granted('ROLE_BUSINESS') %}
 								<a href="{{ path('offer_new') }}" class="btn btn-primary btn-sm">Déposer une offre</a>
