@@ -164,8 +164,8 @@ class StudentController extends AbstractController
         return $this->render('students/new.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
-            'form_title' => "Création",
-            'form_desc' => "Création d'un compte apprenant",
+            'form_title' => "Ajouter un apprenant",
+            'form_desc' => "Formulaire de création d'un profil apprenant",
         ]);
     }
 
