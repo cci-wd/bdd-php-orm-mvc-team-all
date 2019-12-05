@@ -420,8 +420,9 @@ class StudentController extends AbstractController
         $user = $student->getUser();
 
         if(!$user->getStatus()) {
-            $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
-            $url = $request->getHttpHost() . '/registration/' . $token;
+            $token = bin2hex(openssl_random_pseudo_bytes(8));
+            $url = $request->getSchemeAndHttpHost() . '/register/' . $token;
+            $user->setToken($token);
 
             try {
                 $twilio->messages->create(
@@ -435,7 +436,9 @@ class StudentController extends AbstractController
                 return new Response($error, Response::HTTP_FORBIDDEN);
             }
 
-            $user->setToken($token);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
         } else {
             return new Response('The student is already active.', Response::HTTP_FORBIDDEN);
         }

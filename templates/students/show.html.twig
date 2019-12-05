@@ -71,6 +71,9 @@
 				<div class="action-buttons">
 					<a class="btn btn-gray" href="#">Télécharger le CV</a>
 					<a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contacter</a>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a data-student-id="{{student.id}}" id='sms-send' class="btn btn-primary">Inviter</a>
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -235,4 +238,8 @@
 	{% if is_granted('ROLE_ADMIN') %}
 		{{ include('students/_delete_form.html.twig') }}
 	{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+  	<script src="{{ asset('assets/js/invitation.js') }}"></script>
 {% endblock %}
