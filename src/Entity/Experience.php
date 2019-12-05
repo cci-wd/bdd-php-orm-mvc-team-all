@@ -68,7 +68,7 @@ class Experience
      *
      * @ORM\ManyToOne(targetEntity="Student")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $student;

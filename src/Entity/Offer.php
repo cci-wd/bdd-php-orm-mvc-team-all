@@ -71,7 +71,7 @@ class Offer
     /**
      * @var bool
      *
-     * @ORM\Column(name="statut", type="boolean", nullable=false)
+     * @ORM\Column(name="status", type="boolean", nullable=false)
      */
     private $statut;
 
@@ -87,7 +87,7 @@ class Offer
      *
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $section;
@@ -97,7 +97,7 @@ class Offer
      * 
      * @ORM\ManyToOne(targetEntity="App\Entity\Business", inversedBy="offers")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
      */
     private $business;
