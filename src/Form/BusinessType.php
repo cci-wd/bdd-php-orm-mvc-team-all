@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class BusinessType extends AbstractType
 {
@@ -49,7 +50,28 @@ class BusinessType extends AbstractType
                 'attr' => ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Description...'],
                 'required' => false,
             ])
-            ->add('image', FileType::class, array('data_class' => null, 'required' => false))
+            ->add('image', FileType::class, [
+                'label' => 'Image de profil',
+                'attr' => ['class' => 'dropify'],
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+                // make it optional so you don't have to re-upload the PDF file
+                // everytime you edit the Product details
+                'required' => false,
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/jpg',
+                        ],
+                        'mimeTypesMessage' => 'Image non valide.',
+                    ]),
+                ],
+            ])
             ->add('location', ChoiceType::class, [
                 'placeholder' => 'Commune',
                 'choices' => $this->getAllCityName(),
