@@ -169,7 +169,7 @@ class Business
      *
      * @ORM\OneToOne(targetEntity="User", inversedBy="business")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $user;

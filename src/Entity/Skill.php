@@ -40,7 +40,7 @@ class Skill
      * 
      * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="skills")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $student;

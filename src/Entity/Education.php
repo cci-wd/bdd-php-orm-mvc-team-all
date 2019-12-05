@@ -68,7 +68,7 @@ class Education
      * 
      * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="educations")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="student_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $student;

@@ -150,7 +150,7 @@ class Student
      *
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $section;
@@ -160,7 +160,7 @@ class Student
      *
      * @ORM\OneToOne(targetEntity="User", inversedBy="student")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $user;
