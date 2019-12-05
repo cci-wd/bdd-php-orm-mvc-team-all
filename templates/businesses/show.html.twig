@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Businesses
-{% endblock %}
+{% block title %}Businesses{% endblock %}
 
 {% block body %}
 
@@ -15,7 +14,6 @@
 					<h3>{{ business.slogan }}</h3>
 				</div>
 				<hr>
-				<p class="lead">{{ business.description }}</p>
 
 				<ul class="details cols-3">
 					<li>
@@ -25,7 +23,7 @@
 
 					<li>
 						<i class="fa fa-globe"></i>
-						<a href="#">{{ business.website }}</a>
+						<a href="{{ business.website }}">{{ business.website }}</a>
 					</li>
 
 					<li>
@@ -45,7 +43,7 @@
 
 					<li>
 						<i class="fa fa-envelope"></i>
-						<a href="#">{{ business.email }}</a>
+						<a href="mailto:{{ business.email }}">{{ business.email }}</a>
 					</li>
 				</ul>
 
@@ -74,7 +72,13 @@
 					</ul>
 
 					<div class="action-buttons">
-						<a class="btn btn-success" href="#">Contacter</a>
+						{% if is_granted('ROLE_STUDENT') %}
+							<a class="btn btn-success" href="mailto:{{ business.email }}">Contacter</a>
+						{% endif %}
+						{% if is_granted('ROLE_BUSINESS') %}
+							<a class="btn btn-primary" href="{{ path('offer_new') }}">Ajouter une offre</a>
+						{% endif %}
+
 					</div>
 				</div>
 
@@ -97,8 +101,7 @@
 					<h2>Description de l'entreprise</h2>
 				</header>
 
-				<p>Google was founded by Larry Page and Sergey Brin while they were Ph.D. students at Stanford University. Together they own about 14 percent of its shares but control 56 percent of the stockholder voting power through supervoting stock. They incorporated Google as a privately held company on September 4, 1998. An initial public offering followed on August 19, 2004. Its mission statement from the outset was "to organize the world's information and make it universally accessible and useful," and its unofficial slogan was "Don't be evil". In 2004, Google moved to its new headquarters in Mountain View, California, nicknamed the Googleplex. In August 2015, Google announced plans to reorganize its interests as a holding company called Alphabet Inc. When this restructuring took place on October 2, 2015, Google became Alphabet's leading subsidiary, as well as the parent for Google's Internet interests.</p>
-				<p>Rapid growth since incorporation has triggered a chain of products, acquisitions and partnerships beyond Google's core search engine (Google Search). It offers online productivity software (Google Docs) including email (Gmail), a cloud storage service (Google Drive) and a social networking service (Google+). Desktop products include applications for web browsing (Google Chrome), organizing and editing photos (Google Photos), and instant messaging (Hangouts). The company leads the development of the Android mobile operating system and the browser-only Chrome OS for a class of netbooks known as Chromebooks. Google has moved increasingly into communications hardware: it partners with major electronics manufacturers in the production of its "high-quality low-cost" Nexus devices. In 2012, a fiber-optic infrastructure was installed in Kansas City to facilitate a Google Fiber broadband service.</p>
+				<p class="lead">{{ business.description }}</p>
 
 			</div>
 		</section>
@@ -113,8 +116,7 @@
 					<h2>Offres ajoutées par l'entreprise</h2>
 				</header>
 
-				<div
-					class="row">
+				<div class="row">
 
 					<!-- Job item -->
 					{% for offer in offers %}
@@ -163,7 +165,7 @@
 
 	</main>
 	<!-- END Main container -->
-		{% if is_granted('ROLE_ADMIN') %}
-			{{ include('businesses/_delete_form.html.twig') }}
-		{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		{{ include('businesses/_delete_form.html.twig') }}
+	{% endif %}
 {% endblock %}
