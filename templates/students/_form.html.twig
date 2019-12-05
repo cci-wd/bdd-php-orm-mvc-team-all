@@ -150,7 +150,7 @@
 
 {{ form_start(form) }}
 
-<header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }}); background-color: rgba(0,24,40,.55);">
+<header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }});">
   <div class="container page-name">
     <h1 class="text-center">{{ form_title }}</h1>
     <p class="lead text-center">{{ form_desc }}</p>
@@ -206,10 +206,9 @@
                 </div>
               {% else %}
                 {{form_widget(form.phoneNumber)}}
-              {% endif %}
-              {{ form_errors(form.phoneNumber) }}
+              {% endif %}      
         </div>
-
+        {{ form_errors(form.phoneNumber) }}
         <hr class="hr-lg">
 
         <h6>Informations basiques</h6>
