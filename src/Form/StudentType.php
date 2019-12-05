@@ -11,10 +11,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class StudentType extends AbstractType
@@ -58,18 +60,18 @@ class StudentType extends AbstractType
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Ville'],
                 'required' => false,
             ])
-            ->add('website', TextType::class, [
+            ->add('website', UrlType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'URL'],
                 'required' => false,
             ])
-            ->add('age', TextType::class, [
+            ->add('age', IntegerType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Age'],
                 'required' => false,
             ])
-            ->add('phoneNumber', TelType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Téléphone', 'pattern' => "[0-9]{6}"],
+            ->add('phoneNumber', TextType::class, [
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Téléphone'],
             ])
-            ->add('email', TextType::class, [
+            ->add('email', EmailType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Email'],
                 'required' => false,
             ])
@@ -77,15 +79,15 @@ class StudentType extends AbstractType
                 'attr' => ['class' => 'form-control input-lg'],
                 'required' => false,
             ])
-            ->add('linkedin', TextType::class, [
+            ->add('linkedin', UrlType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Linkedin'],
                 'required' => false,
             ])
-            ->add('twitter', TextType::class, [
+            ->add('twitter', UrlType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Twitter'],
                 'required' => false,
             ])
-            ->add('github', TextType::class, [
+            ->add('github', UrlType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Github'],
                 'required' => false,
             ])

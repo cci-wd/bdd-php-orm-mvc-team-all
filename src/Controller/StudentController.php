@@ -150,12 +150,11 @@ class StudentController extends AbstractController
             $user->setUsername($student->getPhoneNumber());
             $user->setPassword($encoder->encodePassword($user, random_bytes(8)));
 
-            $student->setPhoneNumber('+687' . $form['phoneNumber']->getData());
             $student->setUser($user);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
             $entityManager->persist($student);
+            $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('student_list');
@@ -429,7 +428,7 @@ class StudentController extends AbstractController
             $user->setToken($token);
             try {
                 $twilio->messages->create(
-                    $student->getPhoneNumber(),
+                    '+687'.$student->getPhoneNumber(),
                     array(
                         "from" => $container->getParameter('twilio_number'),
                         "body" => "Cliquez ici pour rejoindre la platforme CCI Link : " . $url
