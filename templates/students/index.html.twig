@@ -83,7 +83,7 @@
 							<div class="col-xs-12">
 								<a class="item-block" href="{{student.id}}">
 									<header>
-										<img class="resume-avatar" src="assets/img/avatar.jpg" alt="">
+										<img class="resume-avatar" src="{{ asset('uploads/images/' ~ student.image) }}" alt="">
 										<div class="hgroup">
 											<h4>{{student.firstname}}
 												{{student.lastname}}</h4>
@@ -126,7 +126,6 @@
 									</ul>
 								</footer>
 							</a>
-							<a href="{{ asset('uploads/images/' ~ student.image) }}">Photo de profil</a>
 						</div>
 					{% endfor %}
 					<!-- END Resume detail -->
