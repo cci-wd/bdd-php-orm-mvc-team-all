@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\City;
-use App\Entity\User;
-use App\Entity\Offer;
 use App\Entity\Business;
+use App\Entity\City;
+use App\Entity\Offer;
+use App\Entity\User;
 use App\Form\BusinessType;
+use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -72,7 +74,7 @@ class BusinessController extends AbstractController
      * @Route("/mon-profil", name="business_profile", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_BUSINESS')")
      */
-    public function profile(Request $request): Response
+    public function profile(Request $request, FileUploader $fileUploader): Response
     {
         $business = $this->getUser()->getBusiness();
 
@@ -80,6 +82,12 @@ class BusinessController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $business->setImage($imageName);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('business_profile');
