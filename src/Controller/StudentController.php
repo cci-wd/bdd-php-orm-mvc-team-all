@@ -2,24 +2,25 @@
 
 namespace App\Controller;
 
-use App\Entity\Business;
 use App\Entity\City;
-use App\Entity\Education;
-use App\Entity\Experience;
-use App\Entity\Offer;
-use App\Entity\Section;
-use App\Entity\Skill;
-use App\Entity\Student;
 use App\Entity\User;
+use App\Entity\Offer;
+use App\Entity\Skill;
+use App\Entity\Section;
+use App\Entity\Student;
 use Twilio\Rest\Client;
+use App\Entity\Business;
+use App\Entity\Education;
 use App\Form\StudentType;
+use App\Entity\Experience;
 use App\Service\FileUploader;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -40,7 +41,7 @@ class StudentController extends AbstractController
      * @Route("/liste", name="student_list", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUSINESS')")
      */
-    function list(Request $request): Response {
+    function list(Request $request, PaginatorInterface $paginator): Response {
         $sections = $this->getDoctrine()
             ->getRepository(Section::class)
             ->findAll();
@@ -74,10 +75,15 @@ class StudentController extends AbstractController
         }
 
         $query = $queryBuilder->getQuery();
-        $students = $query->getResult();
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            1 /*limit per page*/
+        );
 
         return $this->render('students/index.html.twig', [
-            'students' => $students,
+            'students' => $pagination,
             'parameters' => [
                 'keyword' => $keyword,
                 'location' => $location,
