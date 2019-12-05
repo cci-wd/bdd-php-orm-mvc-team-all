@@ -97,6 +97,9 @@
 							Il n'y a aucune offre d'emploi disponible.
 						{% endfor %}
 						{# End job detail #}
+						<nav class="text-center">
+              				{{ knp_pagination_render(offers) }}
+            			</nav>
 					</div>
 				</div>
 			</section>
