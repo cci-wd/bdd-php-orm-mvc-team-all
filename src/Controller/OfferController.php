@@ -93,7 +93,7 @@ class OfferController extends AbstractController
         $user = $this->getUser();
 
         $offer = new Offer();
-        $offer->setStatut(0);
+        $offer->setStatus(0);
         $offer->setBusiness($user->getBusiness());
         $offer->setPublishDate(new \DateTime());
         $form = $this->createForm(OfferType::class, $offer);
@@ -136,7 +136,7 @@ class OfferController extends AbstractController
      */
     public function edit(Request $request, Offer $offer): Response
     {
-        $offer->setStatut(0);
+        $offer->setStatus(0);
         $offer->setPublishDate(new \DateTime());
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
