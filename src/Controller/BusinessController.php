@@ -30,6 +30,7 @@ class BusinessController extends AbstractController
 
     /**
      * @Route("/liste", name="business_list", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_STUDENT')")
      */
     function list(Request $request): Response {
         $cities = $this->getDoctrine()
