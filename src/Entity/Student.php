@@ -150,7 +150,7 @@ class Student
      *
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id", nullable=false)
+     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * })
      */
     private $section;
