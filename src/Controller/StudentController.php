@@ -38,6 +38,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/liste", name="student_list", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_BUSINESS')")
      */
     public function list(Request $request): Response
     {
