@@ -93,6 +93,7 @@ class BusinessType extends AbstractType
             ])
             ->add('phoneNumber', TextType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => "Numéro de téléphone"],
+                'required' => false,
             ])
             ->add('email', EmailType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => "Adresse E-mail"],

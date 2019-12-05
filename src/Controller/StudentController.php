@@ -11,6 +11,7 @@ use App\Entity\Section;
 use App\Entity\Skill;
 use App\Entity\Student;
 use App\Entity\User;
+use Twilio\Rest\Client;
 use App\Form\StudentType;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -405,5 +407,35 @@ class StudentController extends AbstractController
         ');
 
         $mpdf->Output();
+    }
+
+    /**
+     * @Route("/{id}/invitation", name="student_invitation", methods={"POST"})
+     */
+    public function invitation(Request $request, Student $student, Client $twilio, ContainerInterface $container)
+    {
+        $user = $student->getUser();
+
+        if(!$user->getStatus()) {
+            $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+            $url = $request->getHttpHost() . '/registration/' . $token;
+
+            try {
+                $twilio->messages->create(
+                    $student->getPhoneNumber(),
+                    array(
+                        "from" => $container->getParameter('twilio_number'),
+                        "body" => "Cliquez ici pour rejoindre la platforme CCI Link : " . $url
+                    )
+                );
+            } catch (RestException $error) {
+                return new Response($error, Response::HTTP_FORBIDDEN);
+            }
+
+            $user->setToken($token);
+        } else {
+            return new Response('The student is already active.', Response::HTTP_FORBIDDEN);
+        }
+        return new Response('The student has been invited;', Response::HTTP_OK);
     }
 }
