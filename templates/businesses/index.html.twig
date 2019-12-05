@@ -2,7 +2,7 @@
 
 {% block body %}
     <!-- Page header -->
-    <header class="page-header bg-img" style="background-image: url(assets/img/bg-banner1.jpg);">
+    <header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
       <div class="container page-name">
         <h1 class="text-center">Liste des entreprises</h1>
         <p class="lead text-center">Faciliter votre recherche à l'aide du filtre :</p>
@@ -64,7 +64,7 @@
             <div class="col-xs-12">
               <a class="item-block" href="{{ path('business_show', {'id': business.id}) }}">
                 <header>
-                  <img src="{{ business.image }}" alt="">
+                  <img src="{{ asset('uploads/images/' ~ business.image) }}" alt="logo-business">
                   <div class="hgroup">
                     <h4><td>{{ business.name }}</td></h4>
                     <h5><td>{{ business.slogan }}</td></h5>

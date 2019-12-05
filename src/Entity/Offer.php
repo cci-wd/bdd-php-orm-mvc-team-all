@@ -73,7 +73,7 @@ class Offer
      *
      * @ORM\Column(name="status", type="boolean", nullable=false)
      */
-    private $statut;
+    private $status;
 
     /**
      * @var \DateTime
@@ -167,14 +167,14 @@ class Offer
         return $this;
     }
 
-    public function getStatut(): ?bool
+    public function getStatus(): ?bool
     {
-        return $this->statut;
+        return $this->status;
     }
 
-    public function setStatut(bool $statut): self
+    public function setStatus(bool $status): self
     {
-        $this->statut = $statut;
+        $this->status = $status;
 
         return $this;
     }
