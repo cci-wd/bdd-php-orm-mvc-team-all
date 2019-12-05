@@ -175,7 +175,7 @@ class AppFixtures extends Fixture
         $offer0->setTitle("Offre d'emploi 0");
         $offer0->setLocation('Nouméa');
         $offer0->setDescription(mt_rand(18, 40));
-        $offer0->setStatut(1);
+        $offer0->setStatus(1);
         $offer0->setSite('www.cfa.cci.nc');
         $offer0->setPublishDate(new \DateTime('10/10/2019'));
         $offer0->setBusiness($business0);
@@ -186,7 +186,7 @@ class AppFixtures extends Fixture
         $offer1->setTitle("Offre d'emploi 1");
         $offer1->setLocation('Boulouparis');
         $offer1->setDescription(mt_rand(18, 40));
-        $offer1->setStatut(1);
+        $offer1->setStatus(1);
         $offer1->setSite('www.cfa.cci.nc');
         $offer1->setPublishDate(new \DateTime('06/04/2019'));
         $offer1->setBusiness($business0);
@@ -197,7 +197,7 @@ class AppFixtures extends Fixture
         $offer2->setTitle("Offre d'emploi 2");
         $offer2->setLocation('Boulouparis');
         $offer2->setDescription(mt_rand(18, 40));
-        $offer2->setStatut(1);
+        $offer2->setStatus(1);
         $offer2->setSite('www.cfa.cci.nc');
         $offer2->setPublishDate(new \DateTime('06/04/2018'));
         $offer2->setBusiness($business0);
@@ -208,7 +208,7 @@ class AppFixtures extends Fixture
         $offer3->setTitle("Offre d'emploi 3");
         $offer3->setLocation('Nouméa');
         $offer3->setDescription(mt_rand(18, 40));
-        $offer3->setStatut(1);
+        $offer3->setStatus(1);
         $offer3->setSite('www.cfa.cci.nc');
         $offer3->setPublishDate(new \DateTime('06/04/2017'));
         $offer3->setBusiness($business1);
@@ -219,7 +219,7 @@ class AppFixtures extends Fixture
         $offer4->setTitle("Offre d'emploi 4");
         $offer4->setLocation('Bourail');
         $offer4->setDescription(mt_rand(18, 40));
-        $offer4->setStatut(1);
+        $offer4->setStatus(1);
         $offer4->setSite('www.cfa.cci.nc');
         $offer4->setPublishDate(new \DateTime('06/04/2016'));
         $offer4->setBusiness($business1);
