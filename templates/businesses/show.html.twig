@@ -9,7 +9,7 @@
 	<header class="page-header bg-img size-lg" style="background-image: url(assets/img/bg-banner2.jpg)">
 		<div class="container">
 			<div class="header-detail">
-				<img class="logo" src="assets/img/logo-google.jpg" alt="">
+				<img class="logo" src="{{ asset('uploads/images/' ~ business.image) }}" alt="logo-business">
 				<div class="hgroup">
 					<h1>{{ business.name }}</h1>
 					<h3>{{ business.slogan }}</h3>
