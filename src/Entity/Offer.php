@@ -27,9 +27,7 @@ class Offer
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      * @Assert\Length(
-     *      min = 5,
      *      max = 255,
-     *      minMessage = "Le titre doit contenir {{ limit }} caractères au minimum",
      *      maxMessage = "Le titre ne doit pas dépasser {{ limit }} caractères"
      * )
      */
@@ -64,9 +62,7 @@ class Offer
      *
      * @ORM\Column(name="description", type="string", length=400, nullable=false)
      * @Assert\Length(
-     *      min = 50,
      *      max = 400,
-     *      minMessage = "La description doit contenir au minimum{{ limit }} caractères",
      *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
      * )
      */
