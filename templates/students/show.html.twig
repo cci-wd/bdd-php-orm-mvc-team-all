@@ -5,9 +5,11 @@
 	<header class="page-header bg-img" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-sm-4">
-					<img src="assets/img/avatar.jpg" alt="">
-				</div>
+				{% if student.image %}
+					<div class="col-xs-12 col-sm-4">
+						<img src="{{ asset('uploads/images/' ~ student.image) }}">
+					</div>
+				{% endif %}
 				<div class="col-xs-12 col-sm-8 header-detail">
 					<div class="hgroup">
 						<h1>{{student.firstname}}
@@ -23,7 +25,7 @@
 						</li>
 						<li>
 							<i class="fa fa-globe"></i>
-							<a href="#">
+							<a href="{{student.website}}">
 								{% if student.website %}
 									{{student.website}}
 								{% else %}
@@ -41,7 +43,7 @@
 						</li>
 						<li>
 							<i class="fa fa-envelope"></i>
-							<a href="#">{{student.email}}</a>
+							<a href="mailto:{{student.email}}">{{student.email}}</a>
 						</li>
 					</ul>
 				</div>
@@ -49,20 +51,25 @@
 			<div class="button-group">
 				<ul class="social-icons">
 					<li>
-						<a class="twitter" href="#">
+						<a class="twitter" href="{{student.twitter}}">
 							<i class="fa fa-twitter"></i>
 						</a>
 					</li>
 					<li>
-						<a class="linkedin" href="#">
+						<a class="linkedin" href="{{student.linkedin}}">
 							<i class="fa fa-linkedin"></i>
+						</a>
+					</li>
+					<li>
+						<a class="github" href="{{student.github}}">
+							<i class="fa fa-github"></i>
 						</a>
 					</li>
 				</ul>
 				<div
 					class="action-buttons">
 					{# <a class="btn btn-gray" href="#">Télécharger le CV</a>
-										<a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contacter</a> #}
+																				<a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contacter</a> #}
 					{% if is_granted('ROLE_ADMIN') %}
 						<a data-student-id="{{student.id}}" id='sms-send' class="btn btn-primary">Inviter</a>
 					{% endif %}
@@ -98,8 +105,8 @@
 										{{education.dateto|date('Y')}}</h6>
 								</header>
 								{# <div class="item-body">
-									<p>Pas de colonne correspondante dans la BDD (educations->description ???).</p>
-								</div> #}
+																									<p>Pas de colonne correspondante dans la BDD (educations->description ???).</p>
+																								</div> #}
 							</div>
 						</div>
 					</div>
@@ -149,7 +156,8 @@
 		<!-- Skills -->
 		<section>
 			<div class="container">
-				<header class="section-header">
+				<header
+					class="section-header">
 					{# <span>Expertise Areas (??)</span> #}
 					<h2>Compétences</h2>
 				</header>
