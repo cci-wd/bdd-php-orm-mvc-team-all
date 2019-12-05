@@ -27,9 +27,7 @@ class Offer
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      * @Assert\Length(
-     *      min = 5,
      *      max = 255,
-     *      minMessage = "Le titre doit contenir {{ limit }} caractères au minimum",
      *      maxMessage = "Le titre ne doit pas dépasser {{ limit }} caractères"
      * )
      */
@@ -64,9 +62,7 @@ class Offer
      *
      * @ORM\Column(name="description", type="string", length=400, nullable=false)
      * @Assert\Length(
-     *      min = 50,
      *      max = 400,
-     *      minMessage = "La description doit contenir au minimum{{ limit }} caractères",
      *      maxMessage = "La description ne doit pas dépasser {{ limit }} caractères"
      * )
      */
@@ -75,7 +71,7 @@ class Offer
     /**
      * @var bool
      *
-     * @ORM\Column(name="statut", type="boolean", nullable=false)
+     * @ORM\Column(name="status", type="boolean", nullable=false)
      */
     private $statut;
 
@@ -91,7 +87,7 @@ class Offer
      *
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $section;
@@ -101,7 +97,7 @@ class Offer
      * 
      * @ORM\ManyToOne(targetEntity="App\Entity\Business", inversedBy="offers")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="business_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
      */
     private $business;

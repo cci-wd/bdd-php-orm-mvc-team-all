@@ -6,11 +6,12 @@ use App\Entity\City;
 use App\Entity\Offer;
 use App\Entity\Section;
 use App\Form\OfferType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/offre")
@@ -29,7 +30,7 @@ class OfferController extends AbstractController
     /**
      * @Route("/liste", name="offer_list", methods={"GET"})
      */
-    function list(Request $request): Response {
+    function list(Request $request, PaginatorInterface $paginator): Response {
         $sections = $this->getDoctrine()
             ->getRepository(Section::class)
             ->findAll();
@@ -63,10 +64,17 @@ class OfferController extends AbstractController
         }
 
         $query = $queryBuilder->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+
         $offers = $query->getResult();
 
         return $this->render('offers/index.html.twig', [
-            'offers' => $offers,
+            'offers' => $pagination,
             'parameters' => [
                 'keyword' => $keyword,
                 'location' => $location,

@@ -22,3 +22,35 @@
     z-index: -1;
     background-color: rgba(0,24,40,.55);
 }
+
+.sticky {
+    position: fixed;
+    bottom: 0;
+    z-index: 2 !important;
+    padding: 10px 0;
+    width: 100%;
+    .section-header {
+        margin-bottom: 10px;
+        h2, p {
+            display: none;
+        }
+    }
+    .btn-xl {
+        height: 44px;
+        line-height: 44px;
+    }
+}
+
+.section-header {
+    margin-bottom: 50px;
+}
+
+section {
+    padding: 70px 0;
+}
+
+@media (max-width: 767px) {
+    section {
+        padding: 50px 0;
+    }
+}

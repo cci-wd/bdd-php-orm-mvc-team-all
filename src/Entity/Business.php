@@ -106,7 +106,7 @@ class Business
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=8, nullable=false)
+     * @ORM\Column(name="phone", type="string", length=8, nullable=true)
      * @Assert\Regex(
      *      pattern = "/^([\d]{2}[\s.]?[\d]{2}[\s.]?[\d]{2})$/",
      *      message = "Le numéro fourni n'est pas valide"
@@ -169,7 +169,7 @@ class Business
      *
      * @ORM\OneToOne(targetEntity="User", inversedBy="business")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $user;

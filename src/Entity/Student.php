@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -12,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="students", indexes={@ORM\Index(name="Students_Sections", columns={"section_id"}), @ORM\Index(name="Students_Users", columns={"user_id"})})
  * @ORM\Entity
+ * @UniqueEntity(
+ *      fields = {"phoneNumber"},
+ *      message = "Le numéro de téléphone fourni existe déjà"
+ * )
  */
 class Student
 {
@@ -35,7 +40,6 @@ class Student
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=45, nullable=false)
-     * 
      * @Assert\Length(
      *      min = 2,
      *      max = 25,
@@ -49,7 +53,6 @@ class Student
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=45, nullable=false)
-     * 
      * @Assert\Length(
      *      min = 2,
      *      max = 25,
@@ -84,7 +87,6 @@ class Student
      * @var int
      *
      * @ORM\Column(name="age", type="integer", nullable=true)
-     * 
      * @Assert\Length(
      *      min = 2,
      *      max = 2,
@@ -97,7 +99,6 @@ class Student
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=10, nullable=false)
-     * 
      * @Assert\Length(
      *      min = 6,
      *      max = 6,
@@ -109,7 +110,7 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     * @ORM\Column(name="email", type="string", length=50, nullable=true)
      * @Assert\Email(
      *     message = "L'email '{{ value }}' n'est pas valide."
      * )
@@ -149,7 +150,7 @@ class Student
      *
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $section;
@@ -159,7 +160,7 @@ class Student
      *
      * @ORM\OneToOne(targetEntity="User", inversedBy="student")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $user;
@@ -461,5 +462,5 @@ class Student
 
         return $this;
     }
-    
+
 }
