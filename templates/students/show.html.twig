@@ -7,7 +7,7 @@
 			<div class="row">
 				{% if student.image %}
 					<div class="col-xs-12 col-sm-4">
-						<img src="{{ asset('uploads/images/' ~ student.image) }}" alt="profile-image">
+						<img src="{{ asset('uploads/images/' ~ student.image) }}" alt="Photo de profil de l'alternant">
 					</div>
 				{% endif %}
 				<div class="col-xs-12 col-sm-8 header-detail">
@@ -66,10 +66,7 @@
 						</a>
 					</li>
 				</ul>
-				<div
-					class="action-buttons">
-					{# <a class="btn btn-gray" href="#">Télécharger le CV</a>
-																				<a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contacter</a> #}
+				<div class="action-buttons">
 					{% if is_granted('ROLE_ADMIN') %}
 						<a data-student-id="{{student.id}}" id='sms-send' class="btn btn-primary">Inviter</a>
 					{% endif %}
@@ -83,8 +80,7 @@
 		<!-- Education -->
 		<section>
 			<div class="container">
-				<header
-					class="section-header">
+				<header class="section-header">
 					{# <span>Derniers diplômes obtenus</span> #}
 					<h2>Diplômes</h2>
 				</header>
@@ -93,20 +89,14 @@
 						<div class="col-xs-12">
 							<div class="item-block">
 								<header>
-									{# <img src="{{ asset('assets/img/logo-mit.png') }}" alt=""> #}
 									<div class="hgroup">
 										<h4>{{education.degree}}
 											<small>{{education.speciality}}</small>
 										</h4>
 										<h5>{{education.schoolname}}</h5>
 									</div>
-									<h6 class="time">{{education.datefrom|date('Y')}}
-										-
-										{{education.dateto|date('Y')}}</h6>
+									<h6 class="time">{{education.datefrom|date('Y')}} - {{education.dateto|date('Y')}}</h6>
 								</header>
-								{# <div class="item-body">
-																									<p>Pas de colonne correspondante dans la BDD (educations->description ???).</p>
-																								</div> #}
 							</div>
 						</div>
 					</div>
@@ -130,14 +120,11 @@
 						<div class="col-xs-12">
 							<div class="item-block">
 								<header>
-									{# <img src="assets/img/logo-google.jpg" alt=""> #}
 									<div class="hgroup">
 										<h4>{{experience.title}}</h4>
 										<h5>{{experience.post}}</h5>
 									</div>
-									<h6 class="time">{{experience.datefrom|date('Y')}}
-										-
-										{{experience.dateto|date('Y')}}</h6>
+									<h6 class="time">{{experience.datefrom|date('Y')}} - {{experience.dateto|date('Y')}}</h6>
 								</header>
 								<div class="item-body">
 									<p>{{experience.description}}</p>

@@ -27,12 +27,15 @@
 						<h2>Les dernières offres</h2>
 					</header>
 					<div
-						class="row item-blocks-connected">
+						class="row">
 						<!-- Job item -->
 						{% for offer in offers|slice(0, 5) %}
 							<div class="col-xs-12">
 								<div class="item-block">
 									<header>
+										{% if offer.business.image %}
+											<a href="{{ path('business_show', {'id': offer.business.id}) }}"><img src="{{ asset('uploads/images/' ~ offer.business.image) }}" alt="logo entreprise"></a>
+										{% endif %}
 										<div class="hgroup">
 											<h4>
 												<a href="{{ path('offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
@@ -49,7 +52,7 @@
 												{{ offer.publishDate|date("d/m/Y") }}</time>
 										</div>
 									</header>
-									{% if (app.user.id == offer.business.user.id or is_granted('ROLE_ADMIN')) %}
+									{% if (is_granted('ROLE_ADMIN')) %}
 										<footer>
 											<div class="action-btn">
 												<a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
@@ -111,7 +114,7 @@
 				</div>
 				<div class="col-sm-12 col-md-6 hidden-xs hidden-sm">
 					<br>
-					<img class="center-block" src="{{ asset('assets/img/how-it-works.png') }}" alt="how it works">
+					<img class="center-block" src="{{ asset('assets/img/how-it-works.png') }}" alt="image de présentation">
 				</div>
 			</div>
 		</section>
