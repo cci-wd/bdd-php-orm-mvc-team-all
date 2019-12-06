@@ -61,9 +61,7 @@
 								<div class="item-block">
 									<header>
 										{% if offer.business.image %}
-											<a href="{{ path('business_show', {'id': offer.business.id}) }}"><img src="{{ asset('uploads/images/' ~ offer.business.image) }}" alt=""></a>
-										{% else %}
-											<img src="{{ asset('assets/img/logo-google.jpg') }}" alt="">
+											<a href="{{ path('business_show', {'id': offer.business.id}) }}"><img src="{{ asset('uploads/images/' ~ offer.business.image) }}" alt="logo entreprise"></a>
 										{% endif %}
 										<div class="hgroup">
 											<h4>
