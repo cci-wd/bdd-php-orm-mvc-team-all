@@ -18,6 +18,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -442,8 +443,10 @@ class StudentController extends AbstractController
             $entityManager->flush();
 
         } else {
-            return new Response('The student is already active.', Response::HTTP_FORBIDDEN);
+            $this->addFlash('error', $student->getFirstName() . ' a déjà activé son compte !');
+            return $this->redirectToRoute('student_show', ['id' => $student->getId()]);
         }
-        return new Response('The student has been invited;', Response::HTTP_OK);
+        $this->addFlash('success', $student->getFirstName() . ' a bien été invité !');
+        return $this->redirectToRoute('student_show', ['id' => $student->getId()]);
     }
 }
