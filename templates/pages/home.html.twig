@@ -56,7 +56,9 @@
 										<footer>
 											<div class="action-btn">
 												<a class="btn btn-xs btn-gray" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
-												<div class="delete-btn">{{ include('offers/_delete_form.html.twig') }}</div>
+												<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal{{ offer.id }}">
+													Supprimer
+												</button>
 											</div>
 										</footer>
 									{% endif %}
@@ -151,4 +153,31 @@
 		<!-- END Categories -->
 	</main>
 	<!-- END Main container -->
+{% endblock %}
+
+{% block modal %}
+{% for offer in offers %}
+<!-- Modal -->
+<div class="modal fade" id="modal{{ offer.id }}" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Suppresion de l'offre : {{ offer.title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        La suppresion d'une offre est définitive et ne peux pas être annuler.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+		<div class="delete-btn">
+		{{ include('offers/_delete_form.html.twig') }}
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
 {% endblock %}
