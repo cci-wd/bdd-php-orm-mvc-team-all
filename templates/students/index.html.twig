@@ -3,6 +3,25 @@
 {% block title %}Liste des étudiants
 {% endblock %}
 
+{% block flashes %}
+    {% for message in app.flashes('success') %}
+    	<div class="alert text-center alert-success" role="alert" style="margin-bottom:0;">
+        	{{ message }}  
+        	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            	<span aria-hidden="true">&times;</span>
+        	</button>
+    	</div>
+	{% endfor %}
+	{% for message in app.flashes('error') %}
+    	<div class="alert text-center alert-danger" role="alert" style="margin-bottom:0;">
+        	{{ message }}  
+        	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            	<span aria-hidden="true">&times;</span>
+        	</button>
+    	</div>
+	{% endfor %}
+{% endblock %}
+
 {% block body %}
 	<!-- Page header -->
 	<header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">

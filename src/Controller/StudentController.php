@@ -239,6 +239,7 @@ class StudentController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('success', 'Le compte de ' . $student->getFirstName() . ' ' . $student->getLastName() . ' a bien été supprimé !');
         return $this->redirectToRoute('student_list');
     }
 
