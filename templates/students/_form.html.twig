@@ -266,6 +266,14 @@
         </div>
       </div>
     </div>
+    <div class="button-group">
+      <div class="action-buttons">
+        <div class="upload-button">
+         <!-- <button class="btn btn-block btn-primary"></i>Choisir une image de couverture</button>
+          {{form_widget(form.coverImage)}}-->
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 <main>
@@ -394,7 +402,7 @@
   <!-- END Skills -->
   {% endif %}
   <!-- Submit -->
-  <section class="bg-img submit sticky" style="background-image: url({{ asset('assets/img/bg-facts.jpg') }});">
+  <section class="bg-img submit sticky">
     <div class="container">
       <header class="section-header">
         <span>Vous avez terminé?</span>
@@ -402,7 +410,7 @@
         <p>Veuillez revoir vos informations une fois de plus et appuyer sur le bouton ci-dessous pour soumettre votre formulaire.</p>
       </header>
 
-      <p class="text-center">
+      <p class="text-center ">
         {{ form_widget(form.submit, { 'label': 'Valider' }) }}
       </p>
 	  </div>

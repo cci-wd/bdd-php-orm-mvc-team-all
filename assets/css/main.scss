@@ -1,17 +1,21 @@
 .delete-btn {
     display: inline-block;
 }
+
 .social-icons {
     a.mail:hover {
         background-color: #517fa4;
     }
+
     a.phone:hover {
         background-color: #4F805D;
     }
 }
-.custom-picker-location > div {
+
+.custom-picker-location>div {
     max-height: 300px !important;
 }
+
 .page-header:before {
     position: absolute;
     content: "";
@@ -20,24 +24,30 @@
     right: 0;
     bottom: 0;
     z-index: -1;
-    background-color: rgba(0,24,40,.55);
+    background-color: rgba(0, 24, 40, .55);
 }
 
-.sticky {
-    position: fixed;
-    bottom: 0;
-    z-index: 2 !important;
-    padding: 10px 0;
-    width: 100%;
-    .section-header {
-        margin-bottom: 10px;
-        h2, p {
-            display: none;
+@media (max-width: 768px) {
+    .sticky {
+        position: fixed;
+        bottom: 0;
+        z-index: 2 !important;
+        padding: 10px 0;
+        width: 100%;
+
+        .section-header {
+            margin-bottom: 10px;
+
+            h2,
+            p {
+                display: none;
+            }
         }
-    }
-    .btn-xl {
-        height: 44px;
-        line-height: 44px;
+
+        .btn-xl {
+            height: 44px;
+            line-height: 44px;
+        }
     }
 }
 
@@ -55,6 +65,7 @@ section {
     }
 }
 
-.section-header h2, .section-header h3 {
+.section-header h2,
+.section-header h3 {
     text-transform: initial;
 }
