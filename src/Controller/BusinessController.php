@@ -113,7 +113,7 @@ class BusinessController extends AbstractController
      * @Route("/creer", name="business_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function create(Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function create(Request $request, FileUploader $fileUploader, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $business = new Business();
@@ -121,6 +121,12 @@ class BusinessController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $business->setImage($imageName);
+            }
 
             $user->setUsername($business->getEmail());
             $user->setRoles(['ROLE_BUSINESS']);
@@ -165,12 +171,21 @@ class BusinessController extends AbstractController
      * @Route("/{id}/modifier", name="business_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function edit(Request $request, Business $business): Response
+    public function edit(Request $request, Business $business, FileUploader $fileUploader): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+
         $form = $this->createForm(BusinessType::class, $business);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image) {
+                $imageName = $fileUploader->upload($image);
+                $business->setImage($imageName);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('business_list');
