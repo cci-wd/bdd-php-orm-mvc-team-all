@@ -7,10 +7,12 @@
 1. Installer composer avec la commande : ```> composer install```
 2. Copier et coller le fichier **.env** puis le renommer en **.env.local** et modifier ```db_user``` & ```db_password``` à la ligne 32 : 
 ```DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/cci_link```
-3. Créér la base de données : ```> php bin/console doctrine:database:create```
-4. Puis : ```> php bin/console doctrine:schema:create```
-5. Lancez la migration vers la base de données : ```> php bin/console doctrine:migrations:migrate```
-6. Lancez le serveur puis rendez-vous sur http://127.0.0.1:8000/: ```> symfony server:start```
+3. Si il y a déja une BDD : ```> php bin/console doctrine:database:drop --force```
+4. Créér la base de données : ```> php bin/console doctrine:database:create```
+5. Puis : ```> php bin/console doctrine:schema:create```
+6. Lancez la migration vers la base de données : ```> php bin/console doctrine:migrations:migrate```
+7. Pour ajouter les jeux de donners : ```> php bin/console doctrine:fixtures:load```
+8. Lancez le serveur puis rendez-vous sur http://127.0.0.1:8000/: ```> symfony server:start```
 
 **Dans un autre terminal, pour lancer le compilateur :**
 
