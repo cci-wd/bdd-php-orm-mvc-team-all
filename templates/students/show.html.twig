@@ -89,7 +89,15 @@
 				<div class="action-buttons">
 					{% if is_granted('ROLE_ADMIN') %}
 						<form id="inviteForm" method="post" action="{{ path("student_invitation", { 'id' : student.id }) }}"></form>
-						<a onclick="document.getElementById('inviteForm').submit();" id='sms-send' class="btn btn-primary">Inviter</a>
+						<form id="editForm" method="post" action="{{ path("student_edit", { 'id' : student.id }) }}"></form>
+
+						<a onclick="document.getElementById('inviteForm').submit();" id='sms-send' class="btn btn-primary">Inviter</a>						
+						<a onclick="document.getElementById('editForm').submit();" id='sms-send' class="btn btn-primary">Modifier</a>
+						
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal{{ student.id }}">
+							Supprimer
+						</button>
+						
 					{% endif %}
 				</div>
 			</div>
