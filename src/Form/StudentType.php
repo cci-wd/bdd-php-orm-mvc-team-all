@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Section;
 use App\Entity\Student;
 use App\Form\SkillType;
@@ -56,9 +57,11 @@ class StudentType extends AbstractType
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Description', 'row' => 8],
                 'required' => false,
             ])
-            ->add('location', TextType::class, [
-                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'Ville'],
-                'required' => false,
+            ->add('location', EntityType::class, [
+                'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'URL'],
+                'class' => City::class,
+                'choice_label' => 'name',
+                'required' => true,
             ])
             ->add('website', UrlType::class, [
                 'attr' => ['class' => 'form-control input-lg', 'placeholder' => 'URL'],
@@ -122,6 +125,7 @@ class StudentType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => "Choisir la section de l'apprenant",
                 'attr' => ['class' => 'form-control selectpicker'],
+                'required' => true,
             ]);
     }
 
