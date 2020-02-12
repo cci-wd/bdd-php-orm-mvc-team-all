@@ -5,3 +5,7 @@
 {% block body %}
     {{ include('businesses/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 {% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/sticky.js') }}"></script>
+{% endblock %}

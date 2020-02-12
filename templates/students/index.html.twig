@@ -24,7 +24,7 @@
 
 {% block body %}
 	<!-- Page header -->
-	<header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
+	<header class="page-header header-list-student" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
 		<div class="container page-name">
 			{% if app.user %}
 				<h1 class="text-center">Liste des alternants</h1>
@@ -34,7 +34,7 @@
 			{% endif %}
 		</div>
 		{% if app.user %}
-			<div class="container">
+			<div class="container list-student">
 				<form action="#">
 					<div class="row">
 						<div class="form-group col-xs-12 col-sm-4">
@@ -109,9 +109,11 @@
 											</h5>
 										</div>
 									</header>
-									<div class="item-body">
-										<p>{{student.description}}</p>
-									</div>
+									{% if student.description %}
+										<div class="item-body">
+											<p>{{student.description}}</p>
+										</div>
+									{% endif %}
 									<footer>
 										<ul class="details cols-3">
 											<li>
