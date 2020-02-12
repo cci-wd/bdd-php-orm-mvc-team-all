@@ -16,18 +16,48 @@
     max-height: 300px !important;
 }
 
-.page-header:before {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    background-color: rgba(0, 24, 40, .55);
+.page-header{
+    &:before {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background-color: rgba(0, 24, 40, .55);
+    }
+    .container.page-name{
+        padding: 20px 15px;
+        bottom: 40px;
+    }
+}
+
+.header-add-new, .header-edit-offer, .header-edit-business, .header-list-student, .header-list-business, .header-list-offer {
+    margin-bottom: 0;
+}
+
+.form-add-student, .form-add-business, .form-edit-offer, .form-edit-business, .list-student, .list-business {
+    bottom: 120px;
+}
+
+.list-offer {
+    transform: translateY(10px) !important ;
+}
+
+.view-profile-student, .view-profile-business, .view-offer {
+    padding-top: 40px;
 }
 
 @media (max-width: 768px) {
+    .page-header{
+        .container.page-name{
+            padding-top: 0;
+        }
+    }
+    .view-profile-student, .view-profile-business, .view-offer {
+        padding-top: 0;
+    }
     .sticky {
         position: fixed;
         bottom: 0;
@@ -59,9 +89,9 @@ section {
     padding: 70px 0;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     section {
-        padding: 50px 0;
+        padding: 30px 0;
     }
 }
 

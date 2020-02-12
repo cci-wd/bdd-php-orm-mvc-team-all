@@ -2,13 +2,13 @@
 
 {% block body %}
     <!-- Page header -->
-    <header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
+    <header class="page-header header-list-business" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
       <div class="container page-name">
         <h1 class="text-center">Liste des entreprises</h1>
         <p class="lead text-center">Faciliter votre recherche à l'aide du filtre :</p>
       </div>
 
-      <div class="container">
+      <div class="container list-business">
         <form action="#">
 
           <div class="row">
@@ -70,10 +70,11 @@
                     <h5><td>{{ business.slogan }}</td></h5>
                   </div>
                 </header>
-
-                <div class="item-body">
-                  <p>{{ (business.description|length > 260 ? business.description|slice(0, 260) ~ '…' : business.description)|striptags|raw  }}</p>
-                </div>
+                {% if business.description %}
+                  <div class="item-body">
+                    <p>{{ (business.description|length > 260 ? business.description|slice(0, 260) ~ '…' : business.description)|striptags|raw  }}</p>
+                  </div>
+                {% endif %}
               </a>
             </div>
         {% endfor %}
