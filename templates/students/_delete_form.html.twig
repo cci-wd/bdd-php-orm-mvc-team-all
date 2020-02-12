@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('student_delete', {'id': student.id}) }}">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.id) }}">
-    <button class="btn btn-xs btn-danger">Supprimer</button>
+    <button class="btn btn-danger">Supprimer</button>
 </form>

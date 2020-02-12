@@ -125,6 +125,7 @@ class StudentType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => "Choisir la section de l'apprenant",
                 'attr' => ['class' => 'form-control selectpicker'],
+                'required' => true,
             ]);
     }
 
