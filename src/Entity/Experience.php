@@ -152,7 +152,7 @@ class Experience
 
     public function getStudent(): ?Student
     {
-        return $this->students;
+        return $this->student;
     }
 
     public function setStudent(?Student $student): self
