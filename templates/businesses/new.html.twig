@@ -5,12 +5,12 @@
 
   {{ form_start(form) }}
   <!-- Page header -->
-  <header class="page-header" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
+  <header class="page-header header-add-new" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
     <div class="container page-name">
       <h1 class="text-center">Ajouter une entreprise</h1>
       <p class="lead text-center">Formulaire de création d'un profil entreprise</p>
     </div>
-    <div class="container">
+    <div class="container form-add-business">
       <div class="row">
         <div class="col-xs-12">
           <div class="row">
@@ -253,7 +253,7 @@
     {% endif %}
 
     <!-- Submit -->
-    <section>
+    <section class="bg-img submit sticky">
       <div class="container">
         <header class="section-header">
           <span>Terminer?</span>
@@ -269,4 +269,8 @@
   {{ form_row(form._token) }}
   {{ form_end(form, {'render_rest': false}) }}
 
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/sticky.js') }}"></script>
 {% endblock %}

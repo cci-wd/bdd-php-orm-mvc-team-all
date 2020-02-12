@@ -2,12 +2,12 @@
 
 {{ form_start(form) }}
 <!-- Page header -->
-<header class="page-header">
+<header class="page-header header-edit-business" style="background-image: url({{ asset('assets/img/bg-banner1.jpg') }})">
   <div class="container page-name">
     <h1 class="text-center">Modifier votre profil entreprise</h1>
     <p class="lead text-center">Mettre à jour le profil de votre entreprise et mettez-le en ligne.</p>
   </div>
-  <div class="container">
+  <div class="container form-edit-business">
     <div class="row">
       <div class="col-xs-12">
         <div class="row">
@@ -246,14 +246,14 @@
   <!-- Social media -->
 
   <!-- Submit -->
-  <section>
+  <section class="bg-img submit sticky">
     <div class="container">
       <header class="section-header">
         <span>Terminer?</span>
         <h2>Soumettre</h2>
         <p>Veuillez revoir vos informations une fois de plus et appuyer sur le bouton ci-dessous pour mettre votre entreprise en ligne.</p>
       </header>
-      <p class="text-center">{{ form_widget(form.submit, { 'label': 'Valider vos modifications' }) }}</p>
+      <p class="text-center">{{ form_widget(form.submit, { 'label': 'Valider' }) }}</p>
     </div>
   </section>
   <!-- END Submit -->
