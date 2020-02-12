@@ -49,26 +49,34 @@
 
 				<div class="button-group">
 					<ul class="social-icons">
+						{% if business.facebook %}
 						<li>
 							<a class="facebook" href="{{ business.facebook }}">
 								<i class="fa fa-facebook"></i>
 							</a>
 						</li>
+						{% endif %}
+						{% if business.twitter %}						
 						<li>
 							<a class="twitter" href="{{ business.twitter }}">
 								<i class="fa fa-twitter"></i>
 							</a>
 						</li>
+						{% endif %}
+						{% if business.linkedin %}						
 						<li>
 							<a class="linkedin" href="{{ business.linkedin }}">
 								<i class="fa fa-linkedin"></i>
 							</a>
 						</li>
+						{% endif %}
+						{% if business.youtube %}						
 						<li>
 							<a class="youtube" href="{{ business.youtube }}">
 								<i class="fa fa-youtube"></i>
 							</a>
 						</li>
+						{% endif %}
 					</ul>
 
 					<div class="action-buttons">
